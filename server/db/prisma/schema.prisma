@@ -1,0 +1,28 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider   = "graphql-schema-generator"
+  createCRUD = "true"
+  // output = "./generated" This is default path.
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+model User {
+  id         Int       @id @default(autoincrement())
+  createdAt  DateTime  @default(now())
+  email      String    @unique
+  name       String
+  role       Role      @default(USER)
+  verified   Boolean?
+  verifiedAt DateTime?
+}

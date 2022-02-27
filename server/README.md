@@ -71,3 +71,12 @@ Nest is an MIT-licensed open source project. It can grow thanks to the sponsors 
 ## License
 
 Nest is [MIT licensed](LICENSE).
+
+## Database MySQL
+
+create database `brew install mysql`
+start server `brew services start mysql`
+stop server `brew services stop mysql`
+connect to server `mysql -u root -p`
+prisma run the generator `npx prisma generate`
+create migration `prisma migrate dev --name init`
