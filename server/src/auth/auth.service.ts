@@ -32,4 +32,23 @@ export class AuthService {
       access_token: this.jwtService.sign(payload),
     };
   }
+
+  async verify(token: string) {
+    const secret = process.env.JWT_SECRET;
+    const decoded = this.jwtService.verify(token, {
+      secret,
+    });
+
+    if (!decoded.email) {
+      throw new Error('Unable to verify the user provided.');
+    }
+
+    const user = await this.userService.getUserByEmail(decoded.email);
+
+    if (!user) {
+      throw new Error('Unable to find the user provided.');
+    }
+
+    return user;
+  }
 }

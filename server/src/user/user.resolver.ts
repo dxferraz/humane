@@ -8,6 +8,10 @@ import {
 } from 'src/graphql_types';
 import { UserService } from './user.service';
 import { Role } from '@prisma/client';
+import { UseGuards } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
+import { GqlAuthGuard } from 'src/auth/guards/gql-auth.guard';
+import { CurrentUser } from 'src/auth/decorators/current-user.decorator';
 
 @Resolver()
 export class UserResolver implements IQuery, IMutation {
@@ -29,7 +33,7 @@ export class UserResolver implements IQuery, IMutation {
 
       return { name, email, birthdate, role };
     } catch (e) {
-      throw new Error('Hash Error' + e);
+      return e;
     }
   }
 
@@ -44,12 +48,9 @@ export class UserResolver implements IQuery, IMutation {
   }
 
   @Query()
-  user(@Args('id') id: number): User | Promise<User> {
-    return this.userService.getUserByID(id);
-  }
-
-  @Query()
-  users(): User[] | Promise<User[]> {
-    throw new Error('Method not implemented.');
+  @UseGuards(GqlAuthGuard)
+  whoAmI(@CurrentUser() user): User | Promise<User> {
+    // Return the user who sent the request
+    return user;
   }
 }

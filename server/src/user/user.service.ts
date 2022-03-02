@@ -1,5 +1,9 @@
 import * as bcrypt from 'bcrypt';
-import { Injectable } from '@nestjs/common';
+import {
+  ConflictException,
+  Injectable,
+  InternalServerErrorException,
+} from '@nestjs/common';
 import { Prisma } from '@prisma/client';
 import { PrismaService } from 'db/prisma/service/prisma.service';
 import { User } from 'src/graphql_types';
@@ -9,9 +13,21 @@ export class UserService {
   constructor(private prisma: PrismaService) {}
 
   async createUser(user: Prisma.UserCreateInput): Promise<User> {
-    return await this.prisma.user.create({
-      data: { ...user },
-    });
+    try {
+      return await this.prisma.user.create({
+        data: { ...user },
+      });
+    } catch (e) {
+      switch (e.code) {
+        // Unique constraints error
+        case 'P2002':
+          throw new ConflictException(
+            'Email already being used!, please enter a different email.',
+          );
+        default:
+          throw new InternalServerErrorException();
+      }
+    }
   }
 
   async getUserByEmail(email: string) {
