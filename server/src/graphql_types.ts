@@ -23,9 +23,9 @@ export class UserCreateInput {
       Passwords will contain at least 1 lower case letter
       Passwords will contain at least 1 number or special character
   */
+  @IsNotEmpty()
   @MinLength(6)
   @MaxLength(30)
-  @IsNotEmpty()
   @Matches(/((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/, {
     message: "Password doesn't match the criteria required.",
   })
@@ -55,13 +55,22 @@ export abstract class IQuery {
 export abstract class IMutation {
   abstract createUser(
     user: UserCreateInput,
-  ): Nullable<UserCreateInput> | Promise<Nullable<UserCreateInput>>;
+  ): Nullable<UserPublic> | Promise<Nullable<UserPublic>>;
 
   abstract updateUser(
     user: UserUpdateInput,
-  ): Nullable<User> | Promise<Nullable<User>>;
+  ): Nullable<UserPublic> | Promise<Nullable<UserPublic>>;
 
-  abstract deleteUser(id: number): Nullable<User> | Promise<Nullable<User>>;
+  abstract deleteUser(
+    id: number,
+  ): Nullable<UserPublic> | Promise<Nullable<UserPublic>>;
+}
+
+export class UserPublic {
+  email: string;
+  name: string;
+  birthdate: DateTime;
+  verified?: Nullable<boolean>;
 }
 
 export class User {

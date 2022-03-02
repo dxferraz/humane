@@ -4,6 +4,7 @@ import {
   IQuery,
   User,
   UserCreateInput,
+  UserPublic,
   UserUpdateInput,
 } from 'src/graphql_types';
 import { UserService } from './user.service';
@@ -20,7 +21,7 @@ export class UserResolver implements IQuery, IMutation {
   @Mutation()
   async createUser(
     @Args('user') user: UserCreateInput,
-  ): Promise<UserCreateInput> | null {
+  ): Promise<UserPublic> | null {
     try {
       const { name, email, birthdate, role } =
         await this.userService.createUser({
@@ -31,19 +32,19 @@ export class UserResolver implements IQuery, IMutation {
           role: Role.USER,
         });
 
-      return { name, email, birthdate, role };
+      return { name, email, birthdate };
     } catch (e) {
       return e;
     }
   }
 
   @Mutation()
-  updateUser(user: UserUpdateInput): User | Promise<User> {
+  updateUser(user: UserUpdateInput): UserPublic | Promise<UserPublic> {
     throw new Error('Method not implemented.');
   }
 
   @Mutation()
-  deleteUser(id: number): User | Promise<User> {
+  deleteUser(id: number): UserPublic | Promise<UserPublic> {
     throw new Error('Method not implemented.');
   }
 

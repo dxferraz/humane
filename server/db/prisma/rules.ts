@@ -1,13 +1,28 @@
 const { SDL } = require('../../node_modules/@prisma/graphql-schema-generator');
 
 const rules = {
+  public: {
+    User: (params) => `
+        type UserPublic {
+          ${params}
+          verified: Boolean
+        }
+      `,
+  },
   query: {
     User: {
       single: {
-        function: 'whoAmI: User',
+        function: 'whoAmI: UserPublic',
       },
       plural: {
         isGenerated: false,
+      },
+    },
+  },
+  mutation: {
+    User: {
+      input: {
+        add: [{ name: 'password', type: 'String' }],
       },
     },
   },
@@ -21,6 +36,7 @@ const rules = {
           case 'createdAt':
           case 'role':
           case 'password':
+          case 'verified':
             return true;
           default:
             return false;
@@ -28,32 +44,6 @@ const rules = {
       },
       transformer: (field) => {
         throw null;
-      },
-    },
-  ],
-  afterAddingTypeModifiers: [
-    {
-      matcher: (field) => {
-        const { type } = field;
-
-        if (/\[(\w+)!]!/gm.exec(type)) {
-          return true;
-        }
-
-        return false;
-      },
-      transformer: (field) => {
-        const { type } = field;
-
-        const match = /\[(\w+)!]!/gm.exec(type);
-
-        if (!match) {
-          return field;
-        }
-
-        const [_, typeWithoutModifiers] = match;
-
-        return { ...field, type: `[${typeWithoutModifiers}]` };
       },
     },
   ],
