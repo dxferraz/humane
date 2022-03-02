@@ -23,14 +23,14 @@ export class UserResolver implements IQuery, IMutation {
     @Args('user') user: UserCreateInput,
   ): Promise<UserPublic> | null {
     try {
-      const { name, email, birthdate, role } =
-        await this.userService.createUser({
-          ...user,
-          createdAt: new Date(),
-          birthdate: new Date(user.birthdate),
-          password: await this.userService.createHash(user.password),
-          role: Role.USER,
-        });
+      const { name, email, birthdate } = await this.userService.createUser({
+        ...user,
+        createdAt: new Date(),
+        modifiedAt: new Date(),
+        birthdate: new Date(user.birthdate),
+        password: await this.userService.createHash(user.password),
+        role: Role.USER,
+      });
 
       return { name, email, birthdate };
     } catch (e) {

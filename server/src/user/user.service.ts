@@ -30,6 +30,27 @@ export class UserService {
     }
   }
 
+  async updateUserByID(params: {
+    id: number;
+    data: Prisma.UserUpdateInput;
+  }): Promise<User> {
+    const { data, id } = params;
+    return this.prisma.user.update({
+      data,
+      where: {
+        id,
+      },
+    });
+  }
+
+  async deleteUserByID(id: number): Promise<User> {
+    return this.prisma.user.delete({
+      where: {
+        id,
+      },
+    });
+  }
+
   async getUserByEmail(email: string) {
     return await this.prisma.user.findUnique({
       where: {

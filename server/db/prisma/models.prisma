@@ -17,5 +17,6 @@ model User {
     role       Role      @default(USER)
     verified   Boolean?
     verifiedAt DateTime?
+    modifiedAt DateTime?
     password   String?
 }

@@ -34,6 +34,7 @@ const rules = {
         switch (name) {
           case 'verifiedAt':
           case 'createdAt':
+          case 'modifiedAt':
           case 'role':
           case 'password':
           case 'verified':
