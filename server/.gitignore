@@ -40,4 +40,4 @@ lerna-debug.log*
 .env
 
 #auto generated code
-schema.prisma
+/db/prisma/schema.prisma

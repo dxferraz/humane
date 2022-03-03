@@ -1,4 +1,5 @@
 import { Role } from '@prisma/client';
+import { Exclude } from 'class-transformer';
 import {
   IsEmail,
   IsEmpty,
@@ -71,8 +72,8 @@ export class UserPublic {
   name: string;
   birthdate: DateTime;
   verified?: Nullable<boolean>;
+  role: Role;
 }
-
 export class User {
   id: number;
   email: string;

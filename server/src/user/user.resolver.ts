@@ -9,12 +9,13 @@ import {
 } from 'src/graphql_types';
 import { UserService } from './user.service';
 import { Role } from '@prisma/client';
-import { UseGuards } from '@nestjs/common';
-import { AuthGuard } from '@nestjs/passport';
+import { UseGuards, UseInterceptors } from '@nestjs/common';
 import { GqlAuthGuard } from 'src/auth/guards/gql-auth.guard';
 import { CurrentUser } from 'src/auth/decorators/current-user.decorator';
+import { ResponseAddAccessTokenToHeaderInterceptor } from 'src/auth/interceptors/response-add-access-token-to-header.interceptor';
 
 @Resolver()
+@UseInterceptors(ResponseAddAccessTokenToHeaderInterceptor)
 export class UserResolver implements IQuery, IMutation {
   constructor(private userService: UserService) {}
 
@@ -23,16 +24,14 @@ export class UserResolver implements IQuery, IMutation {
     @Args('user') user: UserCreateInput,
   ): Promise<UserPublic> | null {
     try {
-      const { name, email, birthdate } = await this.userService.createUser({
+      return (await this.userService.createUser({
         ...user,
         createdAt: new Date(),
         modifiedAt: new Date(),
         birthdate: new Date(user.birthdate),
         password: await this.userService.createHash(user.password),
         role: Role.USER,
-      });
-
-      return { name, email, birthdate };
+      })) as UserPublic;
     } catch (e) {
       return e;
     }

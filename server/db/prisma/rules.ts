@@ -22,6 +22,7 @@ const rules = {
   mutation: {
     User: {
       input: {
+        remove: ['role'],
         add: [{ name: 'password', type: 'String' }],
       },
     },
@@ -35,7 +36,6 @@ const rules = {
           case 'verifiedAt':
           case 'createdAt':
           case 'modifiedAt':
-          case 'role':
           case 'password':
           case 'verified':
             return true;

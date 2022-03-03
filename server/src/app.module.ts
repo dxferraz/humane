@@ -16,6 +16,9 @@ import { AuthModule } from './auth/auth.module';
         path: join(process.cwd() + '/db/prisma/generated/graphql_types.ts'),
         outputAs: 'class',
       },
+      context: ({ req, res }) => {
+        return { request: req, response: res };
+      },
     }),
     UserModule,
     AuthModule,

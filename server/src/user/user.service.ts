@@ -36,7 +36,10 @@ export class UserService {
   }): Promise<User> {
     const { data, id } = params;
     return this.prisma.user.update({
-      data,
+      data: {
+        modifiedAt: new Date(),
+        ...data,
+      },
       where: {
         id,
       },

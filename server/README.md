@@ -79,4 +79,4 @@ start server `brew services start mysql`
 stop server `brew services stop mysql`
 connect to server `mysql -u root -p`
 prisma run the generator `npx prisma generate`
-create migration `prisma migrate dev --name init`
+create migration `npx prisma migrate dev --name init`
