@@ -1,0 +1,91 @@
+datasource db {
+    provider = "mysql"
+    url      = env("DATABASE_URL")
+}
+
+generator client {
+    provider = "prisma-client-js"
+}
+
+generator nestgraphql {
+    provider             = "node node_modules/prisma-nestjs-graphql"
+    output               = "../src/@generated"
+    combineScalarFilters = true
+    noAtomicOperations   = true
+}
+
+enum Skin {
+    PALE
+    WHITE
+    TANNED
+    BROWN
+    BLACK
+}
+
+enum Role {
+    USER
+    ADMIN
+}
+
+model Image {
+    id              Int            @id @default(autoincrement())
+    url             String
+    MissingPerson   MissingPerson? @relation(fields: [missingPersonId], references: [id])
+    missingPersonId Int?
+}
+
+model User {
+    id              Int               @id @default(autoincrement())
+    createdAt       DateTime          @default(now())
+    email           String            @unique
+    name            String
+    thumbnail       String
+    birthdate       DateTime
+    phone           String
+    role            Role              @default(USER)
+    verified        Boolean           @default(false)
+    verifiedAt      DateTime?
+    updatedAt       DateTime?         @updatedAt
+    password        String?
+    reports         MissingPerson[]
+    usersOnChatRoom UsersOnChatRoom[]
+    messages        Message[]
+}
+
+model MissingPerson {
+    id          Int     @id @default(autoincrement())
+    thumbnails  Image[]
+    name        String
+    age         Int
+    height      Float
+    skin        Skin
+    description String  @db.LongText
+    reporter    User    @relation(fields: [reporterId], references: [id])
+    reporterId  Int
+}
+
+model UsersOnChatRoom {
+    user       User     @relation(fields: [userId], references: [id])
+    userId     Int
+    chatRoom   ChatRoom @relation(fields: [chatRoomId], references: [id])
+    chatRoomId Int
+    createdAt  DateTime @default(now())
+
+    @@id([userId, chatRoomId])
+}
+
+model ChatRoom {
+    id              Int               @id @default(autoincrement())
+    messages        Message[]
+    usersOnChatRoom UsersOnChatRoom[]
+}
+
+model Message {
+    id         Int       @id @default(autoincrement())
+    message    String    @db.LongText
+    timeStamp  DateTime  @default(now())
+    author     User      @relation(fields: [authorId], references: [id])
+    authorId   Int
+    chatRoom   ChatRoom? @relation(fields: [chatRoomId], references: [id])
+    chatRoomId Int?
+}

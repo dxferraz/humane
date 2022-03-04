@@ -1,6 +1,0 @@
-generator client {
-    provider    = "graphql-schema-generator"
-    createCRUD  = "true"
-    // output = "./generated" This is default path.
-    customRules = "./rules.ts"
-}

@@ -1,56 +1,129 @@
-import { Resolver, Query, Args, Mutation } from '@nestjs/graphql';
+import { UserWhereUniqueInput } from '@generated/user/user-where-unique.input';
+import { UnauthorizedException, UseGuards, UseInterceptors } from '@nestjs/common';
 import {
-  IMutation,
-  IQuery,
-  User,
-  UserCreateInput,
-  UserPublic,
-  UserUpdateInput,
-} from 'src/graphql_types';
+    Args,
+    Context,
+    Info,
+    Mutation,
+    Parent,
+    Query,
+    ResolveField,
+    Resolver,
+} from '@nestjs/graphql';
+import { PrismaSelect } from '@paljs/plugins';
+import { Prisma } from '@prisma/client';
+import { CurrentUser } from 'app_modules/current-user-decorator';
+import {
+    GraphqlAuthGuard,
+    OptionalGraphqlAuthGuard,
+} from 'app_modules/nestjs-passport-graphql-auth-guard';
+import { GraphQLResolveInfo } from 'graphql';
+
+import { AuthService } from '../auth/auth.service';
+import { SessionService } from '../auth/session.service';
+import { GraphQLContext, PassportUserFields } from '../types';
+import { User } from './models/user.model';
+import { UserCreateInput } from './models/user-create.input';
+import { UserLoginInput } from './models/user-login.input';
+import { UserUpdateInput } from './models/user-update.input';
 import { UserService } from './user.service';
-import { Role } from '@prisma/client';
-import { UseGuards, UseInterceptors } from '@nestjs/common';
-import { GqlAuthGuard } from 'src/auth/guards/gql-auth.guard';
-import { CurrentUser } from 'src/auth/decorators/current-user.decorator';
 import { ResponseAddAccessTokenToHeaderInterceptor } from 'src/auth/interceptors/response-add-access-token-to-header.interceptor';
 
-@Resolver()
+/**
+ * Resolves user object type.
+ */
+@Resolver(() => User)
 @UseInterceptors(ResponseAddAccessTokenToHeaderInterceptor)
-export class UserResolver implements IQuery, IMutation {
-  constructor(private userService: UserService) {}
+export class UserResolver {
+    constructor(
+        private readonly userService: UserService,
+        private readonly authService: AuthService,
+        private readonly sessionService: SessionService,
+    ) {}
 
-  @Mutation()
-  async createUser(
-    @Args('user') user: UserCreateInput,
-  ): Promise<UserPublic> | null {
-    try {
-      return (await this.userService.createUser({
-        ...user,
-        createdAt: new Date(),
-        modifiedAt: new Date(),
-        birthdate: new Date(user.birthdate),
-        password: await this.userService.createHash(user.password),
-        role: Role.USER,
-      })) as UserPublic;
-    } catch (e) {
-      return e;
+    /**
+     * Query for self profile.
+     */
+    @Query(() => User)
+    @UseGuards(GraphqlAuthGuard)
+    async me(
+        @CurrentUser() user: PassportUserFields,
+        @Info() info: GraphQLResolveInfo,
+    ) {
+        const select = new PrismaSelect(info, {
+            defaultFields: {
+                User: { email: true },
+            },
+        }).value.select;
+        return this.userService.findUnique({ select, where: { email: user.email } });
     }
-  }
 
-  @Mutation()
-  updateUser(user: UserUpdateInput): UserPublic | Promise<UserPublic> {
-    throw new Error('Method not implemented.');
-  }
+    /**
+     * Query for single user.
+     */
+    @Query(() => User)
+    @UseGuards(OptionalGraphqlAuthGuard)
+    async user(
+        @Args('where') where: UserWhereUniqueInput,
+        @Info() info: GraphQLResolveInfo,
+    ) {
+        const select = new PrismaSelect(info, {
+            defaultFields: {
+                User: { userId: true },
+            },
+        }).value.select;
 
-  @Mutation()
-  deleteUser(id: number): UserPublic | Promise<UserPublic> {
-    throw new Error('Method not implemented.');
-  }
+        return this.userService.findUnique({
+            select,
+            where,
+            rejectOnNotFound: true,
+        });
+    }
 
-  @Query()
-  @UseGuards(GqlAuthGuard)
-  whoAmI(@CurrentUser() user): User | Promise<User> {
-    // Return the user who sent the request
-    return user;
-  }
+    @Mutation(() => User)
+    async createUser(
+        @Args('data') data: UserCreateInput,
+        @Context() context: GraphQLContext,
+    ) {
+        const user = await this.userService.create({
+            ...data,
+            //TODO: handle image upload
+            thumbnail: '',
+            birthdate: new Date(data.birthdate),
+            password: await this.userService.createHash(data.password),
+        });
+        ({ accessToken: context.token } = await this.authService.session(user));
+        return user;
+    }
+
+    @Mutation(() => User)
+    @UseGuards(GraphqlAuthGuard)
+    async updateUser(
+        @Args('data') data: UserUpdateInput,
+        @CurrentUser() user: PassportUserFields,
+    ) {
+        return this.userService.update(
+            { email: user.email },
+            data as Prisma.UserUpdateInput,
+        );
+    }
+
+    @Mutation(() => User)
+    async loginUser(
+        @Args('data') data: UserLoginInput,
+        @Context() context: GraphQLContext,
+    ) {
+        const user = await this.userService.findByCredentials(data);
+
+        if (!user) {
+            return new UnauthorizedException();
+        }
+        ({ accessToken: context.token } = await this.authService.session(user));
+        return user;
+    }
+
+    @ResolveField(() => String, { nullable: true })
+    async token(@Parent() _: User, @Context() context: GraphQLContext) {
+        return context.token;
+    }
 }

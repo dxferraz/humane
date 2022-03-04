@@ -1,54 +1,42 @@
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { User } from 'src/graphql_types';
-import { UserService } from 'src/user/user.service';
+import { randomBytes } from 'crypto';
 
+import { AppEnvironment } from '../app.environment';
+import { User } from '../user/models/user.model';
+import { SessionTokenFields } from './types';
+
+/**
+ * Authentication service.
+ */
 @Injectable()
 export class AuthService {
-  constructor(
-    private readonly userService: UserService,
-    private readonly jwtService: JwtService,
-  ) {}
+    constructor(
+        private readonly jwtService: JwtService,
+        private readonly appEnvironment: AppEnvironment,
+    ) {}
 
-  async validate(email: string, password: string) {
-    const user = await this.userService.getUserByEmail(email);
+    /**
+     * Returns accessToken.
+     */
+    async session(user: Pick<User, 'id' | 'email'>) {
+        const date = new Date();
 
-    if (!user) {
-      return null;
+        const payload: SessionTokenFields = {
+            sub: Number(user.id),
+            email: user.email,
+        };
+
+        const accessTokenExpiresIn = this.appEnvironment.accessTokenExpiresIn;
+        const refreshTokenExpiresIn = this.appEnvironment.refreshTokenExpiresIn;
+
+        return {
+            accessToken: await this.jwtService.signAsync(payload, {
+                expiresIn: accessTokenExpiresIn / 1000,
+            }),
+            refreshToken: randomBytes(Math.random() * 20 + 20).toString('hex'), // tslint:disable-line:insecure-random
+            accessTokenExpiresAt: date.getTime() + accessTokenExpiresIn,
+            refreshTokenExpiresAt: date.getTime() + refreshTokenExpiresIn,
+        };
     }
-
-    if (await this.userService.validateHash(password, user.password)) {
-      return user;
-    }
-  }
-
-  login(user: User): { access_token: string } {
-    const payload = {
-      email: user.email,
-      sub: user.id,
-    };
-
-    return {
-      access_token: this.jwtService.sign(payload),
-    };
-  }
-
-  async verify(token: string) {
-    const secret = process.env.JWT_SECRET;
-    const decoded = this.jwtService.verify(token, {
-      secret,
-    });
-
-    if (!decoded.email) {
-      throw new Error('Unable to verify the user provided.');
-    }
-
-    const user = await this.userService.getUserByEmail(decoded.email);
-
-    if (!user) {
-      throw new Error('Unable to find the user provided.');
-    }
-
-    return user;
-  }
 }

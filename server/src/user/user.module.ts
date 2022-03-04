@@ -1,22 +1,15 @@
 import { Module } from '@nestjs/common';
-import { UserService } from './user.service';
+import { PrismaModule } from 'app_modules/prisma';
+
+import { AuthModule } from '../auth/auth.module';
+import { UserRepository } from './user.repository';
 import { UserResolver } from './user.resolver';
-import { PrismaService } from 'db/prisma/service/prisma.service';
-import { PassportModule } from '@nestjs/passport';
-import { AuthService } from 'src/auth/auth.service';
-import { JwtModule } from '@nestjs/jwt';
+import { UserService } from './user.service';
+import { UserExistsValidator } from './validators/user-exists.validator';
 
 @Module({
-  imports: [
-    PassportModule.register({
-      defaultStrategy: 'jwt',
-    }),
-    JwtModule.register({
-      secret: process.env.JWT_SECRET,
-      // Token expires in 1h
-      signOptions: { expiresIn: 60 * 60 + 's' },
-    }),
-  ],
-  providers: [UserService, UserResolver, PrismaService, AuthService],
+    imports: [PrismaModule, AuthModule],
+    providers: [UserService, UserResolver, UserRepository, UserExistsValidator],
+    exports: [UserService],
 })
 export class UserModule {}

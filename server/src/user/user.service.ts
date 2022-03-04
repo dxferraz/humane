@@ -1,82 +1,62 @@
-import * as bcrypt from 'bcrypt';
-import {
-  ConflictException,
-  Injectable,
-  InternalServerErrorException,
-} from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
-import { PrismaService } from 'db/prisma/service/prisma.service';
-import { User } from 'src/graphql_types';
+import * as bcrypt from 'bcrypt';
+import { AuthService } from 'src/auth/auth.service';
 
+import { UserRepository } from './user.repository';
+
+/**
+ * Service to manage users.
+ */
 @Injectable()
 export class UserService {
-  constructor(private prisma: PrismaService) {}
+    findUnique = this.repository.findUnique;
+    findMany = this.repository.findMany;
 
-  async createUser(user: Prisma.UserCreateInput): Promise<User> {
-    try {
-      return await this.prisma.user.create({
-        data: { ...user },
-      });
-    } catch (e) {
-      switch (e.code) {
-        // Unique constraints error
-        case 'P2002':
-          throw new ConflictException(
-            'Email already being used!, please enter a different email.',
-          );
-        default:
-          throw new InternalServerErrorException();
-      }
+    constructor(private readonly repository: UserRepository) {}
+
+    async update(where: Prisma.UserWhereUniqueInput, data: Prisma.UserUpdateInput) {
+        return this.repository.update({ data, where });
     }
-  }
 
-  async updateUserByID(params: {
-    id: number;
-    data: Prisma.UserUpdateInput;
-  }): Promise<User> {
-    const { data, id } = params;
-    return this.prisma.user.update({
-      data: {
-        modifiedAt: new Date(),
-        ...data,
-      },
-      where: {
-        id,
-      },
-    });
-  }
+    async findByCredentials(data: { email: string; password: string }) {
+        let user = await this.repository.findUnique({
+            where: { email: data.email },
+        });
+        if (!user) {
+            return null;
+        }
 
-  async deleteUserByID(id: number): Promise<User> {
-    return this.prisma.user.delete({
-      where: {
-        id,
-      },
-    });
-  }
+        if (await this.validateHash(data.password, user.password!)) {
+            return user;
+        } else {
+            return null;
+        }
+    }
 
-  async getUserByEmail(email: string) {
-    return await this.prisma.user.findUnique({
-      where: {
-        email,
-      },
-    });
-  }
+    async findOneRandom() {
+        return this.repository.randomUser();
+    }
 
-  async getUserByID(id: number) {
-    return await this.prisma.user.findUnique({
-      where: {
-        id,
-      },
-    });
-  }
+    async create(data: Prisma.UserCreateInput) {
+        return this.repository.create({ data });
+    }
 
-  async createHash(password: string) {
-    const saltRounds = 10;
-    const salt = await bcrypt.genSalt(saltRounds);
-    return await bcrypt.hash(password, salt);
-  }
+    async reports(id: number) {
+        return await this.repository
+            .findUnique({
+                where: { id },
+            })
+            .reports();
+    }
 
-  async validateHash(password: string, hash: string) {
-    return await bcrypt.compare(password, hash);
-  }
+    async createHash(password: string) {
+        const saltRounds = 10;
+        const salt = await bcrypt.genSalt(saltRounds);
+        return await bcrypt.hash(password, salt);
+    }
+
+    async validateHash(password: string, hash: string) {
+        return await bcrypt.compare(password, hash);
+    }
 }
