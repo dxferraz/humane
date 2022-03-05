@@ -1,5 +1,10 @@
 import { UserWhereUniqueInput } from '@generated/user/user-where-unique.input';
-import { UnauthorizedException, UseGuards, UseInterceptors } from '@nestjs/common';
+import {
+    ForbiddenException,
+    UnauthorizedException,
+    UseGuards,
+    UseInterceptors,
+} from '@nestjs/common';
 import {
     Args,
     Context,
@@ -28,6 +33,7 @@ import { UserLoginInput } from './models/user-login.input';
 import { UserUpdateInput } from './models/user-update.input';
 import { UserService } from './user.service';
 import { ResponseAddAccessTokenToHeaderInterceptor } from 'src/auth/interceptors/response-add-access-token-to-header.interceptor';
+import { UpdateUserValidation } from 'app_modules/update-user-decorator';
 
 /**
  * Resolves user object type.
@@ -99,12 +105,14 @@ export class UserResolver {
     @Mutation(() => User)
     @UseGuards(GraphqlAuthGuard)
     async updateUser(
-        @Args('data') data: UserUpdateInput,
+        @Args('data') @UpdateUserValidation() data: UserUpdateInput,
         @CurrentUser() user: PassportUserFields,
     ) {
         return this.userService.update(
             { email: user.email },
-            data as Prisma.UserUpdateInput,
+            {
+                ...(data as Prisma.UserUpdateInput),
+            },
         );
     }
 

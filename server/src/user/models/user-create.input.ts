@@ -7,6 +7,7 @@ import {
     MinLength,
     Validate,
 } from 'class-validator';
+import { dateValidation, passwordValidation } from '../validators/regex';
 
 import { UserExistsValidator } from '../validators/user-exists.validator';
 
@@ -26,26 +27,15 @@ export class UserCreateInput {
     @Field(() => String, { nullable: false })
     name: string;
 
-    /*
-      Passwords will contain at least 6 characters
-      Passwords will contain at least 1 upper case letter
-      Passwords will contain at least 1 lower case letter
-      Passwords will contain at least 1 number or special character
-    */
     @IsNotEmpty()
-    @MinLength(6)
-    @MaxLength(30)
-    @Matches(/((?=.*\d)|(?=.*\W+))(?![\n.])(?=.*[A-Z])(?=.*[a-z]).*$/, {
-        message: "Password doesn't match the criteria required.",
+    @Matches(passwordValidation.pattern, {
+        message: passwordValidation.message,
     })
     @Field(() => String, { nullable: false })
     password: string;
 
-    /*
-      DD/MM/YYYY or DD-MM-YYYY
-    */
-    @Matches(/^(0?[1-9]|[12]\d|3[01])[/\-](0?[1-9]|1[0-2])[/\-]\d{4}$/, {
-        message: 'Birthday should follow the format DD-MM-YYYY',
+    @Matches(dateValidation.pattern, {
+        message: dateValidation.message,
     })
     @Field(() => String, { nullable: false })
     birthdate: string;
