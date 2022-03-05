@@ -1,23 +1,23 @@
 {
   "compilerOptions": {
     "module": "commonjs",
-    "declaration": true,
+    "target": "es2017",
+    "importHelpers": true,
+    "declaration": false,
     "removeComments": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "allowSyntheticDefaultImports": true,
-    "target": "es2017",
+    "esModuleInterop": true,
     "sourceMap": true,
-    "outDir": "./dist",
-    "baseUrl": "./",
-    "incremental": true,
     "skipLibCheck": true,
-    "strictNullChecks": false,
-    "noImplicitAny": false,
-    "strictBindCallApply": false,
-    "forceConsistentCasingInFileNames": false,
-    "noFallthroughCasesInSwitch": false,
-    "types": ["node"],
-    "typeRoots": [ "./node_modules/@types" ]
-  }
+    "strictNullChecks": true,
+    "incremental": true,
+    "outDir": "./dist",
+    "baseUrl": ".",
+    "paths": {
+      "@generated/*": ["src/@generated/*"],
+      "app_modules/*": ["src/app_modules/*"]
+    }
+  },
+  "include": ["src/**/*.ts", "test/**/*.ts", "@generated/*", "prisma/*.ts"]
 }
