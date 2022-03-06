@@ -1,27 +1,18 @@
 /* eslint-disable max-lines */
 import {
-    Body,
     Controller,
-    Delete,
     Get,
-    HttpCode,
     Param,
     Post,
     Put,
-    Query,
     Req,
-    Res,
     UseInterceptors,
 } from '@nestjs/common';
 import { AuthorizationToken } from 'app_modules/nestjs-authorization-token';
-import { Request, Response } from 'express';
+import { Request } from 'express';
 
 import { ApiService } from './api.service';
 import { GraphQLResponseInterceptor } from './graphql-response.interceptor';
-import { CreateArticleDto } from './models/create-article.dto';
-import { CreateArticleCommentDto } from './models/create-article-comment.dto';
-import { GetArticlesDto } from './models/get-articles.dto';
-import { TagListInterceptor } from './tag-list.interceptor';
 
 /**
  * This is REST API wrapper around graphql.

@@ -1,6 +1,6 @@
 import { userFields } from './user';
 
-export const commentFields = /* GraphQL */ `
+export const bio = /* GraphQL */ `
     fragment commentFields on Comment {
         id: commentId
         createdAt
