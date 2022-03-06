@@ -1,7 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart' hide Title;
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:flutter_recaptcha_v2/flutter_recaptcha_v2.dart';
 import 'package:humane/Components/shared_components/InputField.dart' as I;
 import 'package:humane/Services/service_locator.dart';
 import 'package:humane/icons.dart';
@@ -15,7 +14,6 @@ import 'package:humane/services/service_locator.dart';
 
 class SignIn extends HookWidget {
   final _formKey = GlobalKey<FormState>();
-  final RecaptchaV2Controller recaptchaV2Controller = RecaptchaV2Controller();
   final FocusNode _emailFocus = FocusNode();
   final FocusNode _passwordFocus = FocusNode();
   late String email;
@@ -68,8 +66,8 @@ class SignIn extends HookWidget {
                           ),
                         ),
                         Title(text: "Sign In"),
-                        Line(),
-                        Text(
+                        const Line(),
+                        const Text(
                           'Enter via social networks',
                           style: TextStyle(
                             color: Colors.black,
@@ -77,7 +75,7 @@ class SignIn extends HookWidget {
                           ),
                         ),
                         Container(
-                          padding: EdgeInsets.symmetric(vertical: 20),
+                          padding: const EdgeInsets.symmetric(vertical: 20),
                           child: Row(
                             children: <Widget>[
                               Container(
@@ -88,7 +86,7 @@ class SignIn extends HookWidget {
                               Container(
                                 width: 0.8,
                                 height: 40,
-                                margin: new EdgeInsets.symmetric(horizontal: 15.0),
+                                margin: const EdgeInsets.symmetric(horizontal: 15.0),
                                 decoration: BoxDecoration(
                                   border: Border.all(
                                     color: Colors.grey,
@@ -99,9 +97,9 @@ class SignIn extends HookWidget {
                               Container(
                                 width: 40,
                                 height: 40,
-                                decoration: new BoxDecoration(
+                                decoration: const BoxDecoration(
                                   color: Colors.white,
-                                  borderRadius: new BorderRadius.all(Radius.circular(5)),
+                                  borderRadius: BorderRadius.all(Radius.circular(5)),
                                   boxShadow: [
                                     BoxShadow(
                                       color: Colors.grey,
@@ -114,7 +112,7 @@ class SignIn extends HookWidget {
                                     )
                                   ],
                                 ),
-                                padding: EdgeInsets.all(5),
+                                padding: const EdgeInsets.all(5),
                                 child: SvgPicture.asset("assets/icons/google.svg", semanticsLabel: 'Google Logo'),
                               ),
                             ],
@@ -130,7 +128,7 @@ class SignIn extends HookWidget {
                             focusNode: _emailFocus,
                             nextFocusNode: _passwordFocus,
                             type: TextInputType.emailAddress,
-                            icon: Icon(HumaneIcons.mail)),
+                            icon: const Icon(HumaneIcons.mail)),
                         I.InputField(
                             onChanged: ([_password]) {
                               password = _password;
@@ -138,11 +136,11 @@ class SignIn extends HookWidget {
                             hint: "Password",
                             textInputAction: TextInputAction.done,
                             focusNode: _passwordFocus,
-                            icon: Icon(HumaneIcons.padlock),
+                            icon: const Icon(HumaneIcons.padlock),
                             hidden: true,
                             paddingBottom: 3),
                         Container(
-                          padding: EdgeInsets.only(bottom: 20),
+                          padding: const EdgeInsets.only(bottom: 20),
                           alignment: Alignment.centerRight,
                           child: GestureDetector(
                             onTap: () {
@@ -158,7 +156,7 @@ class SignIn extends HookWidget {
                           ),
                         ),
                         Container(
-                          padding: EdgeInsets.only(bottom: 20),
+                          padding: const EdgeInsets.only(bottom: 20),
                           child: Row(
                             children: <Widget>[
                               SizedBox(
@@ -171,8 +169,8 @@ class SignIn extends HookWidget {
                                     activeColor: Colors.white,
                                     value: recaptchaVerified.value,
                                     onChanged: (bool? value) {
+                                      //TODO: Implement Recaptcha
                                       if (recaptchaVerified.value == false) {
-                                        recaptchaV2Controller.show();
                                         recaptchaToggle.value = !recaptchaToggle.value;
                                       }
                                     },
@@ -180,7 +178,7 @@ class SignIn extends HookWidget {
                                 ),
                               ),
                               Container(
-                                padding: EdgeInsets.only(left: 10),
+                                padding: const EdgeInsets.only(left: 10),
                                 child: Text(
                                   'Verify your are not a robot',
                                   style: TextStyle(
@@ -199,7 +197,7 @@ class SignIn extends HookWidget {
                           },
                         ),
                         Container(
-                          padding: EdgeInsets.only(top: 20),
+                          padding: const EdgeInsets.only(top: 20),
                           child: Center(
                             child: Text.rich(
                               TextSpan(
@@ -207,7 +205,7 @@ class SignIn extends HookWidget {
                                 style: TextStyle(fontFamily: "Montserrat-medium", color: Theme.of(context).secondaryHeaderColor),
                                 children: <InlineSpan>[
                                   TextSpan(
-                                    recognizer: new TapGestureRecognizer()
+                                    recognizer: TapGestureRecognizer()
                                       ..onTap = () {
                                         Navigator.of(context).pushNamed('signUp');
                                       },
@@ -224,20 +222,6 @@ class SignIn extends HookWidget {
                   ),
                 ),
               ),
-              RecaptchaV2(
-                  apiKey: "6Lfnid8UAAAAAM0xIV4PhsdZuW7jJpEsTPjNLaqF",
-                  apiSecret: "6Lfnid8UAAAAAMx9K_m8WUxHkmjjszW8j90m_aUO",
-                  controller: recaptchaV2Controller,
-                  onVerifiedError: (err) {
-                    print(err);
-                  },
-                  onVerifiedSuccessfully: (success) {
-                    if (success) {
-                      recaptchaVerified.value = true;
-                    } else {
-                      recaptchaVerified.value = false;
-                    }
-                  }),
             ],
           ),
         ),

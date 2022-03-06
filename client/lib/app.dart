@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:humane/config.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:humane/routes.dart';
 
 class MyApp extends StatelessWidget {
@@ -11,14 +11,14 @@ class MyApp extends StatelessWidget {
     }
 
     // Colors
-    Color primaryColor = const Color(0xFFFF2E63);
-    Color secondaryHeaderColor = const Color(0xFF010A43);
+    Color primaryColor = const Color(0xFFf16622);
+    Color secondaryHeaderColor = const Color(0xFF34658a);
 
     return MaterialApp(
-      title: appName,
+      title: dotenv.env['APP_NAME']!,
       debugShowCheckedModeBanner: false,
       theme: ThemeData(primaryColor: primaryColor, secondaryHeaderColor: secondaryHeaderColor, fontFamily: "Montserrat-regular"),
-      initialRoute: 'splashscreen',
+      initialRoute: 'onBoarding',
       routes: routes,
     );
   }

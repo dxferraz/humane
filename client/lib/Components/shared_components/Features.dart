@@ -14,14 +14,6 @@ class Features extends StatelessWidget {
 
   Widget renderIcon(BuildContext context, Feature feature) {
     switch (feature.name) {
-      case "climate_control":
-        {
-          return Icon(
-            HumaneIcons.temperature,
-            size: iconSize,
-            color: Theme.of(context).primaryColor,
-          );
-        }
       case "individual_alarm":
         {
           return Icon(
@@ -30,22 +22,7 @@ class Features extends StatelessWidget {
             color: Theme.of(context).primaryColor,
           );
         }
-      case "hours_24":
-        {
-          return Icon(
-            HumaneIcons.open_24_hours,
-            size: iconSize,
-            color: Theme.of(context).primaryColor,
-          );
-        }
-      case "drive_up_unit":
-        {
-          return Icon(
-            HumaneIcons.capacity,
-            size: iconSize,
-            color: Theme.of(context).primaryColor,
-          );
-        }
+
       case "eletronic_gate_access":
         {
           return Icon(

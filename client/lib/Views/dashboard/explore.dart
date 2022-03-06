@@ -71,10 +71,11 @@ class Explore extends HookWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
-                          Container(
-                            margin: EdgeInsets.only(right: 10),
-                            child: SvgPicture.asset("assets/images/logo.svg", width: 80, semanticsLabel: 'Illustration'),
-                          ),
+                          // TODO: add new logo
+                          // Container(
+                          //   margin: EdgeInsets.only(right: 10),
+                          //   child: SvgPicture.asset("assets/images/logo.svg", width: 80, semanticsLabel: 'Illustration'),
+                          // ),
                           SearchBar(),
                         ],
                       ),

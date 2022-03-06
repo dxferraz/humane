@@ -28,7 +28,7 @@ class IntroPage extends StatelessWidget {
                 size: 20,
                 align: TextAlign.center,
               ),
-              Line(),
+              const Line(),
               subtitle != ""
                   ? Container(
                       padding: const EdgeInsets.symmetric(vertical: 20),

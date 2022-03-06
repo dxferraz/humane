@@ -22,6 +22,24 @@ enum Skin {
     BLACK
 }
 
+enum HairColor {
+    BALCK
+    BROWN
+    RED
+    BLOND
+    GRAY
+    WHITE
+    OTHER
+}
+
+enum EyeColor {
+    GREEN
+    HAZEL
+    BLUE
+    BROWN
+    GREYOROTHER
+}
+
 enum Role {
     USER
     ADMIN
@@ -32,36 +50,48 @@ model Image {
     url             String
     MissingPerson   MissingPerson? @relation(fields: [missingPersonId], references: [id])
     missingPersonId Int?
+    Donation        Donation?      @relation(fields: [donationId], references: [id])
+    donationId      Int?
+    Necessity       Necessity?     @relation(fields: [necessityId], references: [id])
+    necessityId     Int?
 }
 
 model User {
-    id              Int               @id @default(autoincrement())
-    createdAt       DateTime          @default(now())
-    email           String            @unique
-    name            String
-    thumbnail       String
-    birthdate       DateTime
-    phone           String
-    role            Role              @default(USER)
-    verified        Boolean           @default(false)
-    verifiedAt      DateTime?
-    updatedAt       DateTime?         @updatedAt
-    password        String?
-    reports         MissingPerson[]
-    usersOnChatRoom UsersOnChatRoom[]
-    messages        Message[]
+    id                Int               @id @default(autoincrement())
+    createdAt         DateTime          @default(now())
+    email             String            @unique
+    name              String
+    thumbnail         String
+    birthdate         DateTime
+    phone             String
+    role              Role              @default(USER)
+    emailVerified     Boolean           @default(false)
+    emailVerifiedAt   DateTime?
+    profileVerified   Boolean           @default(false)
+    profileVerifiedAt DateTime?
+    updatedAt         DateTime?         @updatedAt
+    password          String?
+    reports           MissingPerson[]
+    usersOnChatRoom   UsersOnChatRoom[]
+    messages          Message[]
+    donations         Donation[]
+    necessities       Necessity[]
 }
 
 model MissingPerson {
-    id          Int     @id @default(autoincrement())
-    thumbnails  Image[]
-    name        String
-    age         Int
-    height      Float
-    skin        Skin
-    description String  @db.LongText
-    reporter    User    @relation(fields: [reporterId], references: [id])
-    reporterId  Int
+    id               Int       @id @default(autoincrement())
+    thumbnails       Image[]
+    name             String
+    age              Int?
+    height           Float?
+    skin             Skin?
+    description      String?   @db.LongText
+    reporter         User      @relation(fields: [reporterId], references: [id])
+    reporterId       Int
+    disappearanceDay DateTime?
+    eyeColor         EyeColor
+    hairColor        HairColor
+
 }
 
 model UsersOnChatRoom {
@@ -81,11 +111,46 @@ model ChatRoom {
 }
 
 model Message {
-    id         Int       @id @default(autoincrement())
-    message    String    @db.LongText
-    timeStamp  DateTime  @default(now())
-    author     User      @relation(fields: [authorId], references: [id])
+    id         Int      @id @default(autoincrement())
+    message    String   @db.LongText
+    timeStamp  DateTime @default(now())
+    author     User     @relation(fields: [authorId], references: [id])
     authorId   Int
-    chatRoom   ChatRoom? @relation(fields: [chatRoomId], references: [id])
-    chatRoomId Int?
+    chatRoom   ChatRoom @relation(fields: [chatRoomId], references: [id])
+    chatRoomId Int
+}
+
+model Category {
+    id        Int         @id @default(autoincrement())
+    title     String
+    Donation  Donation[]
+    Necessity Necessity[]
+}
+
+model Donation {
+    id          Int      @id @default(autoincrement())
+    thumbnails  Image[]
+    title       String
+    description String
+    timeStamp   DateTime @default(now())
+    category    Category @relation(fields: [categoryId], references: [id])
+    categoryId  Int
+    address     String
+    zipCode     String
+    User        User     @relation(fields: [userId], references: [id])
+    userId      Int
+}
+
+model Necessity {
+    id          Int      @id @default(autoincrement())
+    thumbnails  Image[]
+    title       String
+    description String
+    timeStamp   DateTime @default(now())
+    category    Category @relation(fields: [categoryId], references: [id])
+    categoryId  Int
+    address     String
+    zipCode     String
+    User        User     @relation(fields: [userId], references: [id])
+    userId      Int
 }

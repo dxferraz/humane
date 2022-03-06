@@ -32,11 +32,7 @@ class StoragesChipOptionsState extends State<StoragesChipOptions> {
                   child: ChoiceChip(
                     avatar: Container(
                       child: Icon(
-                        i == 0
-                            ? HumaneIcons.male
-                            : i == 1
-                                ? HumaneIcons.mother
-                                : HumaneIcons.shop,
+                        HumaneIcons.male,
                         size: 17,
                         color: sizePreference == option ? Colors.white : Colors.black,
                       ),

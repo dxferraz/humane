@@ -1,8 +1,8 @@
 import 'dart:io';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:humane/features/lists_storages/domain/entities/Storage.dart';
 import 'package:humane/Utils/AppExceptions.dart';
 import 'package:humane/Utils/response.dart';
-import 'package:humane/config.dart';
 import 'package:http/http.dart';
 import 'package:rxdart/rxdart.dart';
 
@@ -13,9 +13,10 @@ class SearchService {
   Stream<List<Storage>> all(int page) async* {
     List<Storage> storages = [];
     try {
-      print("Access: " + endpoint + "/storage/all?page=$page");
+      print("Access: " + dotenv.env['API_URL']! + "/storage/all?page=$page");
+      Uri uri = Uri(path: dotenv.env['API_URL']! + "/storage/all?page=$page");
       Map<String, dynamic> map = HandleResponse.returnResponse(await get(
-        endpoint + "/storage/all?page=$page",
+        uri,
         headers: <String, String>{
           'Accept': 'application/json',
         },

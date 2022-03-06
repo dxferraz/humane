@@ -1,23 +1,16 @@
 import 'package:flutter/material.dart' hide Title;
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:flutter_recaptcha_v2/flutter_recaptcha_v2.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:humane/Components/shared_components/InputField.dart';
 import 'package:humane/Components/shared_components/Line.dart';
 import 'package:humane/Components/shared_components/TextLine.dart';
-
 import 'package:humane/Components/shared_components/Title.dart';
 import 'package:humane/Components/shared_components/Button.dart';
-import 'package:humane/Services/auth_service.dart';
-import 'package:humane/Services/service_locator.dart';
-import 'package:humane/Utils/useRecaptchaController.dart';
-import 'package:humane/features/authentication/domain/entities/User.dart';
 import 'package:humane/icons.dart';
 import 'package:humane/utils/regex.dart';
 
 class SignUp extends HookWidget {
   final _formKey = GlobalKey<FormState>();
-  late RecaptchaV2Controller recaptchaV2Controller;
   final FocusNode _nameFocus = FocusNode();
   final FocusNode _emailFocus = FocusNode();
   final FocusNode _passwordFocus = FocusNode();
@@ -46,7 +39,7 @@ class SignUp extends HookWidget {
   Widget build(BuildContext context) {
     ValueNotifier<bool> recaptchaVerified = useState(false);
     ValueNotifier<bool> recaptchaToggle = useState(false);
-    recaptchaV2Controller = useRecaptchaV2ControllerController();
+
     return Scaffold(
       body: Container(
         child: SingleChildScrollView(
@@ -111,9 +104,9 @@ class SignUp extends HookWidget {
                               Container(
                                 width: 40,
                                 height: 40,
-                                decoration: new BoxDecoration(
+                                decoration: const BoxDecoration(
                                   color: Colors.white,
-                                  borderRadius: new BorderRadius.all(Radius.circular(5)),
+                                  borderRadius: const BorderRadius.all(Radius.circular(5)),
                                   boxShadow: [
                                     BoxShadow(
                                       color: Colors.grey,
@@ -126,7 +119,7 @@ class SignUp extends HookWidget {
                                     )
                                   ],
                                 ),
-                                padding: EdgeInsets.all(5),
+                                padding: const EdgeInsets.all(5),
                                 child: SvgPicture.asset("assets/icons/google.svg", semanticsLabel: 'Google Logo'),
                               ),
                             ],
@@ -192,9 +185,11 @@ class SignUp extends HookWidget {
                                     activeColor: Colors.white,
                                     checkColor: Theme.of(context).primaryColor,
                                     value: recaptchaVerified.value,
-                                    onChanged: (bool? value) {
-                                      // recaptchaV2Controller.show();
-                                      // recaptchaToggle.value = !recaptchaToggle.value;
+                                    onChanged: (bool? value) async {
+                                      //TODO: Implement Recaptcha
+                                      if (recaptchaVerified.value == false) {
+                                        recaptchaToggle.value = !recaptchaToggle.value;
+                                      }
                                     },
                                   ),
                                 ),
@@ -221,23 +216,6 @@ class SignUp extends HookWidget {
                   ),
                 ),
               ),
-              RecaptchaV2(
-                apiKey: "6Lfnid8UAAAAAM0xIV4PhsdZuW7jJpEsTPjNLaqF",
-                apiSecret: "6Lfnid8UAAAAAMx9K_m8WUxHkmjjszW8j90m_aUO",
-                controller: recaptchaV2Controller,
-                onVerifiedError: (err) {
-                  print(err);
-                },
-                onVerifiedSuccessfully: (success) {
-                  // print(recaptchaV2Controller.token);
-                  if (success) {
-                    recaptchaVerified.value = true;
-                  } else {
-                    recaptchaVerified.value = false;
-                    print("Failed to verify.");
-                  }
-                },
-              )
             ],
           ),
         ),

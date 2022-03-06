@@ -31,9 +31,11 @@ class Home extends HookWidget {
       controller: _navigationController,
       barHeight: bottomNavBarHeight,
       barBackgroundColor: Colors.white,
-      animationDuration: Duration(milliseconds: 300),
-      selectedCallback: (int index) {
-        model.setSelectedPosition(index);
+      animationDuration: const Duration(milliseconds: 300),
+      selectedCallback: (int? index) {
+        if (index != null) {
+          model.setSelectedPosition(index);
+        }
       },
     );
   }
