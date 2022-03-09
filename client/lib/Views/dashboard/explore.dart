@@ -6,8 +6,6 @@ import 'package:humane/Components/shared_components/FilterButton.dart';
 import 'package:humane/Components/shared_components/card.dart';
 import 'package:humane/Components/shared_components/searchBar.dart';
 import 'package:humane/features/lists_storages/domain/entities/Storage.dart';
-import 'package:humane/Services/search_service.dart';
-import 'package:humane/services/service_locator.dart';
 
 class Explore extends HookWidget {
   int page = 1;
@@ -17,15 +15,15 @@ class Explore extends HookWidget {
 
   Future<void> getStorages({bool reset = false}) async {
     isLoading.value = true;
-    return getIt<SearchService>().all(page).listen((data) {
-      if (reset) {
-        storages.value = data;
-        isLoading.value = false;
-        return;
-      }
-      storages.value = storages.value + data;
-      isLoading.value = false;
-    }).asFuture();
+    // return getIt<SearchService>().all(page).listen((data) {
+    //   if (reset) {
+    //     storages.value = data;
+    //     isLoading.value = false;
+    //     return;
+    //   }
+    //   storages.value = storages.value + data;
+    //   isLoading.value = false;
+    // }).asFuture();
   }
 
   Future<void> refetchStorages() async {

@@ -7,7 +7,7 @@ import { capitalizeFirstLetter } from '../../utils';
     Passwords will contain at least 1 special character;
  */
 export const passwordValidation = {
-    pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,20}$/,
+    pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$#!%*?&]{6,20}$/,
     message: `
     Passwords must have at least 6 and maximum 20 characters;
     Passwords will contain at least 1 upper case letter;

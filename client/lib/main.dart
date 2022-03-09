@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:humane/Services/service_locator.dart';
+import 'package:humane/core/injection/injection.dart';
 import 'app.dart';
 
 Future<void> main() async {
@@ -9,5 +9,5 @@ Future<void> main() async {
   await dotenv.load(fileName: '.env.dev');
 
   setup();
-  runApp(MyApp());
+  runApp(HumaneApp());
 }

@@ -9,7 +9,6 @@ import 'package:humane/Views/dashboard/explore.dart';
 import 'package:humane/Views/dashboard/myStorages.dart';
 import 'package:humane/Views/dashboard/profile.dart';
 import 'package:humane/icons.dart';
-import 'package:humane/services/service_locator.dart';
 import 'package:scoped_model/scoped_model.dart';
 
 class Home extends HookWidget {
@@ -44,26 +43,26 @@ class Home extends HookWidget {
   Widget build(BuildContext context) {
     _navigationController = useCircularBottomNavigationController(selectedPos);
     return ScopedModel<HomeModel>(
-        model: getIt<HomeModel>(),
+        // model: getIt<HomeModel>(),
         child: Scaffold(
-          body: ScopedModelDescendant<HomeModel>(
-            builder: (context, child, model) => Stack(
-              children: <Widget>[
-                Positioned(
-                  top: 0,
-                  right: 0,
-                  child: Container(
-                    child: SvgPicture.asset("assets/icons/detailTop.svg", width: 220, semanticsLabel: 'Illustration'),
-                  ),
-                ),
-                IndexedStack(
-                  index: model.selectedPosition,
-                  children: screens,
-                ),
-                Align(alignment: Alignment.bottomCenter, child: bottomNav(model))
-              ],
+      body: ScopedModelDescendant<HomeModel>(
+        builder: (context, child, model) => Stack(
+          children: <Widget>[
+            Positioned(
+              top: 0,
+              right: 0,
+              child: Container(
+                child: SvgPicture.asset("assets/icons/detailTop.svg", width: 220, semanticsLabel: 'Illustration'),
+              ),
             ),
-          ),
-        ));
+            IndexedStack(
+              index: model.selectedPosition,
+              children: screens,
+            ),
+            Align(alignment: Alignment.bottomCenter, child: bottomNav(model))
+          ],
+        ),
+      ),
+    ));
   }
 }

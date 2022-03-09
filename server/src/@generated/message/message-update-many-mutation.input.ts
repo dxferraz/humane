@@ -1,10 +1,12 @@
-import { Field, InputType } from '@nestjs/graphql';
+import { Field } from '@nestjs/graphql';
+import { InputType } from '@nestjs/graphql';
 
 @InputType()
 export class MessageUpdateManyMutationInput {
-    @Field(() => String, { nullable: true })
+
+    @Field(() => String, {nullable:true})
     message?: string;
 
-    @Field(() => Date, { nullable: true })
+    @Field(() => Date, {nullable:true})
     timeStamp?: Date | string;
 }

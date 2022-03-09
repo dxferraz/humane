@@ -1,19 +1,20 @@
-import { Field, InputType } from '@nestjs/graphql';
-
-import { ChatRoomUpdateOneWithoutMessagesInput } from '../chat-room/chat-room-update-one-without-messages.input';
+import { Field } from '@nestjs/graphql';
+import { InputType } from '@nestjs/graphql';
 import { UserUpdateOneRequiredWithoutMessagesInput } from '../user/user-update-one-required-without-messages.input';
+import { ChatRoomUpdateOneRequiredWithoutMessagesInput } from '../chat-room/chat-room-update-one-required-without-messages.input';
 
 @InputType()
 export class MessageUpdateInput {
-    @Field(() => String, { nullable: true })
+
+    @Field(() => String, {nullable:true})
     message?: string;
 
-    @Field(() => Date, { nullable: true })
+    @Field(() => Date, {nullable:true})
     timeStamp?: Date | string;
 
-    @Field(() => UserUpdateOneRequiredWithoutMessagesInput, { nullable: true })
+    @Field(() => UserUpdateOneRequiredWithoutMessagesInput, {nullable:true})
     author?: UserUpdateOneRequiredWithoutMessagesInput;
 
-    @Field(() => ChatRoomUpdateOneWithoutMessagesInput, { nullable: true })
-    chatRoom?: ChatRoomUpdateOneWithoutMessagesInput;
+    @Field(() => ChatRoomUpdateOneRequiredWithoutMessagesInput, {nullable:true})
+    chatRoom?: ChatRoomUpdateOneRequiredWithoutMessagesInput;
 }

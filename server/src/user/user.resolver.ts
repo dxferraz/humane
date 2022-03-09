@@ -93,9 +93,6 @@ export class UserResolver {
     ) {
         const user = await this.userService.create({
             ...data,
-            //TODO: handle image upload
-            thumbnail: '',
-            birthdate: new Date(data.birthdate),
             password: await this.userService.createHash(data.password),
         });
         ({ accessToken: context.token } = await this.authService.session(user));

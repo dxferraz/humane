@@ -1,10 +1,18 @@
-import { Field, InputType } from '@nestjs/graphql';
+import { Field } from '@nestjs/graphql';
+import { InputType } from '@nestjs/graphql';
 
 @InputType()
 export class ImageAvgAggregateInput {
-    @Field(() => Boolean, { nullable: true })
+
+    @Field(() => Boolean, {nullable:true})
     id?: true;
 
-    @Field(() => Boolean, { nullable: true })
+    @Field(() => Boolean, {nullable:true})
     missingPersonId?: true;
+
+    @Field(() => Boolean, {nullable:true})
+    donationId?: true;
+
+    @Field(() => Boolean, {nullable:true})
+    necessityId?: true;
 }
