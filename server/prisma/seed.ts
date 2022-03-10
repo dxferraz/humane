@@ -1,5 +1,5 @@
 import 'dotenv-flow/config';
-import { PrismaClient, Skin } from '@prisma/client';
+import { EyeColor, HairColor, PrismaClient, Skin } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
@@ -9,6 +9,7 @@ async function main() {
 
     await prisma.image.deleteMany({});
     await prisma.missingPerson.deleteMany({});
+    await prisma.usersOnChatRoom.deleteMany({});
     await prisma.chatRoom.deleteMany({});
     await prisma.message.deleteMany({});
     await prisma.user.deleteMany({});
@@ -57,6 +58,8 @@ async function main() {
                         age: 12,
                         height: 43,
                         skin: Skin.BLACK,
+                        eyeColor: EyeColor.BLUE,
+                        hairColor: HairColor.BALCK,
                         description:
                             'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam tincidunt sapien nec condimentum commodo. Curabitur varius nisi vel metus faucibus, in viverra erat condimentum. Cras non nisi molestie, elementum libero lobortis, ultricies nisi. Mauris nulla turpis, rhoncus sollicitudin scelerisque nec, varius nec erat. Maecenas a nulla libero. Aliquam id libero tellus. Etiam accumsan justo ac ligula hendrerit, eget lobortis lorem commodo. Nullam mollis ullamcorper dui sed efficitur. Mauris sem sapien, consectetur sit amet velit a, varius condimentum sapien.',
                     },
@@ -75,6 +78,8 @@ async function main() {
                         age: 43,
                         height: 89,
                         skin: Skin.WHITE,
+                        eyeColor: EyeColor.BLUE,
+                        hairColor: HairColor.BALCK,
                         description:
                             'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam tincidunt sapien nec condimentum commodo. Curabitur varius nisi vel metus faucibus, in viverra erat condimentum. Cras non nisi molestie, elementum libero lobortis, ultricies nisi. Mauris nulla turpis, rhoncus sollicitudin scelerisque nec, varius nec erat. Maecenas a nulla libero. Aliquam id libero tellus. Etiam accumsan justo ac ligula hendrerit, eget lobortis lorem commodo. Nullam mollis ullamcorper dui sed efficitur. Mauris sem sapien, consectetur sit amet velit a, varius condimentum sapien.',
                     },

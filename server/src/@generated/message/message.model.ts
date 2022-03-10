@@ -1,28 +1,31 @@
-import { Field, ID, Int, ObjectType } from '@nestjs/graphql';
-
-import { ChatRoom } from '../chat-room/chat-room.model';
+import { Field } from '@nestjs/graphql';
+import { ObjectType } from '@nestjs/graphql';
+import { ID } from '@nestjs/graphql';
 import { User } from '../user/user.model';
+import { Int } from '@nestjs/graphql';
+import { ChatRoom } from '../chat-room/chat-room.model';
 
 @ObjectType()
 export class Message {
-    @Field(() => ID, { nullable: false })
+
+    @Field(() => ID, {nullable:false})
     id!: number;
 
-    @Field(() => String, { nullable: false })
+    @Field(() => String, {nullable:false})
     message!: string;
 
-    @Field(() => Date, { nullable: false })
+    @Field(() => Date, {nullable:false})
     timeStamp!: Date;
 
-    @Field(() => User, { nullable: false })
+    @Field(() => User, {nullable:false})
     author?: User;
 
-    @Field(() => Int, { nullable: false })
+    @Field(() => Int, {nullable:false})
     authorId!: number;
 
-    @Field(() => ChatRoom, { nullable: true })
-    chatRoom?: ChatRoom | null;
+    @Field(() => ChatRoom, {nullable:false})
+    chatRoom?: ChatRoom;
 
-    @Field(() => Int, { nullable: true })
-    chatRoomId!: number | null;
+    @Field(() => Int, {nullable:false})
+    chatRoomId!: number;
 }

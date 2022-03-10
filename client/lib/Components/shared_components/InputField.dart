@@ -50,30 +50,36 @@ class InputFieldState extends State<InputField> {
   @override
   Widget build(BuildContext context) {
     return Container(
-        padding: EdgeInsets.only(bottom: widget.paddingBottom),
-        child: TextFormField(
-          onFieldSubmitted: (value) {
+      padding: EdgeInsets.only(bottom: widget.paddingBottom),
+      child: TextFormField(
+        onFieldSubmitted: (value) {
+          if (widget.focusNode != null && widget.nextFocusNode != null) {
             _fieldFocusChange(context, widget.focusNode!, widget.nextFocusNode!);
-          },
-          focusNode: widget.focusNode,
-          textInputAction: widget.textInputAction,
-          // onChanged: widget.onChanged,
-          obscureText: hidden,
-          keyboardType: widget.type,
-          style: TextStyle(fontSize: 20.0, color: Colors.black, fontFamily: "Montserrat-light"),
-          decoration: InputDecoration(
-            prefixIcon: Container(width: 0, alignment: Alignment(-1, -0.8), padding: EdgeInsets.only(top: 9, right: 0), child: widget.icon),
-            suffixIcon: widget.hidden == true
-                ? Container(
-                    width: 0,
-                    alignment: Alignment(-1, -0.8),
-                    padding: EdgeInsets.only(top: 9, right: 0),
-                    child: GestureDetector(onTap: this.viewPassword, child: Icon(hidden ? HumaneIcons.eye : HumaneIcons.hide)))
-                : null,
-            contentPadding: const EdgeInsets.only(left: 14.0, bottom: 8.0, top: 8.0),
-            hintText: widget.hint,
-          ),
-          // validator: widget.validator),
-        ));
+          }
+        },
+        focusNode: widget.focusNode,
+        textInputAction: widget.textInputAction,
+        // onChanged: widget.onChanged,
+        obscureText: hidden,
+        keyboardType: widget.type,
+        style: TextStyle(fontSize: 20.0, color: Theme.of(context).secondaryHeaderColor, fontFamily: "Montserrat-light"),
+
+        decoration: InputDecoration(
+          focusColor: Colors.amberAccent,
+          prefixIcon: Container(
+              width: 0, alignment: const Alignment(-1, -0.8), padding: const EdgeInsets.only(top: 9, right: 0), child: widget.icon),
+          suffixIcon: widget.hidden == true
+              ? Container(
+                  width: 0,
+                  alignment: const Alignment(-1, -0.8),
+                  padding: const EdgeInsets.only(top: 9, right: 0),
+                  child: GestureDetector(onTap: viewPassword, child: Icon(hidden ? HumaneIcons.eye : HumaneIcons.hide)))
+              : null,
+          contentPadding: const EdgeInsets.only(left: 14.0, bottom: 8.0, top: 8.0),
+          hintText: widget.hint,
+        ),
+        // validator: widget.validator),
+      ),
+    );
   }
 }

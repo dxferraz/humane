@@ -1,7 +1,10 @@
-import { Field, Float, ObjectType } from '@nestjs/graphql';
+import { Field } from '@nestjs/graphql';
+import { ObjectType } from '@nestjs/graphql';
+import { Float } from '@nestjs/graphql';
 
 @ObjectType()
 export class ChatRoomAvgAggregate {
-    @Field(() => Float, { nullable: true })
+
+    @Field(() => Float, {nullable:true})
     id?: number;
 }

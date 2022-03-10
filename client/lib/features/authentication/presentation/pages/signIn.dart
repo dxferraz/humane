@@ -2,15 +2,12 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart' hide Title;
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:humane/Components/shared_components/InputField.dart' as I;
-import 'package:humane/Services/service_locator.dart';
 import 'package:humane/icons.dart';
-import 'package:humane/libraries/recaptcha.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:humane/Components/shared_components/Line.dart';
 import 'package:humane/Components/shared_components/TextLine.dart';
 import 'package:humane/Components/shared_components/Title.dart';
 import 'package:humane/Components/shared_components/Button.dart';
-import 'package:humane/services/service_locator.dart';
 
 class SignIn extends HookWidget {
   final _formKey = GlobalKey<FormState>();
@@ -18,16 +15,6 @@ class SignIn extends HookWidget {
   final FocusNode _passwordFocus = FocusNode();
   late String email;
   late String password;
-
-  handleSignIn(BuildContext context) {
-    // if (_formKey.currentState.validate()) {
-    // getIt<AuthService>()
-    //     .login(email: email, password: password)
-    //     .listen((event) {
-    //   Navigator.of(context).pushReplacementNamed('search');
-    // });
-    // }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -192,9 +179,7 @@ class SignIn extends HookWidget {
                         ),
                         Button(
                           text: 'Sign In',
-                          onPress: () {
-                            handleSignIn(context);
-                          },
+                          onPress: () {},
                         ),
                         Container(
                           padding: const EdgeInsets.only(top: 20),

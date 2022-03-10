@@ -1,13 +1,16 @@
-import 'package:flutter/material.dart' hide Title;
-import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:humane/Components/shared_components/InputField.dart';
 import 'package:humane/Components/shared_components/Line.dart';
 import 'package:humane/Components/shared_components/TextLine.dart';
 import 'package:humane/Components/shared_components/Title.dart';
 import 'package:humane/Components/shared_components/Button.dart';
+import 'package:humane/core/injection/injection.dart';
+import 'package:humane/features/authentication/presentation/bloc/sign_user_bloc.dart';
 import 'package:humane/icons.dart';
 import 'package:humane/utils/regex.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter/material.dart' hide Title;
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:flutter_svg/svg.dart';
 
 class SignUp extends HookWidget {
   final _formKey = GlobalKey<FormState>();
@@ -20,43 +23,30 @@ class SignUp extends HookWidget {
   late String password;
   late String confirmPassword;
 
-  handleSignUp() {
-    // if (_formKey.currentState!.validate() && recaptchaV2Controller.token != null) {
-    // getIt<AuthService>()
-    //     .register(
-    //         name: name,
-    //         email: email,
-    //         password: password,
-    //         passwordConfirmation: confirmPassword,
-    //         recaptcha: recaptchaV2Controller.token)
-    //     .listen((User user) {
-    //   print(user.name);
-    // });
-    // }
-  }
-
   @override
   Widget build(BuildContext context) {
-    ValueNotifier<bool> recaptchaVerified = useState(false);
     ValueNotifier<bool> recaptchaToggle = useState(false);
 
-    return Scaffold(
-      body: Container(
-        child: SingleChildScrollView(
+    return BlocProvider<SignUserBloc>(
+      create: (BuildContext context) => getIt<SignUserBloc>(),
+      child: Scaffold(
+        body: SingleChildScrollView(
           child: Stack(
             children: <Widget>[
               Positioned(
                 top: 0,
                 right: 0,
-                child: Container(
-                  child: SvgPicture.asset("assets/icons/signup.svg", width: 220, semanticsLabel: 'Illustration'),
+                child: Image.asset(
+                  "assets/icons/signup.png",
+                  height: 220,
+                  fit: BoxFit.scaleDown,
                 ),
               ),
               SafeArea(
                 child: Container(
                   alignment: Alignment.center,
                   height: MediaQuery.of(context).size.height,
-                  padding: EdgeInsets.only(left: 30, right: 30),
+                  padding: const EdgeInsets.only(left: 30, right: 30),
                   child: Form(
                     key: _formKey,
                     child: Column(
@@ -68,13 +58,13 @@ class SignUp extends HookWidget {
                             Navigator.pop(context);
                           },
                           child: Container(
-                            padding: EdgeInsets.only(bottom: 5),
+                            padding: const EdgeInsets.only(bottom: 5),
                             child: Icon(HumaneIcons.back, color: Theme.of(context).primaryColor),
                           ),
                         ),
                         Title(text: "Sign Up"),
-                        Line(),
-                        Text(
+                        const Line(),
+                        const Text(
                           'Register here',
                           style: TextStyle(
                             color: Colors.black,
@@ -82,10 +72,10 @@ class SignUp extends HookWidget {
                           ),
                         ),
                         Container(
-                          padding: EdgeInsets.symmetric(vertical: 20),
+                          padding: const EdgeInsets.symmetric(vertical: 20),
                           child: Row(
                             children: <Widget>[
-                              Container(
+                              SizedBox(
                                 width: 40,
                                 height: 40,
                                 child: SvgPicture.asset("assets/icons/facebook.svg", semanticsLabel: 'Facebook Logo'),
@@ -93,7 +83,7 @@ class SignUp extends HookWidget {
                               Container(
                                 width: 0.8,
                                 height: 40,
-                                margin: new EdgeInsets.symmetric(horizontal: 15.0),
+                                margin: const EdgeInsets.symmetric(horizontal: 15.0),
                                 decoration: BoxDecoration(
                                   border: Border.all(
                                     color: Colors.grey,
@@ -106,7 +96,7 @@ class SignUp extends HookWidget {
                                 height: 40,
                                 decoration: const BoxDecoration(
                                   color: Colors.white,
-                                  borderRadius: const BorderRadius.all(Radius.circular(5)),
+                                  borderRadius: BorderRadius.all(Radius.circular(5)),
                                   boxShadow: [
                                     BoxShadow(
                                       color: Colors.grey,
@@ -131,7 +121,7 @@ class SignUp extends HookWidget {
                             focusNode: _nameFocus,
                             nextFocusNode: _emailFocus,
                             textInputAction: TextInputAction.next,
-                            icon: Icon(HumaneIcons.male),
+                            icon: const Icon(HumaneIcons.male),
                             validator: twoNamesValidator,
                             paddingBottom: 15,
                             onChanged: (value) {
@@ -143,7 +133,7 @@ class SignUp extends HookWidget {
                             nextFocusNode: _passwordFocus,
                             textInputAction: TextInputAction.next,
                             type: TextInputType.emailAddress,
-                            icon: Icon(HumaneIcons.mail),
+                            icon: const Icon(HumaneIcons.mail),
                             validator: emailValidator,
                             paddingBottom: 15,
                             onChanged: (value) {
@@ -154,26 +144,25 @@ class SignUp extends HookWidget {
                             focusNode: _passwordFocus,
                             nextFocusNode: _confirmPasswordFocus,
                             textInputAction: TextInputAction.next,
-                            icon: Icon(HumaneIcons.padlock),
+                            icon: const Icon(HumaneIcons.padlock),
                             hidden: true,
                             validator: passwordValidator,
                             paddingBottom: 15,
                             onChanged: (value) {
-                              print(value);
                               password = value;
                             }),
                         InputField(
                             hint: "Confirm Password",
                             focusNode: _confirmPasswordFocus,
                             textInputAction: TextInputAction.done,
-                            icon: Icon(HumaneIcons.shield),
+                            icon: const Icon(HumaneIcons.shield),
                             hidden: true,
                             paddingBottom: 15,
                             onChanged: (value) {
                               confirmPassword = value;
                             }),
                         Container(
-                          padding: EdgeInsets.only(bottom: 20),
+                          padding: const EdgeInsets.only(bottom: 20),
                           child: Row(
                             children: <Widget>[
                               SizedBox(
@@ -184,18 +173,16 @@ class SignUp extends HookWidget {
                                   child: Checkbox(
                                     activeColor: Colors.white,
                                     checkColor: Theme.of(context).primaryColor,
-                                    value: recaptchaVerified.value,
+                                    value: recaptchaToggle.value,
                                     onChanged: (bool? value) async {
                                       //TODO: Implement Recaptcha
-                                      if (recaptchaVerified.value == false) {
-                                        recaptchaToggle.value = !recaptchaToggle.value;
-                                      }
+                                      recaptchaToggle.value = !recaptchaToggle.value;
                                     },
                                   ),
                                 ),
                               ),
                               Container(
-                                padding: EdgeInsets.only(left: 10),
+                                padding: const EdgeInsets.only(left: 10),
                                 child: Text(
                                   'Verify your are not a robot',
                                   style: TextStyle(
@@ -209,7 +196,7 @@ class SignUp extends HookWidget {
                         ),
                         Button(
                           text: 'Sign Up',
-                          onPress: handleSignUp,
+                          onPress: () => {},
                         ),
                       ],
                     ),

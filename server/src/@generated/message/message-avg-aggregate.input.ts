@@ -1,13 +1,15 @@
-import { Field, InputType } from '@nestjs/graphql';
+import { Field } from '@nestjs/graphql';
+import { InputType } from '@nestjs/graphql';
 
 @InputType()
 export class MessageAvgAggregateInput {
-    @Field(() => Boolean, { nullable: true })
+
+    @Field(() => Boolean, {nullable:true})
     id?: true;
 
-    @Field(() => Boolean, { nullable: true })
+    @Field(() => Boolean, {nullable:true})
     authorId?: true;
 
-    @Field(() => Boolean, { nullable: true })
+    @Field(() => Boolean, {nullable:true})
     chatRoomId?: true;
 }

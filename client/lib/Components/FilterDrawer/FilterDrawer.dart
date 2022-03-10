@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:humane/Components/shared_components/Line.dart';
-import 'package:humane/Services/search_service.dart';
-import 'package:humane/Services/service_locator.dart';
 import 'package:humane/icons.dart';
 
 class FilterDrawer extends HookWidget {
