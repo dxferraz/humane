@@ -9,7 +9,9 @@ class InputField extends StatefulWidget {
   TextInputType type;
   bool hidden;
   double paddingBottom;
+  TextCapitalization? textCapitalization;
   String? tooltip;
+  AutovalidateMode? autovalidateMode;
   late TextInputAction? textInputAction;
   late FocusNode? focusNode;
   late FocusNode? nextFocusNode;
@@ -23,10 +25,12 @@ class InputField extends StatefulWidget {
       this.icon,
       this.onChanged,
       this.validator,
+      this.textCapitalization,
+      this.autovalidateMode,
       this.type = TextInputType.text,
       this.tooltip,
       this.hidden = false,
-      this.paddingBottom = 20})
+      this.paddingBottom = 10})
       : super(key: key);
 
   @override
@@ -61,19 +65,20 @@ class InputFieldState extends State<InputField> {
         children: [
           Expanded(
             child: TextFormField(
+              textCapitalization: widget.textCapitalization == null ? TextCapitalization.none : widget.textCapitalization!,
               onFieldSubmitted: (value) {
                 if (widget.focusNode != null && widget.nextFocusNode != null) {
                   _fieldFocusChange(context, widget.focusNode!, widget.nextFocusNode!);
                 }
               },
+              autovalidateMode: widget.autovalidateMode == null ? AutovalidateMode.onUserInteraction : widget.autovalidateMode,
               focusNode: widget.focusNode,
               textInputAction: widget.textInputAction,
               onChanged: widget.onChanged,
               obscureText: hidden,
               keyboardType: widget.type,
-              style: TextStyle(fontSize: 20.0, color: Theme.of(context).secondaryHeaderColor, fontFamily: "Montserrat-light"),
+              style: const TextStyle(fontSize: 20.0, fontFamily: "Montserrat-light"),
               decoration: InputDecoration(
-                focusColor: Colors.amberAccent,
                 prefixIcon: Container(
                     width: 0, alignment: const Alignment(-1, -0.8), padding: const EdgeInsets.only(top: 9, right: 0), child: widget.icon),
                 suffixIcon: widget.hidden == true
@@ -83,7 +88,7 @@ class InputFieldState extends State<InputField> {
                         padding: const EdgeInsets.only(top: 9, right: 0),
                         child: GestureDetector(onTap: viewPassword, child: Icon(hidden ? Humane.eye : Humane.hide)))
                     : null,
-                contentPadding: const EdgeInsets.only(left: 14.0, bottom: 8.0, top: 8.0),
+                contentPadding: const EdgeInsets.only(left: 14.0, top: 12.0),
                 hintText: widget.hint,
               ),
               validator: widget.validator,

@@ -55,6 +55,7 @@ flutter_icons:
 
 # The following section is specific to Flutter.
 flutter:
+  uses-material-design: true
   fonts:
     - family: LEMONMILK-bold
       fonts:

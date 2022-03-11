@@ -1,8 +1,8 @@
-import 'package:humane/shared_components/InputField.dart';
-import 'package:humane/shared_components/Line.dart';
-import 'package:humane/shared_components/TextLine.dart';
-import 'package:humane/shared_components/Title.dart';
-import 'package:humane/shared_components/Button.dart';
+import 'package:humane/core/components/LoadingButton.dart';
+import 'package:humane/core/components/InputField.dart';
+import 'package:humane/core/components/Line.dart';
+import 'package:humane/core/components/TextLine.dart';
+import 'package:humane/core/components/Title.dart';
 import 'package:humane/core/injection/injection.dart';
 import 'package:humane/features/authentication/presentation/bloc/signUserBloc.dart';
 import 'package:humane/icons.dart';
@@ -24,9 +24,8 @@ class SignUp extends HookWidget {
   String confirmPassword = '';
 
   @override
-  Widget build(BuildContext buildContext) {
+  Widget build(BuildContext context) {
     ValueNotifier<bool> recaptchaToggle = useState(false);
-    AutovalidateMode autovalidateMode = AutovalidateMode.onUserInteraction;
 
     final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -54,10 +53,9 @@ class SignUp extends HookWidget {
                 SafeArea(
                   child: Container(
                     alignment: Alignment.center,
-                    height: MediaQuery.of(buildContext).size.height,
+                    height: MediaQuery.of(context).size.height,
                     padding: const EdgeInsets.only(left: 30, right: 30),
                     child: Form(
-                      autovalidateMode: autovalidateMode,
                       key: _formKey,
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -65,11 +63,11 @@ class SignUp extends HookWidget {
                         children: <Widget>[
                           GestureDetector(
                             onTap: () {
-                              Navigator.pop(buildContext);
+                              Navigator.pop(context);
                             },
                             child: Container(
                               padding: const EdgeInsets.only(bottom: 5),
-                              child: Icon(Humane.back, color: Theme.of(buildContext).primaryColor),
+                              child: Icon(Humane.back, color: Theme.of(context).primaryColor),
                             ),
                           ),
                           Title(text: "Sign Up"),
@@ -127,6 +125,7 @@ class SignUp extends HookWidget {
                           ),
                           TextLine(text: "or register with"),
                           InputField(
+                              textCapitalization: TextCapitalization.words,
                               hint: "Full Name",
                               focusNode: _nameFocus,
                               nextFocusNode: _emailFocus,
@@ -135,7 +134,6 @@ class SignUp extends HookWidget {
                               validator: (value) {
                                 return twoNamesValidator(value!);
                               },
-                              paddingBottom: 15,
                               onChanged: (value) {
                                 name = value!.trim();
                               }),
@@ -149,7 +147,6 @@ class SignUp extends HookWidget {
                               validator: (value) {
                                 return emailValidator(value!);
                               },
-                              paddingBottom: 15,
                               onChanged: (value) {
                                 email = value!.trim();
                               }),
@@ -165,7 +162,6 @@ class SignUp extends HookWidget {
                               validator: (value) {
                                 return passwordValidator(value!);
                               },
-                              paddingBottom: 15,
                               onChanged: (value) {
                                 password = value!;
                               }),
@@ -175,7 +171,6 @@ class SignUp extends HookWidget {
                               textInputAction: TextInputAction.done,
                               icon: const Icon(Humane.shield),
                               hidden: true,
-                              paddingBottom: 15,
                               validator: (value) {
                                 return confirmPasswordValidator(value!, password);
                               },
@@ -190,10 +185,10 @@ class SignUp extends HookWidget {
                                   width: 20,
                                   height: 20,
                                   child: Theme(
-                                    data: ThemeData(unselectedWidgetColor: Theme.of(buildContext).primaryColor),
+                                    data: ThemeData(unselectedWidgetColor: Theme.of(context).primaryColor),
                                     child: Checkbox(
                                       activeColor: Colors.white,
-                                      checkColor: Theme.of(buildContext).primaryColor,
+                                      checkColor: Theme.of(context).primaryColor,
                                       value: recaptchaToggle.value,
                                       onChanged: (bool? value) async {
                                         //TODO: Implement Recaptcha
@@ -207,7 +202,7 @@ class SignUp extends HookWidget {
                                   child: Text(
                                     'Verify your are not a robot',
                                     style: TextStyle(
-                                      color: Theme.of(buildContext).primaryColor,
+                                      color: Theme.of(context).primaryColor,
                                       fontFamily: "Montserrat-regular",
                                     ),
                                   ),
@@ -217,9 +212,22 @@ class SignUp extends HookWidget {
                           ),
                           BlocBuilder<SignUserBloc, SignUserState>(
                             builder: (context, state) {
-                              return Button(
+                              LoadingButtonStates buttonState = LoadingButtonStates.init;
+                              if (state is ErrorUser) {
+                                buttonState = LoadingButtonStates.init;
+                              }
+
+                              if (state is LoadingUser) {
+                                buttonState = LoadingButtonStates.submitting;
+                              }
+                              return LoadingButton(
+                                state: buttonState,
                                 text: 'Sign Up',
-                                onPress: () => submitForm(context),
+                                onPress: () {
+                                  if (buttonState != LoadingButtonStates.submitting) {
+                                    submitForm(context);
+                                  }
+                                },
                               );
                             },
                           ),

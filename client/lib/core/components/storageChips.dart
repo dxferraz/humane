@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:humane/shared_components/Button.dart';
+import 'package:humane/core/components/Button.dart';
 import 'package:humane/icons.dart';
 import 'package:flutter/material.dart' hide Title;
 
@@ -10,6 +10,7 @@ class StoragesChipOptions extends StatefulWidget {
   StoragesChipOptions({Key? key, this.options = const ['For me', "For my family", 'For my business'], required this.onSelected})
       : super(key: key);
 
+  @override
   StoragesChipOptionsState createState() => StoragesChipOptionsState();
 }
 

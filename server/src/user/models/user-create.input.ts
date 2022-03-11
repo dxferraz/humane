@@ -1,6 +1,6 @@
 import { Field, InputType } from '@nestjs/graphql';
 import { IsEmail, IsNotEmpty, Matches, MinLength, Validate } from 'class-validator';
-import { passwordValidation } from '../validators/regex';
+import { emailValidator, passwordValidation } from '../validators/regex';
 
 import { UserExistsValidator } from '../validators/user-exists.validator';
 
@@ -10,7 +10,7 @@ import { UserExistsValidator } from '../validators/user-exists.validator';
 @InputType()
 export class UserCreateInput {
     @IsNotEmpty()
-    @IsEmail()
+    @IsEmail(undefined, { message: emailValidator.message })
     @Field(() => String, { nullable: false })
     @Validate(UserExistsValidator)
     email: string;

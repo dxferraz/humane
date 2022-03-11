@@ -1,9 +1,9 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart' hide Title;
-import 'package:humane/shared_components/InputField.dart';
-import 'package:humane/shared_components/Line.dart';
-import 'package:humane/shared_components/Title.dart';
-import 'package:humane/shared_components/Button.dart';
+import 'package:humane/core/components/InputField.dart';
+import 'package:humane/core/components/Line.dart';
+import 'package:humane/core/components/Title.dart';
+import 'package:humane/core/components/Button.dart';
 import '../../../../icons.dart';
 
 class ForgotPassword extends StatefulWidget {

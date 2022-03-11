@@ -24,6 +24,10 @@ export const nameValidator = {
     message: 'Use full name (more then one name).',
 };
 
+export const emailValidator = {
+    message: 'Invalid email address. Please try again!',
+};
+
 export const minMaxValidation = (name, min, max?) => {
     var pattern = new RegExp(`^[\\w\\W]{${min ?? ''},${max ?? ''}}$`, 'g');
 
