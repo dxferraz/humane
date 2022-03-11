@@ -35,6 +35,8 @@ dependencies:
   flutter_dotenv: ^5.0.2
   graphql_flutter: ^5.0.1
   data_connection_checker: ^0.3.4
+  smooth_page_indicator: ^1.0.0+2
+  websafe_svg: ^2.1.1
 
 dev_dependencies:
   flutter_test:
@@ -54,45 +56,37 @@ flutter_icons:
 # The following section is specific to Flutter.
 flutter:
   fonts:
-    - family: LEMONMILK-bold
+    - family: Cairo
       fonts:
-        - asset: assets/fonts/lemon/LEMONMILK-Bold.otf
-    - family: LEMONMILK-light
+        - asset: assets/fonts/cairo/Cairo-ExtraLight.ttf
+          weight: 200
+        - asset: assets/fonts/cairo/Cairo-Light.ttf
+          weight: 300
+        - asset: assets/fonts/cairo/Cairo-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/cairo/Cairo-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/cairo/Cairo-SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/cairo/Cairo-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/cairo/Cairo-Black.ttf
+          weight: 800
+    - family: Ubuntu
       fonts:
-        - asset: assets/fonts/lemon/LEMONMILK-Light.otf
-    - family: LEMONMILK-regular
-      fonts:
-        - asset: assets/fonts/lemon/LEMONMILK-Regular.otf
-    - family: Montserrat-bold
-      fonts:
-        - asset: assets/fonts/montserrat/Montserrat-Bold.otf
-    - family: Montserrat-light
-      fonts:
-        - asset: assets/fonts//montserrat/Montserrat-Light.otf
-    - family: Montserrat-regular
-      fonts:
-        - asset: assets/fonts/montserrat/Montserrat-Regular.otf
-    - family: Montserrat-medium
-      fonts:
-        - asset: assets/fonts/montserrat/Montserrat-Medium.otf
-    - family: HumaneIcons
-      fonts:
-        - asset: assets/icons/HumaneIcons.ttf
+        - asset: assets/fonts/ubuntu/Ubuntu-Light.ttf
+          weight: 200
+        - asset: assets/fonts/ubuntu/Ubuntu-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/ubuntu/Ubuntu-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/ubuntu/Ubuntu-Bold.ttf
+          weight: 700
 
   # uses-material-design: true
 
-assets:
-  - .env.dev
-  - assets/icons/facebook.svg
-  - assets/icons/google.svg
-  - assets/icons/signin.svg
-  - assets/icons/signup.png
-  - assets/icons/storage.svg
-  - assets/icons/detailTop.svg
-  - assets/icons/detailTopOpacity.svg
-  - assets/icons/detailBottom.svg
-  - assets/icons/promobg.svg
-  - assets/icons/intro1.svg
-  - assets/icons/intro2.svg
-  - assets/icons/intro3.svg
+  assets:
+    - .env.dev
+    - assets/icons/
+    - assets/images/
 
