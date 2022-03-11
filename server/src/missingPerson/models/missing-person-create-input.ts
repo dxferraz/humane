@@ -1,5 +1,6 @@
 import { Skin } from '.prisma/client';
 import { Field, InputType } from '@nestjs/graphql';
+import { EyeColor, HairColor } from '@prisma/client';
 
 @InputType()
 export class MissingPersonCreateInput {
@@ -20,4 +21,10 @@ export class MissingPersonCreateInput {
 
     @Field(() => () => {}, { nullable: true })
     thumbnails?: any;
+
+    @Field(() => () => {}, { nullable: true })
+    eyeColor: EyeColor;
+
+    @Field(() => () => {}, { nullable: true })
+    hairColor: HairColor;
 }

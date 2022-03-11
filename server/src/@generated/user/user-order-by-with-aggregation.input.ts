@@ -1,62 +1,69 @@
-import { Field, InputType } from '@nestjs/graphql';
-
+import { Field } from '@nestjs/graphql';
+import { InputType } from '@nestjs/graphql';
 import { SortOrder } from '../prisma/sort-order.enum';
-import { UserAvgOrderByAggregateInput } from './user-avg-order-by-aggregate.input';
 import { UserCountOrderByAggregateInput } from './user-count-order-by-aggregate.input';
+import { UserAvgOrderByAggregateInput } from './user-avg-order-by-aggregate.input';
 import { UserMaxOrderByAggregateInput } from './user-max-order-by-aggregate.input';
 import { UserMinOrderByAggregateInput } from './user-min-order-by-aggregate.input';
 import { UserSumOrderByAggregateInput } from './user-sum-order-by-aggregate.input';
 
 @InputType()
 export class UserOrderByWithAggregationInput {
-    @Field(() => SortOrder, { nullable: true })
+
+    @Field(() => SortOrder, {nullable:true})
     id?: keyof typeof SortOrder;
 
-    @Field(() => SortOrder, { nullable: true })
+    @Field(() => SortOrder, {nullable:true})
     createdAt?: keyof typeof SortOrder;
 
-    @Field(() => SortOrder, { nullable: true })
+    @Field(() => SortOrder, {nullable:true})
     email?: keyof typeof SortOrder;
 
-    @Field(() => SortOrder, { nullable: true })
+    @Field(() => SortOrder, {nullable:true})
     name?: keyof typeof SortOrder;
 
-    @Field(() => SortOrder, { nullable: true })
+    @Field(() => SortOrder, {nullable:true})
     thumbnail?: keyof typeof SortOrder;
 
-    @Field(() => SortOrder, { nullable: true })
+    @Field(() => SortOrder, {nullable:true})
     birthdate?: keyof typeof SortOrder;
 
-    @Field(() => SortOrder, { nullable: true })
+    @Field(() => SortOrder, {nullable:true})
     phone?: keyof typeof SortOrder;
 
-    @Field(() => SortOrder, { nullable: true })
+    @Field(() => SortOrder, {nullable:true})
     role?: keyof typeof SortOrder;
 
-    @Field(() => SortOrder, { nullable: true })
-    verified?: keyof typeof SortOrder;
+    @Field(() => SortOrder, {nullable:true})
+    emailVerified?: keyof typeof SortOrder;
 
-    @Field(() => SortOrder, { nullable: true })
-    verifiedAt?: keyof typeof SortOrder;
+    @Field(() => SortOrder, {nullable:true})
+    emailVerifiedAt?: keyof typeof SortOrder;
 
-    @Field(() => SortOrder, { nullable: true })
+    @Field(() => SortOrder, {nullable:true})
+    profileVerified?: keyof typeof SortOrder;
+
+    @Field(() => SortOrder, {nullable:true})
+    profileVerifiedAt?: keyof typeof SortOrder;
+
+    @Field(() => SortOrder, {nullable:true})
     updatedAt?: keyof typeof SortOrder;
 
-    @Field(() => SortOrder, { nullable: true })
+    @Field(() => SortOrder, {nullable:true})
     password?: keyof typeof SortOrder;
 
-    @Field(() => UserCountOrderByAggregateInput, { nullable: true })
+    @Field(() => UserCountOrderByAggregateInput, {nullable:true})
     _count?: UserCountOrderByAggregateInput;
 
-    @Field(() => UserAvgOrderByAggregateInput, { nullable: true })
+    @Field(() => UserAvgOrderByAggregateInput, {nullable:true})
     _avg?: UserAvgOrderByAggregateInput;
 
-    @Field(() => UserMaxOrderByAggregateInput, { nullable: true })
+    @Field(() => UserMaxOrderByAggregateInput, {nullable:true})
     _max?: UserMaxOrderByAggregateInput;
 
-    @Field(() => UserMinOrderByAggregateInput, { nullable: true })
+    @Field(() => UserMinOrderByAggregateInput, {nullable:true})
     _min?: UserMinOrderByAggregateInput;
 
-    @Field(() => UserSumOrderByAggregateInput, { nullable: true })
+    @Field(() => UserSumOrderByAggregateInput, {nullable:true})
     _sum?: UserSumOrderByAggregateInput;
 }

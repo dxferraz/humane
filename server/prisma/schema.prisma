@@ -61,16 +61,16 @@ model User {
     createdAt         DateTime          @default(now())
     email             String            @unique
     name              String
-    thumbnail         String
-    birthdate         DateTime
-    phone             String
+    thumbnail         String?
+    birthdate         DateTime?
+    phone             String?
     role              Role              @default(USER)
     emailVerified     Boolean           @default(false)
     emailVerifiedAt   DateTime?
     profileVerified   Boolean           @default(false)
     profileVerifiedAt DateTime?
     updatedAt         DateTime?         @updatedAt
-    password          String?
+    password          String
     reports           MissingPerson[]
     usersOnChatRoom   UsersOnChatRoom[]
     messages          Message[]
@@ -79,18 +79,18 @@ model User {
 }
 
 model MissingPerson {
-    id               Int       @id @default(autoincrement())
+    id               Int        @id @default(autoincrement())
     thumbnails       Image[]
     name             String
     age              Int?
     height           Float?
     skin             Skin?
-    description      String?   @db.LongText
-    reporter         User      @relation(fields: [reporterId], references: [id])
+    description      String?    @db.LongText
+    reporter         User       @relation(fields: [reporterId], references: [id])
     reporterId       Int
     disappearanceDay DateTime?
-    eyeColor         EyeColor
-    hairColor        HairColor
+    eyeColor         EyeColor?
+    hairColor        HairColor?
 
 }
 

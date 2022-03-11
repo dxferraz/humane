@@ -13,8 +13,10 @@ export function createUser(parts: Partial<UserPayload> = {}): UserPayload {
         phone: '123123123',
         createdAt: new Date(),
         role: Role.USER,
-        verified: true,
-        verifiedAt: new Date(),
+        emailVerified: true,
+        emailVerifiedAt: new Date(),
+        profileVerified: false,
+        profileVerifiedAt: new Date(),
         updatedAt: new Date(),
         ...parts,
     };

@@ -1,24 +1,38 @@
-import { Field, Float, InputType, Int } from '@nestjs/graphql';
-
+import { Field } from '@nestjs/graphql';
+import { InputType } from '@nestjs/graphql';
+import { Int } from '@nestjs/graphql';
+import { Float } from '@nestjs/graphql';
 import { Skin } from '../prisma/skin.enum';
+import { EyeColor } from '../prisma/eye-color.enum';
+import { HairColor } from '../prisma/hair-color.enum';
 
 @InputType()
 export class MissingPersonCreateManyReporterInput {
-    @Field(() => Int, { nullable: true })
+
+    @Field(() => Int, {nullable:true})
     id?: number;
 
-    @Field(() => String, { nullable: false })
+    @Field(() => String, {nullable:false})
     name!: string;
 
-    @Field(() => Int, { nullable: false })
-    age!: number;
+    @Field(() => Int, {nullable:true})
+    age?: number;
 
-    @Field(() => Float, { nullable: false })
-    height!: number;
+    @Field(() => Float, {nullable:true})
+    height?: number;
 
-    @Field(() => Skin, { nullable: false })
-    skin!: keyof typeof Skin;
+    @Field(() => Skin, {nullable:true})
+    skin?: keyof typeof Skin;
 
-    @Field(() => String, { nullable: false })
-    description!: string;
+    @Field(() => String, {nullable:true})
+    description?: string;
+
+    @Field(() => Date, {nullable:true})
+    disappearanceDay?: Date | string;
+
+    @Field(() => EyeColor, {nullable:true})
+    eyeColor?: keyof typeof EyeColor;
+
+    @Field(() => HairColor, {nullable:true})
+    hairColor?: keyof typeof HairColor;
 }

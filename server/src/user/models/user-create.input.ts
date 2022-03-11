@@ -1,13 +1,6 @@
 import { Field, InputType } from '@nestjs/graphql';
-import {
-    IsEmail,
-    IsNotEmpty,
-    Matches,
-    MaxLength,
-    MinLength,
-    Validate,
-} from 'class-validator';
-import { dateValidation, passwordValidation } from '../validators/regex';
+import { IsEmail, IsNotEmpty, Matches, MinLength, Validate } from 'class-validator';
+import { emailValidator, passwordValidation } from '../validators/regex';
 
 import { UserExistsValidator } from '../validators/user-exists.validator';
 
@@ -17,7 +10,7 @@ import { UserExistsValidator } from '../validators/user-exists.validator';
 @InputType()
 export class UserCreateInput {
     @IsNotEmpty()
-    @IsEmail()
+    @IsEmail(undefined, { message: emailValidator.message })
     @Field(() => String, { nullable: false })
     @Validate(UserExistsValidator)
     email: string;
@@ -33,20 +26,4 @@ export class UserCreateInput {
     })
     @Field(() => String, { nullable: false })
     password: string;
-
-    @Matches(dateValidation.pattern, {
-        message: dateValidation.message,
-    })
-    @Field(() => String, { nullable: false })
-    birthdate: string;
-
-    @MinLength(4)
-    @MaxLength(30)
-    @IsNotEmpty()
-    @Field(() => String, { nullable: false })
-    phone: string;
-
-    //TODO: change type to GraphQLUpload
-    @Field(() => String, { nullable: true })
-    thumbNail: any;
 }

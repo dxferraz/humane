@@ -1,10 +1,13 @@
-import { Field, InputType, Int } from '@nestjs/graphql';
+import { Field } from '@nestjs/graphql';
+import { InputType } from '@nestjs/graphql';
+import { Int } from '@nestjs/graphql';
 
 @InputType()
 export class UsersOnChatRoomCreateManyChatRoomInput {
-    @Field(() => Int, { nullable: false })
+
+    @Field(() => Int, {nullable:false})
     userId!: number;
 
-    @Field(() => Date, { nullable: true })
+    @Field(() => Date, {nullable:true})
     createdAt?: Date | string;
 }

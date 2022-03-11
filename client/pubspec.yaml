@@ -10,13 +10,21 @@ dependencies:
   flutter:
     sdk: flutter
   http:
+   # Dependency Injection
+  get_it: ^7.2.0
+  injectable: ^1.5.3
+  scoped_model: ^1.1.0
+
+  #BLoC Arquitecture
+  bloc: ^8.0.3
+  flutter_bloc: ^8.0.1
+
+  validators: ^3.0.0
   flutter_svg: ^1.0.3
   webview_flutter: ^0.3.19+9
   circular_bottom_navigation: ^2.0.0
   introduction_screen: ^3.0.0
   angles: ^2.1.1
-  get_it: ^7.2.0
-  scoped_model: ^1.1.0
   flutter_hooks: ^0.18.2+1
   rxdart: ^0.27.3
   http_interceptor: ^1.0.0
@@ -24,15 +32,17 @@ dependencies:
   path_provider: ^2.0.9
   equatable: ^2.0.3
   dartz: ^0.10.1
-  bloc: ^8.0.3
   flutter_launcher_icons: ^0.9.2
   flutter_dotenv: ^5.0.2
+  graphql_flutter: ^5.0.1
+  data_connection_checker: ^0.3.4
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^1.0.0
   build_runner:
+
 
 
 flutter_icons:
@@ -45,6 +55,7 @@ flutter_icons:
 
 # The following section is specific to Flutter.
 flutter:
+  uses-material-design: true
   fonts:
     - family: LEMONMILK-bold
       fonts:
@@ -67,9 +78,9 @@ flutter:
     - family: Montserrat-medium
       fonts:
         - asset: assets/fonts/montserrat/Montserrat-Medium.otf
-    - family: HumaneIcons
+    - family: Humane
       fonts:
-        - asset: assets/icons/HumaneIcons.ttf
+        - asset: assets/icons/Humane.ttf
 
   # uses-material-design: true
 
@@ -79,7 +90,6 @@ flutter:
     - assets/icons/facebook.svg
     - assets/icons/google.svg
     - assets/icons/signin.svg
-    - assets/icons/signup.svg
     - assets/icons/storage.svg
     - assets/icons/detailTop.svg
     - assets/icons/detailTopOpacity.svg

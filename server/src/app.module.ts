@@ -33,15 +33,15 @@ export async function graphqlModuleFactory(logger: Logger) {
         },
         formatError: new ApolloErrorConverter({
             logger: logger.error.bind(logger),
-            fallback: {
-                // Still send error message in the log
-                code: '', // the Error code you want to use
-                message: '', // the Error message you want to use
-                data: originalError => {
-                    // use the original Error to format and return extra data to include
-                    return originalError;
-                },
-            },
+            // fallback: {
+            //     // Still send error message in the log
+            //     code: '', // the Error code you want to use
+            //     message: '', // the Error message you want to use
+            //     data: originalError => {
+            //         // use the original Error to format and return extra data to include
+            //         return originalError;
+            //     },
+            // },
             errorMap: [
                 {
                     NotFoundError: {
