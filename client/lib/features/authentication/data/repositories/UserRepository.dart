@@ -12,11 +12,13 @@ class UserRepository extends IUserRepository {
   UserRepository({required this.remoteDataSource, required this.localDataSource});
 
   @override
-  Future<Either<Failure, User>>? signIn(String email, String password) {
+  Future<Either<Failure, User>> signIn(String email, String password) {
     // TODO: implement signUp
     throw UnimplementedError();
   }
 
   @override
-  Future<Either<Failure, User>>? signUp(String name, String email, String password) {}
+  Future<Either<Failure, User>> signUp(String name, String email, String password) {
+    return remoteDataSource.signUp(name: name, email: email, password: password);
+  }
 }

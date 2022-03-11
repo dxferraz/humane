@@ -1,4 +1,4 @@
-import '../models/user_model.dart';
+import '../models/userModel.dart';
 
 abstract class IUserLocalDataSource {
   Future<UserModel?> signIn({required String email, required String password});

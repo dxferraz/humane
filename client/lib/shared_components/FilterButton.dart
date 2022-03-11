@@ -18,7 +18,7 @@ class FilterButton extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Icon(
-            HumaneIcons.filter,
+            Humane.filter,
             size: 25,
             color: Colors.white,
           ),

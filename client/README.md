@@ -2,6 +2,12 @@
 
 A new Flutter project.
 
+## Create .env
+
+You must create a .env.dev file under the client folder with the following content:
+APP_NAME=Humane
+API_URL_GRAPHQL=localhost:3001/graphql
+
 ## Getting Started
 
 This project is a starting point for a Flutter application.

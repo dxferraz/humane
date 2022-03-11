@@ -1,4 +1,4 @@
-part of 'sign_user_bloc.dart';
+part of 'signUserBloc.dart';
 
 abstract class SignUserEvent extends Equatable {
   @override

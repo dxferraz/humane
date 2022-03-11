@@ -14,10 +14,6 @@ class HumaneApp extends StatelessWidget {
       currentFocus.focusedChild?.unfocus();
     }
 
-    // We're using HiveStore for persistence,
-    // so we need to initialize Hive.
-    // await initHiveForFlutter();
-
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: const SystemUiOverlayStyle(
         systemNavigationBarContrastEnforced: true,
@@ -26,7 +22,10 @@ class HumaneApp extends StatelessWidget {
       child: MaterialApp(
         title: dotenv.env['APP_NAME']!,
         debugShowCheckedModeBanner: false,
-        theme: ThemeData(primaryColor: appDarkOrange, secondaryHeaderColor: appDarkBlue, fontFamily: "Cairo"),
+        theme: ThemeData(
+            primaryColor: appDarkOrange,
+            secondaryHeaderColor: appDarkBlue,
+            fontFamily: "Cairo"),
         initialRoute: 'intro',
         routes: routes,
       ),

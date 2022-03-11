@@ -19,6 +19,7 @@ dependencies:
   bloc: ^8.0.3
   flutter_bloc: ^8.0.1
 
+  validators: ^3.0.0
   flutter_svg: ^1.0.3
   webview_flutter: ^0.3.19+9
   circular_bottom_navigation: ^2.0.0
@@ -45,6 +46,7 @@ dev_dependencies:
   build_runner:
 
 
+
 flutter_icons:
   android: "launcher_icon"
   ios: true
@@ -56,6 +58,9 @@ flutter_icons:
 # The following section is specific to Flutter.
 flutter:
   fonts:
+    - family: Humane
+      fonts:
+        - asset: assets/icons/Humane.ttf
     - family: Cairo
       fonts:
         - asset: assets/fonts/cairo/Cairo-ExtraLight.ttf
@@ -82,6 +87,7 @@ flutter:
           weight: 500
         - asset: assets/fonts/ubuntu/Ubuntu-Bold.ttf
           weight: 700
+      
 
   # uses-material-design: true
 
