@@ -1,9 +1,9 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart' hide Title;
-import 'package:humane/Components/shared_components/InputField.dart';
-import 'package:humane/Components/shared_components/Line.dart';
-import 'package:humane/Components/shared_components/Title.dart';
-import 'package:humane/Components/shared_components/Button.dart';
+import 'package:humane/shared_components/InputField.dart';
+import 'package:humane/shared_components/Line.dart';
+import 'package:humane/shared_components/Title.dart';
+import 'package:humane/shared_components/Button.dart';
 import '../../../../icons.dart';
 
 class ForgotPassword extends StatefulWidget {
@@ -38,7 +38,7 @@ class ForgotPasswordState extends State<ForgotPassword> {
                       },
                       child: Container(
                         padding: const EdgeInsets.only(bottom: 5),
-                        child: Icon(HumaneIcons.back, color: Theme.of(context).primaryColor),
+                        child: Icon(Humane.back, color: Theme.of(context).primaryColor),
                       ),
                     ),
                     Title(text: "Forgot Password"),
@@ -53,7 +53,7 @@ class ForgotPasswordState extends State<ForgotPassword> {
                         ),
                       ),
                     ),
-                    InputField(hint: "Email", type: TextInputType.emailAddress, icon: const Icon(HumaneIcons.mail)),
+                    InputField(hint: "Email", type: TextInputType.emailAddress, icon: const Icon(Humane.mail)),
                     Container(
                       padding: const EdgeInsets.only(bottom: 20),
                       child: Row(

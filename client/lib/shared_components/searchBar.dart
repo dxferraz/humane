@@ -67,7 +67,7 @@ class SearchBar extends HookWidget {
                             padding: EdgeInsets.all(isOpened.value ? 0 : 10),
                             duration: Duration(milliseconds: 500),
                             child: Icon(
-                              HumaneIcons.search,
+                              Humane.search,
                               size: 22,
                             ),
                           ),

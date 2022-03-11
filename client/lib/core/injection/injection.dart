@@ -1,6 +1,3 @@
-import 'package:data_connection_checker/data_connection_checker.dart';
-import 'package:get_it/get_it.dart';
-import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:humane/core/injection/registerModule.dart';
 import 'package:humane/core/network/networkInfo.dart';
 import 'package:humane/features/authentication/data/datasources/UserLocalDataSource.dart';
@@ -9,7 +6,10 @@ import 'package:humane/features/authentication/data/repositories/UserRepository.
 import 'package:humane/features/authentication/domain/repositories/IUserRepository.dart';
 import 'package:humane/features/authentication/domain/usecases/signin.dart';
 import 'package:humane/features/authentication/domain/usecases/signup.dart';
-import 'package:humane/features/authentication/presentation/bloc/sign_user_bloc.dart';
+import 'package:humane/features/authentication/presentation/bloc/signUserBloc.dart';
+import 'package:data_connection_checker/data_connection_checker.dart';
+import 'package:get_it/get_it.dart';
+import 'package:graphql_flutter/graphql_flutter.dart';
 
 final getIt = GetIt.instance;
 

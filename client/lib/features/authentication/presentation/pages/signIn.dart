@@ -1,13 +1,13 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart' hide Title;
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:humane/Components/shared_components/InputField.dart' as I;
+import 'package:humane/shared_components/InputField.dart' as I;
 import 'package:humane/icons.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:humane/Components/shared_components/Line.dart';
-import 'package:humane/Components/shared_components/TextLine.dart';
-import 'package:humane/Components/shared_components/Title.dart';
-import 'package:humane/Components/shared_components/Button.dart';
+import 'package:humane/shared_components/Line.dart';
+import 'package:humane/shared_components/TextLine.dart';
+import 'package:humane/shared_components/Title.dart';
+import 'package:humane/shared_components/Button.dart';
 
 class SignIn extends HookWidget {
   final _formKey = GlobalKey<FormState>();
@@ -49,7 +49,7 @@ class SignIn extends HookWidget {
                           },
                           child: Container(
                             padding: EdgeInsets.only(bottom: 5),
-                            child: Icon(HumaneIcons.back, color: Theme.of(context).primaryColor),
+                            child: Icon(Humane.back, color: Theme.of(context).primaryColor),
                           ),
                         ),
                         Title(text: "Sign In"),
@@ -108,22 +108,22 @@ class SignIn extends HookWidget {
                         TextLine(text: "or continue with"),
                         I.InputField(
                             onChanged: (_email) {
-                              email = _email;
+                              email = _email!;
                             },
                             hint: "Email",
                             textInputAction: TextInputAction.next,
                             focusNode: _emailFocus,
                             nextFocusNode: _passwordFocus,
                             type: TextInputType.emailAddress,
-                            icon: const Icon(HumaneIcons.mail)),
+                            icon: const Icon(Humane.mail)),
                         I.InputField(
                             onChanged: ([_password]) {
-                              password = _password;
+                              password = _password!;
                             },
                             hint: "Password",
                             textInputAction: TextInputAction.done,
                             focusNode: _passwordFocus,
-                            icon: const Icon(HumaneIcons.padlock),
+                            icon: const Icon(Humane.padlock),
                             hidden: true,
                             paddingBottom: 3),
                         Container(

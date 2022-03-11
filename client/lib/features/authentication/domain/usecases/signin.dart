@@ -11,7 +11,7 @@ class SignIn extends UseCase<User, SignInParams> {
 
   @override
   Future<Either<Failure, User>> call(SignInParams param) async {
-    return await repository.signIn(param.email, param.password)!;
+    return await repository.signIn(param.email, param.password);
   }
 }
 

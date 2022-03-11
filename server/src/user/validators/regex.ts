@@ -1,19 +1,14 @@
 import { capitalizeFirstLetter } from '../../utils';
 /*
     Passwords must have at least 6 and maximum 20 characters;
-    Passwords will contain at least 1 upper case letter;
-    Passwords will contain at least 1 lower case letter;
-    Passwords will contain at least 1 number;
-    Passwords will contain at least 1 special character;
+    Passwords must contain at least 1 upper case letter;
+    Passwords must contain at least 1 lower case letter;
+    Passwords must contain at least 1 number;
+    Passwords must contain at least 1 special character;
  */
 export const passwordValidation = {
     pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$#!%*?&]{6,20}$/,
-    message: `
-    Passwords must have at least 6 and maximum 20 characters;
-    Passwords will contain at least 1 upper case letter;
-    Passwords will contain at least 1 lower case letter;
-    Passwords will contain at least 1 number;
-    Passwords will contain at least 1 special character;`,
+    message: `Passwords must have at least 6 and maximum 20 characters;\nPasswords must contain at least 1 upper case letter;\nPasswords must contain at least 1 lower case letter;\nPasswords must contain at least 1 number;\nPasswords must contain at least 1 special character;`,
 };
 
 /*
@@ -22,6 +17,11 @@ export const passwordValidation = {
 export const dateValidation = {
     pattern: /^(0?[1-9]|[12]\d|3[01])[/\-](0?[1-9]|1[0-2])[/\-]\d{4}$/,
     message: 'Birthday should follow the format DD-MM-YYYY',
+};
+
+export const nameValidator = {
+    pattern: /(\w.+\s).+/,
+    message: 'Use full name (more then one name).',
 };
 
 export const minMaxValidation = (name, min, max?) => {

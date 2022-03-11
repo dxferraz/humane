@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:humane/shared_components/Button.dart';
 import 'package:humane/icons.dart';
-import 'package:humane/Components/shared_components/Button.dart';
 import 'package:flutter/material.dart' hide Title;
 
 class StoragesChipOptions extends StatefulWidget {
@@ -32,7 +32,7 @@ class StoragesChipOptionsState extends State<StoragesChipOptions> {
                   child: ChoiceChip(
                     avatar: Container(
                       child: Icon(
-                        HumaneIcons.male,
+                        Humane.male,
                         size: 17,
                         color: sizePreference == option ? Colors.white : Colors.black,
                       ),

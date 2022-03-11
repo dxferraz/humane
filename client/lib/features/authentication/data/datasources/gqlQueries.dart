@@ -1,9 +1,9 @@
 mixin GqlQuery {
   static String createUserQuery = '''
-  mutation{
-  createUser(\$data: User){
-    name
+  mutation CreateUser(\$input: UserCreateInput!){
+    createUser(data: \$input){
+      name
+    }
   }
-}
   ''';
 }

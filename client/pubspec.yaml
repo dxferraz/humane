@@ -19,6 +19,7 @@ dependencies:
   bloc: ^8.0.3
   flutter_bloc: ^8.0.1
 
+  validators: ^3.0.0
   flutter_svg: ^1.0.3
   webview_flutter: ^0.3.19+9
   circular_bottom_navigation: ^2.0.0
@@ -41,6 +42,7 @@ dev_dependencies:
     sdk: flutter
   flutter_lints: ^1.0.0
   build_runner:
+
 
 
 flutter_icons:
@@ -75,9 +77,9 @@ flutter:
     - family: Montserrat-medium
       fonts:
         - asset: assets/fonts/montserrat/Montserrat-Medium.otf
-    - family: HumaneIcons
+    - family: Humane
       fonts:
-        - asset: assets/icons/HumaneIcons.ttf
+        - asset: assets/icons/Humane.ttf
 
   # uses-material-design: true
 
@@ -87,7 +89,6 @@ flutter:
     - assets/icons/facebook.svg
     - assets/icons/google.svg
     - assets/icons/signin.svg
-    - assets/icons/signup.png
     - assets/icons/storage.svg
     - assets/icons/detailTop.svg
     - assets/icons/detailTopOpacity.svg
