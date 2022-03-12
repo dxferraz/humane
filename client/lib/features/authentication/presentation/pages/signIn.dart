@@ -224,6 +224,7 @@ class SignIn extends HookWidget {
   }
 
   submitForm(BuildContext context) {
+    FocusManager.instance.primaryFocus?.unfocus();
     if (_formKey.currentState?.validate() != false) {
       BlocProvider.of<SignUserBloc>(context).add(SignInUserEvent(email: email, password: password));
     }

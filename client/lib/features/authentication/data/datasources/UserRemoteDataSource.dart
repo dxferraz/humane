@@ -4,10 +4,13 @@ import 'package:humane/core/errors/failures.dart';
 import 'package:humane/features/authentication/data/datasources/gqlQueries.dart';
 import 'package:humane/features/authentication/data/models/userModel.dart';
 import 'package:humane/features/authentication/domain/entities/User.dart';
+import 'package:humane/features/authentication/presentation/pages/forgotPassword.dart';
 
 abstract class IUserRemoteDataSource {
   Future<Either<Failure, User>> signIn({required String email, required String password});
   Future<Either<Failure, User>> signUp({required String name, required String email, required String password});
+  Future<Either<Failure, String>> forgotPassword({required String email});
+  Future<Either<Failure, User>> updatePassword({required String password});
 }
 
 class UserRemoteDataSource extends IUserRemoteDataSource {
@@ -65,5 +68,31 @@ class UserRemoteDataSource extends IUserRemoteDataSource {
       }
     }
     return Right(UserModel.fromMap(result.data!['loginUser'])!);
+  }
+
+  @override
+  Future<Either<Failure, String>> forgotPassword({required String email}) async {
+    final variables = {
+      "input": {"email": email}
+    };
+    QueryResult result = await _client.mutate(MutationOptions(
+      document: gql(GqlQuery.forgotPasswordQuery),
+      variables: variables,
+    ));
+
+    print(result);
+    LoginUserFailure defaultFailure =
+        const LoginUserFailure(message: 'Something went wrong with your request! Please Try again later... sorry!');
+
+    if (result.data == null) {
+      return Left(defaultFailure);
+    }
+    return Right(result.data!['forgotPassword']);
+  }
+
+  @override
+  Future<Either<Failure, User>> updatePassword({required String password}) async {
+    // TODO: implement updatePassword
+    throw UnimplementedError();
   }
 }

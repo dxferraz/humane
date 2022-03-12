@@ -7,13 +7,13 @@ import {
     mapItemBases,
 } from 'apollo-error-converter';
 import { PubSub } from 'apollo-server-express';
-import { PrismaModule } from 'app_modules/prisma';
+import { PrismaModule } from 'src/core/prisma';
 import { Request } from 'express';
 import { NestologModule } from 'nestolog';
 
-import { ApiModule } from './api/api.module';
 import { AppEnvironment } from './app.environment';
-import { UserModule } from './user/user.module';
+import { UserModule } from './modules/user/user.module';
+import { ConfigModule } from '@nestjs/config';
 
 export async function graphqlModuleFactory(logger: Logger) {
     return {
@@ -64,7 +64,9 @@ export async function graphqlModuleFactory(logger: Logger) {
 @Global()
 @Module({
     imports: [
-        ApiModule,
+        ConfigModule.forRoot({
+            isGlobal: true, // no need to import into other modules
+        }),
         UserModule,
         PrismaModule.registerAsync({
             inject: [AppEnvironment],

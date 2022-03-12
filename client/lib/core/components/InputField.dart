@@ -72,10 +72,7 @@ class InputFieldState extends State<InputField> {
                 if (widget.focusNode != null && widget.nextFocusNode != null) {
                   _fieldFocusChange(context, widget.focusNode!, widget.nextFocusNode!);
                 }
-                print('hey');
                 if (widget.onSubmit != null) {
-                  print('onSubmit');
-
                   widget.onSubmit!();
                 }
               },

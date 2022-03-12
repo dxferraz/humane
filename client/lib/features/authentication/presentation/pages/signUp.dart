@@ -199,40 +199,18 @@ class SignUp extends HookWidget {
                                     password = value!;
                                   }),
                               InputField(
-                                  hint: "Confirm Password",
-                                  focusNode: _confirmPasswordFocus,
-                                  textInputAction: TextInputAction.done,
-                                  icon: const Icon(Humane.shield),
-                                  hidden: true,
-                                  onSubmit: () => submitForm(context),
-                                  validator: (value) {
-                                    return confirmPasswordValidator(value!, password);
-                                  },
-                                  onChanged: (value) {
-                                    confirmPassword = value!;
-                                  }),
-                              Container(
-                                padding: const EdgeInsets.only(bottom: 20),
-                                child: Row(
-                                  children: <Widget>[
-                                    SizedBox(
-                                      width: 20,
-                                      height: 20,
-                                      child: Theme(
-                                        data: ThemeData(unselectedWidgetColor: Theme.of(context).primaryColor),
-                                        child: Checkbox(
-                                          activeColor: Colors.white,
-                                          checkColor: Theme.of(context).primaryColor,
-                                          value: recaptchaToggle.value,
-                                          onChanged: (bool? value) async {
-                                            //TODO: Implement Recaptcha
-                                            recaptchaToggle.value = !recaptchaToggle.value;
-                                          },
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
+                                hint: "Confirm Password",
+                                focusNode: _confirmPasswordFocus,
+                                textInputAction: TextInputAction.done,
+                                icon: const Icon(Humane.shield),
+                                hidden: true,
+                                onSubmit: () => submitForm(context),
+                                validator: (value) {
+                                  return confirmPasswordValidator(value!, password);
+                                },
+                                onChanged: (value) {
+                                  confirmPassword = value!;
+                                },
                               ),
                               LoadingButton(
                                 state: buttonState,
@@ -259,6 +237,7 @@ class SignUp extends HookWidget {
   }
 
   submitForm(BuildContext context) {
+    FocusManager.instance.primaryFocus?.unfocus();
     if (_formKey.currentState?.validate() != false) {
       BlocProvider.of<SignUserBloc>(context).add(SignUpUserEvent(email: email, password: password, name: name));
     }

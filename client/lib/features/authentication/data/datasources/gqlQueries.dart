@@ -15,4 +15,10 @@ mixin GqlQuery {
     }
   }
   ''';
+
+  static String forgotPasswordQuery = '''
+  mutation ForgotPassword(\$input: ForgotPasswordInput!) {
+    forgotPassword(data: \$input)
+  }
+  ''';
 }

@@ -1,1 +1,0 @@
-export { userFields } from './user';
