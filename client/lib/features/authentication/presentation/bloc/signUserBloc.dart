@@ -15,6 +15,7 @@ class SignUserBloc extends Bloc<SignUserEvent, SignUserState> {
 
   SignUserBloc({required this.signIn, required this.signUp}) : super(SignUserInitial()) {
     on<SignUpUserEvent>(_onSignUpUserEvent);
+    on<SignInUserEvent>(_onSignInUserEvent);
   }
 
   void _onSignUpUserEvent(SignUpUserEvent event, Emitter<SignUserState> emit) async {
@@ -24,6 +25,17 @@ class SignUserBloc extends Bloc<SignUserEvent, SignUserState> {
     failureOrUser.fold((l) {
       if (l is CreateUserFailure) {
         emit(ErrorUser(messages: l.messages));
+      }
+    }, (r) => emit(SignedUser(r)));
+  }
+
+  void _onSignInUserEvent(SignInUserEvent event, Emitter<SignUserState> emit) async {
+    emit(LoadingUser());
+    Either<Failure, User> failureOrUser = await signIn(SignInParams(email: event.email, password: event.password));
+
+    failureOrUser.fold((l) {
+      if (l is LoginUserFailure) {
+        emit(ErrorUser(messages: [l.message]));
       }
     }, (r) => emit(SignedUser(r)));
   }

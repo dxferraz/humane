@@ -22,3 +22,8 @@ String? confirmPasswordValidator(String confirmation, String password) {
   if (confirmation == password) return null;
   return "Password must match.";
 }
+
+String? isEmpty(String string) {
+  if (!isNull(string)) return null;
+  return "Password cannot be empty.";
+}

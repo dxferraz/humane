@@ -12,6 +12,7 @@ class InputField extends StatefulWidget {
   TextCapitalization? textCapitalization;
   String? tooltip;
   AutovalidateMode? autovalidateMode;
+  VoidCallback? onSubmit;
   late TextInputAction? textInputAction;
   late FocusNode? focusNode;
   late FocusNode? nextFocusNode;
@@ -29,6 +30,7 @@ class InputField extends StatefulWidget {
       this.autovalidateMode,
       this.type = TextInputType.text,
       this.tooltip,
+      this.onSubmit,
       this.hidden = false,
       this.paddingBottom = 10})
       : super(key: key);
@@ -70,8 +72,14 @@ class InputFieldState extends State<InputField> {
                 if (widget.focusNode != null && widget.nextFocusNode != null) {
                   _fieldFocusChange(context, widget.focusNode!, widget.nextFocusNode!);
                 }
+                print('hey');
+                if (widget.onSubmit != null) {
+                  print('onSubmit');
+
+                  widget.onSubmit!();
+                }
               },
-              autovalidateMode: widget.autovalidateMode == null ? AutovalidateMode.onUserInteraction : widget.autovalidateMode,
+              autovalidateMode: widget.autovalidateMode ?? AutovalidateMode.onUserInteraction,
               focusNode: widget.focusNode,
               textInputAction: widget.textInputAction,
               onChanged: widget.onChanged,

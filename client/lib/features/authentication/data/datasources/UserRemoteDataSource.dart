@@ -20,26 +20,50 @@ class UserRemoteDataSource extends IUserRemoteDataSource {
     final variables = {
       "input": {"name": name, "email": email, "password": password}
     };
-    final result = await _client.query(QueryOptions(
+    QueryResult result = await _client.mutate(MutationOptions(
       document: gql(GqlQuery.createUserQuery),
       variables: variables,
     ));
-    print(result);
     if (result.data == null) {
       if (result.exception != null && result.exception!.graphqlErrors.isNotEmpty) {
         List<String> messages =
             CreateUserFailure.fromMap(result.exception!.graphqlErrors[0].extensions!['exception']['response']['message'])!;
         return Left(CreateUserFailure(messages: messages));
       } else {
-        return Left(CreateUserFailure(messages: const ['Something went wrong! Please Try again later... sorry!']));
+        return const Left(CreateUserFailure(messages: ['Something went wrong! Please Try again later... sorry!']));
       }
     }
-    return Right(UserModel.fromMap(result.data!)!);
+
+    return Right(UserModel.fromMap(result.data!['createUser'])!);
   }
 
   @override
-  Future<Either<Failure, User>> signIn({required String email, required String password}) {
-    // TODO: implement signIn
-    throw UnimplementedError();
+  Future<Either<Failure, User>> signIn({required String email, required String password}) async {
+    final variables = {
+      "input": {"email": email, "password": password}
+    };
+    QueryResult result = await _client.mutate(MutationOptions(
+      document: gql(GqlQuery.loginUserQuery),
+      variables: variables,
+    ));
+
+    print(result);
+    LoginUserFailure defaultFailure =
+        const LoginUserFailure(message: 'Something went wrong with your request! Please Try again later... sorry!');
+
+    if (result.data == null) {
+      if (result.exception != null && result.exception!.graphqlErrors.isNotEmpty) {
+        final code = result.exception!.graphqlErrors[0].extensions!['exception']['response']['statusCode'];
+        if (code == 401) {
+          //Unauthorized
+          return const Left(LoginUserFailure(message: "Wrong email or password, please try again!"));
+        } else {
+          return Left(defaultFailure);
+        }
+      } else {
+        return Left(defaultFailure);
+      }
+    }
+    return Right(UserModel.fromMap(result.data!['loginUser'])!);
   }
 }
