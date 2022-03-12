@@ -13,12 +13,21 @@ class UserRepository extends IUserRepository {
 
   @override
   Future<Either<Failure, User>> signIn(String email, String password) {
-    // TODO: implement signUp
-    throw UnimplementedError();
+    return remoteDataSource.signIn(email: email, password: password);
   }
 
   @override
   Future<Either<Failure, User>> signUp(String name, String email, String password) {
     return remoteDataSource.signUp(name: name, email: email, password: password);
+  }
+
+  @override
+  Future<Either<Failure, String>> forgotPassword(String email) {
+    return remoteDataSource.forgotPassword(email: email);
+  }
+
+  @override
+  Future<Either<Failure, User>> updatePassword(String password) {
+    return remoteDataSource.updatePassword(password: password);
   }
 }

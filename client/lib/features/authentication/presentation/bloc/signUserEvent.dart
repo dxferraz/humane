@@ -49,3 +49,12 @@ class UpdateUserEvent extends SignUserEvent {
     return props;
   }
 }
+
+class ForgetPasswordEvent extends SignUserEvent {
+  final String email;
+
+  ForgetPasswordEvent({required this.email});
+
+  @override
+  List<Object> get props => [email];
+}

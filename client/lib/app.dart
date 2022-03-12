@@ -45,9 +45,7 @@ class HumaneApp extends StatelessWidget {
             secondaryHeaderColor: secondaryHeaderColor,
             fontFamily: "Montserrat-regular"),
         initialRoute: 'signIn',
-        onGenerateRoute: (settings) {
-          return CupertinoPageRoute(builder: (context) => routes[settings.name]!(context));
-        },
+        routes: routes,
       ),
     );
   }

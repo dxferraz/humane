@@ -5,21 +5,21 @@ import 'package:humane/core/usecases/usecase.dart';
 import 'package:humane/features/authentication/domain/entities/User.dart';
 import '../repositories/IUserRepository.dart';
 
-class SignIn extends UseCase<User, SignInParams> {
+class UpdatePassword extends UseCase<User, UpdatePasswordParams> {
   final IUserRepository repository;
-  SignIn(this.repository);
+  UpdatePassword(this.repository);
 
   @override
-  Future<Either<Failure, User>> call(SignInParams param) async {
-    return repository.signIn(param.email, param.password);
+  Future<Either<Failure, User>> call(UpdatePasswordParams param) async {
+    return repository.updatePassword(param.password);
   }
 }
 
-class SignInParams extends Equatable {
-  final String email;
+class UpdatePasswordParams extends Equatable {
   final String password;
-  const SignInParams({required this.email, required this.password});
+
+  const UpdatePasswordParams({required this.password});
 
   @override
-  List<Object> get props => [email, password];
+  List<Object> get props => [password];
 }
