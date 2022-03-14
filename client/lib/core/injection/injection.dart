@@ -5,8 +5,9 @@ import 'package:humane/features/authentication/data/datasources/UserLocalDataSou
 import 'package:humane/features/authentication/data/datasources/UserRemoteDataSource.dart';
 import 'package:humane/features/authentication/data/repositories/UserRepository.dart';
 import 'package:humane/features/authentication/domain/repositories/IUserRepository.dart';
-import 'package:humane/features/authentication/domain/usecases/signin.dart';
-import 'package:humane/features/authentication/domain/usecases/signup.dart';
+import 'package:humane/features/authentication/domain/usecases/forgotPassword.dart';
+import 'package:humane/features/authentication/domain/usecases/signIn.dart';
+import 'package:humane/features/authentication/domain/usecases/signUp.dart';
 import 'package:humane/features/authentication/presentation/bloc/signUserBloc.dart';
 import 'package:data_connection_checker/data_connection_checker.dart';
 import 'package:get_it/get_it.dart';
@@ -21,12 +22,13 @@ void setup(config) {
   getIt.registerLazySingleton<FlavorConfig>(() => config);
 
   //Scoped Models
-  getIt.registerFactory<SignUserBloc>(() => SignUserBloc(signIn: getIt(), signUp: getIt()));
+  getIt.registerFactory<SignUserBloc>(() => SignUserBloc(signIn: getIt(), signUp: getIt(), forgotPassword: getIt()));
   getIt.registerLazySingleton<GraphQLClient>(() => registerModule.gqlClient);
 
   //Use cases
   getIt.registerLazySingleton<SignIn>(() => SignIn(getIt()));
   getIt.registerLazySingleton<SignUp>(() => SignUp(getIt()));
+  getIt.registerLazySingleton<ForgotPassword>(() => ForgotPassword(getIt()));
 
   // Repository
   getIt.registerLazySingleton<IUserRepository>(() => UserRepository(remoteDataSource: getIt(), localDataSource: getIt()));

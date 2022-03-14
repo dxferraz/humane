@@ -31,3 +31,12 @@ class SignedUser extends SignUserState {
   @override
   List<Object> get props => [user];
 }
+
+class EmailSent extends SignUserState {
+  final String message;
+
+  const EmailSent(this.message);
+
+  @override
+  List<Object> get props => [message];
+}
