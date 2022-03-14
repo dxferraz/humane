@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:humane/Utils/constants.dart';
+import 'package:humane/Utils/colors.dart';
 import 'package:humane/routes.dart';
 
 class HumaneApp extends StatelessWidget {
-  const HumaneApp({Key? key}) : super(key: key);
+  const HumaneApp({Key? key, required this.showHome}) : super(key: key);
+
+  final bool showHome;
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +28,7 @@ class HumaneApp extends StatelessWidget {
             primaryColor: appDarkOrange,
             secondaryHeaderColor: appDarkBlue,
             fontFamily: "Cairo"),
-        initialRoute: 'intro',
+        initialRoute: showHome ? 'signUp' : 'intro',
         routes: routes,
       ),
     );

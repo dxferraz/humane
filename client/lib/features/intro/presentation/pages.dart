@@ -1,9 +1,10 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide Title;
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:humane/Utils/constants.dart';
-import 'package:websafe_svg/websafe_svg.dart';
+import 'package:humane/Utils/colors.dart';
+import 'package:humane/shared_components/Title.dart';
 
 Widget introPage({
+  required BuildContext context,
   required String urlImage,
   required String title,
   required String subtitle,
@@ -11,22 +12,17 @@ Widget introPage({
     Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
+        const SizedBox(height: 60),
         SizedBox(
-          height: 300,
+          height: MediaQuery.of(context).size.height * 0.3,
           child: SvgPicture.asset(
             urlImage,
-            width: 300,
+            width: 200,
           ),
         ),
-        const SizedBox(height: 60),
-        Text(
-          title,
-          style: const TextStyle(
-            color: appGrey,
-            fontFamily: 'Cairo',
-            fontSize: 28,
-            fontWeight: FontWeight.w700,
-          ),
+        const SizedBox(height: 20),
+        Title(
+          text: title,
         ),
         const SizedBox(height: 20),
         Container(

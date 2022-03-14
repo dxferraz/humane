@@ -38,6 +38,8 @@ dependencies:
   data_connection_checker: ^0.3.4
   smooth_page_indicator: ^1.0.0+2
   websafe_svg: ^2.1.1
+  rive: ^0.7.22
+  shared_preferences: ^2.0.12
 
 dev_dependencies:
   flutter_test:
