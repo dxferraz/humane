@@ -69,8 +69,8 @@ class _IntroPageState extends State<IntroPage> {
             ),
           ),
           Container(
-            padding: const EdgeInsets.only(top: 20),
-            height: 80,
+            padding: const EdgeInsets.only(top: 40),
+            height: 110,
             child: Image.asset(
               'assets/images/humaneLogo.png',
               width: double.infinity,

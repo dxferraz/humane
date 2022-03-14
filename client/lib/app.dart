@@ -21,8 +21,8 @@ class HumaneApp extends StatelessWidget {
     }
 
     return AnnotatedRegion<SystemUiOverlayStyle>(
-      value: const SystemUiOverlayStyle(
-        statusBarColor: appDarkOrange,
+      value: SystemUiOverlayStyle(
+        statusBarColor: appDarkOrange.withAlpha(120),
       ),
       child: MaterialApp(
         builder: (context, child) {

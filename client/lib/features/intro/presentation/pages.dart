@@ -14,7 +14,7 @@ Widget introPage({
       children: [
         const SizedBox(height: 60),
         SizedBox(
-          height: MediaQuery.of(context).size.height * 0.3,
+          height: MediaQuery.of(context).size.height * 0.25,
           child: SvgPicture.asset(
             urlImage,
             width: 200,
