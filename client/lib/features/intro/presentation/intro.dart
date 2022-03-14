@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:humane/Utils/colors.dart';
+import 'package:humane/core/components/GradientButton.dart';
 import 'package:humane/features/intro/presentation/pages.dart';
-import 'package:humane/shared_components/GradientButton.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 

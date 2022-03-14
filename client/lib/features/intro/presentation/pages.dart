@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart' hide Title;
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:humane/Utils/colors.dart';
-import 'package:humane/shared_components/Title.dart';
+import 'package:humane/core/components/Title.dart';
 
 Widget introPage({
   required BuildContext context,
