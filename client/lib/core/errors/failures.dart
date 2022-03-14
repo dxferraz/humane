@@ -5,9 +5,9 @@ abstract class Failure extends Equatable {
 }
 
 class CreateUserFailure extends Failure {
-  List<String>? messages;
+  final List<String>? messages;
 
-  CreateUserFailure({this.messages});
+  const CreateUserFailure({this.messages});
 
   static List<String>? fromMap(List<dynamic> map) {
     List<String> list = [];
@@ -17,4 +17,13 @@ class CreateUserFailure extends Failure {
 
   @override
   List<Object?> get props => [messages];
+}
+
+class LoginUserFailure extends Failure {
+  final String message;
+
+  const LoginUserFailure({required this.message});
+
+  @override
+  List<Object?> get props => [message];
 }

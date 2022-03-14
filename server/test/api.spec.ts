@@ -5,7 +5,7 @@ import request from 'supertest';
 
 import { AppModule } from '../src/app.module';
 import { configureApp, createApp } from '../src/main';
-import { Await } from '../src/types';
+import { Await } from '../src/core/types';
 
 let app: Await<ReturnType<typeof createApp>>;
 let server: any;

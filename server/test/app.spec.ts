@@ -2,7 +2,7 @@ import request from 'supertest';
 import { inspect } from 'util';
 
 import { createApp } from '../src/main';
-import { Await } from '../src/types';
+import { Await } from '../src/core/types';
 
 const d = (o: any) =>
     console.log(inspect(o, { colors: true, depth: null, compact: true }));
