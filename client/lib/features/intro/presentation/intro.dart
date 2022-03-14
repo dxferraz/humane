@@ -51,29 +51,26 @@ class _IntroPageState extends State<IntroPage> {
                   context: context,
                   urlImage: 'assets/images/connectIllustration.svg',
                   title: 'Conectando Pessoas',
-                  subtitle:
-                      'Um aplicativo que conecta doadores com pessoas necessitadas.',
+                  subtitle: 'Um aplicativo que conecta doadores com pessoas necessitadas.',
                 ),
                 introPage(
                   context: context,
                   urlImage: 'assets/images/donationIllustration.svg',
                   title: 'Doe qualquer coisa',
-                  subtitle:
-                      'Através do aplicativo é possível doar roupas, móveis e qualquer objeto!',
+                  subtitle: 'Através do aplicativo é possível doar roupas, móveis e qualquer objeto!',
                 ),
                 introPage(
                   context: context,
                   urlImage: 'assets/images/developerIllustration.svg',
                   title: 'Seja um parceiro!',
-                  subtitle:
-                      'Ajude os nossos desenvolvedores a manter este aplicativo com a sua doação!',
+                  subtitle: 'Ajude os nossos desenvolvedores a manter este aplicativo com a sua doação!',
                 ),
               ],
             ),
           ),
           Container(
-            padding: const EdgeInsets.only(top: 20),
-            height: 80,
+            padding: const EdgeInsets.only(top: 40),
+            height: 110,
             child: Image.asset(
               'assets/images/humaneLogo.png',
               width: double.infinity,
@@ -129,10 +126,9 @@ class _IntroPageState extends State<IntroPage> {
                       isLastPage
                           ? GradientButton(
                               onPressed: () async {
-                                final prefs =
-                                    await SharedPreferences.getInstance();
+                                final prefs = await SharedPreferences.getInstance();
                                 prefs.setBool('showHome', true);
-                                Navigator.pushNamed(context, 'signUp');
+                                Navigator.pushNamed(context, 'signIn');
                               },
                               text: 'Fazer Login',
                               bottomLeftColor: appDarkOrange,

@@ -38,9 +38,6 @@ class SignUp extends HookWidget {
         body: BlocListener<SignUserBloc, SignUserState>(
           listener: (context, state) {
             if (state is SignedUser) {
-              // Clear form on success
-              _formKey.currentState?.reset();
-
               WidgetsBinding.instance?.addPostFrameCallback(
                 (_) {
                   Navigator.push(
@@ -56,6 +53,9 @@ class SignUp extends HookWidget {
                   );
                 },
               );
+
+              // Clear form on success
+              _formKey.currentState?.reset();
             }
             if (state is ErrorUser && state.messages != null && state.messages!.isNotEmpty) {
               String message = state.messages!.join("\n");

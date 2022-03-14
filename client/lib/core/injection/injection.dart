@@ -1,3 +1,4 @@
+import 'package:humane/core/flavors/flavorConfig.dart';
 import 'package:humane/core/injection/registerModule.dart';
 import 'package:humane/core/network/networkInfo.dart';
 import 'package:humane/features/authentication/data/datasources/UserLocalDataSource.dart';
@@ -14,8 +15,11 @@ import 'package:graphql_flutter/graphql_flutter.dart';
 
 final getIt = GetIt.instance;
 
-void setup() {
+void setup(config) {
   final registerModule = RegisterModule();
+
+  // Flavor Config
+  getIt.registerLazySingleton<FlavorConfig>(() => config);
 
   //Scoped Models
   getIt.registerFactory<SignUserBloc>(() => SignUserBloc(signIn: getIt(), signUp: getIt(), forgotPassword: getIt()));
