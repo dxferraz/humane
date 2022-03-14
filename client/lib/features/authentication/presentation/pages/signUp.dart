@@ -35,6 +35,25 @@ class SignUp extends HookWidget {
         key: _scaffoldKey,
         body: BlocListener<SignUserBloc, SignUserState>(
           listener: (context, state) {
+            if (state is SignedUser) {
+              WidgetsBinding.instance?.addPostFrameCallback(
+                (_) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => Successful(
+                        nextPage: 'home',
+                        title: "Welcome " + state.user.name.split(' ').first + "!",
+                        paragraph:
+                            "We sent you a veryfication email.\n\nDon't forget to verify your email to keep using all features of the app!",
+                      ),
+                    ),
+                  );
+                },
+              );
+              // Clear form on success
+              _formKey.currentState?.reset();
+            }
             if (state is ErrorUser && state.messages != null && state.messages!.isNotEmpty) {
               String message = state.messages!.join("\n");
               _scaffoldKey.currentState!.showSnackBar(SnackBar(

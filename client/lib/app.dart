@@ -1,53 +1,42 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:humane/Utils/colors.dart';
+import 'package:humane/core/flavors/flavorConfig.dart';
 import 'package:humane/routes.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HumaneApp extends StatelessWidget {
-  const HumaneApp({Key? key}) : super(key: key);
+  final FlavorConfig config;
+  final SharedPreferences prefs;
+
+  const HumaneApp({Key? key, required this.config, required this.prefs}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final showHome = prefs.getBool('showHome') ?? false;
+
     FocusScopeNode currentFocus = FocusScope.of(context);
     if (!currentFocus.hasPrimaryFocus && currentFocus.focusedChild != null) {
       currentFocus.focusedChild?.unfocus();
     }
 
-    // Colors
-    Color primaryColor = const Color(0xFFf16622);
-    Color secondaryHeaderColor = const Color(0xFF34658a);
-
-    Map<int, Color> colorCodes = {
-      50: Color.fromRGBO(241, 102, 34, .1),
-      100: Color.fromRGBO(241, 102, 34, .2),
-      200: Color.fromRGBO(241, 102, 34, .3),
-      300: Color.fromRGBO(241, 102, 34, .4),
-      400: Color.fromRGBO(241, 102, 34, .5),
-      500: Color.fromRGBO(241, 102, 34, .6),
-      600: Color.fromRGBO(241, 102, 34, .7),
-      700: Color.fromRGBO(241, 102, 34, .8),
-      800: Color.fromRGBO(241, 102, 34, .9),
-      900: Color.fromRGBO(241, 102, 34, 1),
-    };
-    MaterialColor orangeColor = MaterialColor(0xFFf16622, colorCodes);
-
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: const SystemUiOverlayStyle(
-        statusBarColor: Color(0xFFf16622),
+        statusBarColor: appDarkOrange,
       ),
       child: MaterialApp(
-        title: dotenv.env['APP_NAME']!,
+        builder: (context, child) {
+          if (config.name.isEmpty) {
+            return Container(child: child);
+          }
+          return Banner(message: config.name, color: config.bannerColor, location: BannerLocation.bottomEnd, child: child);
+        },
+        title: config.appTitle,
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
-            primarySwatch: orangeColor,
-            primaryColor: primaryColor,
-            secondaryHeaderColor: secondaryHeaderColor,
-            fontFamily: "Montserrat-regular"),
-        initialRoute: 'signIn',
-        onGenerateRoute: (settings) {
-          return CupertinoPageRoute(builder: (context) => routes[settings.name]!(context));
-        },
+            primarySwatch: orangeColor, primaryColor: primaryColor, secondaryHeaderColor: secondaryHeaderColor, fontFamily: 'Cairo'),
+        initialRoute: showHome ? 'signIn' : 'intro',
+        routes: routes,
       ),
     );
   }
