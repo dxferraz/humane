@@ -2,10 +2,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:humane/Utils/colors.dart';
 import 'package:humane/routes.dart';
 
 class HumaneApp extends StatelessWidget {
-  const HumaneApp({Key? key}) : super(key: key);
+  const HumaneApp({Key? key, required this.showHome}) : super(key: key);
+
+  final bool showHome;
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +46,7 @@ class HumaneApp extends StatelessWidget {
             primarySwatch: orangeColor,
             primaryColor: primaryColor,
             secondaryHeaderColor: secondaryHeaderColor,
-            fontFamily: "Montserrat-regular"),
+            fontFamily: 'Cairo'),
         initialRoute: 'signIn',
         routes: routes,
       ),

@@ -48,6 +48,10 @@ dependencies:
   path_provider: ^2.0.9
   dartz: ^0.10.1
   data_connection_checker: ^0.3.4
+  smooth_page_indicator: ^1.0.0+2
+  websafe_svg: ^2.1.1
+  rive: ^0.7.22
+  shared_preferences: ^2.0.12
 
 dev_dependencies:
   flutter_test:
@@ -67,37 +71,43 @@ flutter_icons:
 flutter:
   uses-material-design: true
   fonts:
-    - family: LEMONMILK-bold
-      fonts:
-        - asset: assets/fonts/lemon/LEMONMILK-Bold.otf
-    - family: LEMONMILK-light
-      fonts:
-        - asset: assets/fonts/lemon/LEMONMILK-Light.otf
-    - family: LEMONMILK-regular
-      fonts:
-        - asset: assets/fonts/lemon/LEMONMILK-Regular.otf
-    - family: Montserrat-bold
-      fonts:
-        - asset: assets/fonts/montserrat/Montserrat-Bold.otf
-    - family: Montserrat-light
-      fonts:
-        - asset: assets/fonts//montserrat/Montserrat-Light.otf
-    - family: Montserrat-regular
-      fonts:
-        - asset: assets/fonts/montserrat/Montserrat-Regular.otf
-    - family: Montserrat-medium
-      fonts:
-        - asset: assets/fonts/montserrat/Montserrat-Medium.otf
     - family: Humane
       fonts:
         - asset: assets/icons/Humane.ttf
+    - family: Cairo
+      fonts:
+        - asset: assets/fonts/cairo/Cairo-ExtraLight.ttf
+          weight: 200
+        - asset: assets/fonts/cairo/Cairo-Light.ttf
+          weight: 300
+        - asset: assets/fonts/cairo/Cairo-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/cairo/Cairo-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/cairo/Cairo-SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/cairo/Cairo-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/cairo/Cairo-Black.ttf
+          weight: 800
+    - family: Ubuntu
+      fonts:
+        - asset: assets/fonts/ubuntu/Ubuntu-Light.ttf
+          weight: 200
+        - asset: assets/fonts/ubuntu/Ubuntu-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/ubuntu/Ubuntu-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/ubuntu/Ubuntu-Bold.ttf
+          weight: 700
+      
 
   # uses-material-design: true
 
-
   assets:
     - .env.dev
+    - assets/icons/
+    - assets/images/
     - assets/animations/
-    - assets/icons/facebook.svg
-    - assets/icons/google.svg
+
 
