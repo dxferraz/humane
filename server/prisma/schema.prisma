@@ -86,7 +86,7 @@ model MissingPerson {
     height           Float?
     skin             Skin?
     description      String?    @db.LongText
-    reporter         User       @relation(fields: [reporterId], references: [id])
+    reporter         User       @relation(fields: [reporterId], references: [id], onDelete: Cascade)
     reporterId       Int
     disappearanceDay DateTime?
     eyeColor         EyeColor?
@@ -95,7 +95,7 @@ model MissingPerson {
 }
 
 model UsersOnChatRoom {
-    user       User     @relation(fields: [userId], references: [id])
+    user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
     userId     Int
     chatRoom   ChatRoom @relation(fields: [chatRoomId], references: [id])
     chatRoomId Int
@@ -114,7 +114,7 @@ model Message {
     id         Int      @id @default(autoincrement())
     message    String   @db.LongText
     timeStamp  DateTime @default(now())
-    author     User     @relation(fields: [authorId], references: [id])
+    author     User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
     authorId   Int
     chatRoom   ChatRoom @relation(fields: [chatRoomId], references: [id])
     chatRoomId Int
@@ -137,7 +137,7 @@ model Donation {
     categoryId  Int
     address     String
     zipCode     String
-    User        User     @relation(fields: [userId], references: [id])
+    User        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
     userId      Int
 }
 
@@ -151,6 +151,6 @@ model Necessity {
     categoryId  Int
     address     String
     zipCode     String
-    User        User     @relation(fields: [userId], references: [id])
+    User        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
     userId      Int
 }
