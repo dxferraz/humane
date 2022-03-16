@@ -1,3 +1,4 @@
+import 'package:http/http.dart';
 import 'package:humane/core/flavors/flavorConfig.dart';
 import 'package:humane/core/injection/registerModule.dart';
 import 'package:humane/core/network/networkInfo.dart';

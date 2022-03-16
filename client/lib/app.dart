@@ -35,7 +35,7 @@ class HumaneApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
             primarySwatch: orangeColor, primaryColor: primaryColor, secondaryHeaderColor: secondaryHeaderColor, fontFamily: 'Cairo'),
-        initialRoute: showHome ? 'signIn' : 'intro',
+        initialRoute: 'home',
         routes: routes,
       ),
     );

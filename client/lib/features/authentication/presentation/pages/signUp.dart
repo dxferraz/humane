@@ -212,6 +212,7 @@ class SignUp extends HookWidget {
                                   confirmPassword = value!;
                                 },
                               ),
+                              Text("I have read and agree to Humane's Privacy Policy and Terms and Conditions."),
                               LoadingButton(
                                 state: buttonState,
                                 text: 'Sign Up',
