@@ -1,5 +1,4 @@
 import { Field, InputType } from '@nestjs/graphql';
-import { MaxLength, MinLength } from 'class-validator';
 import { GraphQLUpload } from 'graphql-upload';
 
 /**

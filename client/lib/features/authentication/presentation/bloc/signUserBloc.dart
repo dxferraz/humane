@@ -29,7 +29,7 @@ class SignUserBloc extends Bloc<SignUserEvent, SignUserState> {
       if (l is CreateUserFailure) {
         emit(ErrorUser(messages: l.messages));
       }
-    }, (r) => emit(SignedUser(r)));
+    }, (user) => emit(SignedUser(user)));
   }
 
   void _onSignInUserEvent(SignInUserEvent event, Emitter<SignUserState> emit) async {
@@ -40,7 +40,7 @@ class SignUserBloc extends Bloc<SignUserEvent, SignUserState> {
       if (l is LoginUserFailure) {
         emit(ErrorUser(messages: [l.message]));
       }
-    }, (r) => emit(SignedUser(r)));
+    }, (user) => emit(SignedUser(user)));
   }
 
   void _onForgetPasswordEvent(ForgetPasswordEvent event, Emitter<SignUserState> emit) async {
@@ -51,6 +51,6 @@ class SignUserBloc extends Bloc<SignUserEvent, SignUserState> {
       if (l is LoginUserFailure) {
         emit(ErrorUser(messages: [l.message]));
       }
-    }, (r) => emit(EmailSent(r)));
+    }, (user) => emit(EmailSent(user)));
   }
 }
