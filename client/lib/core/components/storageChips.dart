@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:humane/core/components/Button.dart';
+import 'package:humane/core/theme/themeConstants.dart';
+import 'package:humane/core/components/PrimaryButton.dart';
 import 'package:humane/icons.dart';
 import 'package:flutter/material.dart' hide Title;
 
@@ -55,6 +56,7 @@ class StoragesChipOptionsState extends State<StoragesChipOptions> {
               }).toList()),
         ),
         Button(
+          background: appDarkOrangeColor,
           text: "Search",
           onPress: () {},
         ),

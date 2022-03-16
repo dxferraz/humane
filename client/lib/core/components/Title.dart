@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:humane/Utils/colors.dart';
+import 'package:humane/core/theme/themeConstants.dart';
 
 class Title extends StatelessWidget {
   String text;
@@ -24,7 +24,7 @@ class Title extends StatelessWidget {
         text,
         textAlign: align,
         style: TextStyle(
-          color: color ?? appDarkOrange,
+          color: color ?? appDarkOrangeColor,
           fontFamily: 'Cairo',
           fontSize: 28,
           fontWeight: FontWeight.w700,

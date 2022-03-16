@@ -5,7 +5,7 @@ import 'package:humane/core/components/Background.dart';
 import 'package:humane/core/components/InputField.dart';
 import 'package:humane/core/components/Line.dart';
 import 'package:humane/core/components/Title.dart';
-import 'package:humane/core/components/Button.dart';
+import 'package:humane/core/components/PrimaryButton.dart';
 import 'package:humane/core/injection/injection.dart';
 import 'package:humane/features/authentication/presentation/bloc/signUserBloc.dart';
 import 'package:humane/features/authentication/presentation/pages/validators/regex.dart';

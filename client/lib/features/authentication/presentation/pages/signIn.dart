@@ -13,7 +13,7 @@ import 'package:humane/icons.dart';
 import 'package:humane/core/components/Line.dart';
 import 'package:humane/core/components/TextLine.dart';
 import 'package:humane/core/components/Title.dart';
-import 'package:humane/core/components/Button.dart';
+import 'package:humane/core/components/PrimaryButton.dart';
 
 class SignIn extends HookWidget {
   final _formKey = GlobalKey<FormState>();

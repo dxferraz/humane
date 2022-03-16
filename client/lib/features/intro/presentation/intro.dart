@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:humane/Utils/colors.dart';
+import 'package:humane/core/theme/themeConstants.dart';
 import 'package:humane/core/components/GradientButton.dart';
 import 'package:humane/features/intro/presentation/pages.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -51,26 +51,29 @@ class _IntroPageState extends State<IntroPage> {
                   context: context,
                   urlImage: 'assets/images/connectIllustration.svg',
                   title: 'Conectando Pessoas',
-                  subtitle: 'Um aplicativo que conecta doadores com pessoas necessitadas.',
+                  subtitle:
+                      'Um aplicativo que conecta doadores com pessoas necessitadas.',
                 ),
                 introPage(
                   context: context,
                   urlImage: 'assets/images/donationIllustration.svg',
                   title: 'Doe qualquer coisa',
-                  subtitle: 'Através do aplicativo é possível doar roupas, móveis e qualquer objeto!',
+                  subtitle:
+                      'Através do aplicativo é possível doar roupas, móveis e qualquer objeto!',
                 ),
                 introPage(
                   context: context,
                   urlImage: 'assets/images/developerIllustration.svg',
                   title: 'Seja um parceiro!',
-                  subtitle: 'Ajude os nossos desenvolvedores a manter este aplicativo com a sua doação!',
+                  subtitle:
+                      'Ajude os nossos desenvolvedores a manter este aplicativo com a sua doação!',
                 ),
               ],
             ),
           ),
           Container(
-            padding: const EdgeInsets.only(top: 40),
-            height: 110,
+            padding: const EdgeInsets.only(top: 75),
+            height: 150,
             child: Image.asset(
               'assets/images/humaneLogo.png',
               width: double.infinity,
@@ -98,7 +101,7 @@ class _IntroPageState extends State<IntroPage> {
                             dotWidth: 10,
                             spacing: 10,
                             dotColor: Colors.grey,
-                            activeDotColor: appDarkOrange,
+                            activeDotColor: appDarkOrangeColor,
                           ),
                           onDotClicked: (index) => controller.animateToPage(
                             index,
@@ -117,7 +120,7 @@ class _IntroPageState extends State<IntroPage> {
                         child: const Text(
                           'Pular',
                           style: TextStyle(
-                            color: appLightOrange,
+                            color: appLightOrangeColor,
                             fontFamily: 'Cairo',
                             fontSize: 16,
                           ),
@@ -126,13 +129,14 @@ class _IntroPageState extends State<IntroPage> {
                       isLastPage
                           ? GradientButton(
                               onPressed: () async {
-                                final prefs = await SharedPreferences.getInstance();
+                                final prefs =
+                                    await SharedPreferences.getInstance();
                                 prefs.setBool('showHome', true);
                                 Navigator.pushNamed(context, 'signIn');
                               },
                               text: 'Fazer Login',
-                              bottomLeftColor: appDarkOrange,
-                              topRightColor: appLightOrange,
+                              bottomLeftColor: appDarkOrangeColor,
+                              topRightColor: appLightOrangeColor,
                             )
                           : GradientButton(
                               onPressed: () {
@@ -142,8 +146,8 @@ class _IntroPageState extends State<IntroPage> {
                                 );
                               },
                               text: 'Continuar',
-                              bottomLeftColor: appDarkOrange,
-                              topRightColor: appLightOrange,
+                              bottomLeftColor: appDarkOrangeColor,
+                              topRightColor: appLightOrangeColor,
                             ),
                     ],
                   ),

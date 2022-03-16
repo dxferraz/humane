@@ -5,24 +5,40 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "client",
-            "cwd": "client",
-            "request": "launch",
-            "type": "dart"
-        },
-        {
-            "name": "client (profile mode)",
+            "name": "dev",
             "cwd": "client",
             "request": "launch",
             "type": "dart",
-            "flutterMode": "profile"
+            "program": "lib/core/flavors/mainDev.dart",
+            "args": [
+                "--flavor",
+                "dev",
+                "--no-sound-null-safety"
+            ]
         },
         {
-            "name": "client (release mode)",
+            "name": "stage",
             "cwd": "client",
             "request": "launch",
             "type": "dart",
-            "flutterMode": "release"
+            "program": "lib/core/flavors/mainStage.dart",
+            "args": [
+                "--flavor",
+                "stage",
+                "--no-sound-null-safety"
+            ]
+        },
+        {
+            "name": "prod",
+            "cwd": "client",
+            "request": "launch",
+            "type": "dart",
+            "program": "lib/core/flavors/mainProd.dart",
+            "args": [
+                "--flavor",
+                "prod",
+                "--no-sound-null-safety"
+            ]
         }
     ]
 }
