@@ -8,13 +8,9 @@
             "name": "dev",
             "cwd": "client",
             "request": "launch",
-            "type": "dart",
+            "type": "dart", 
             "program": "lib/core/flavors/mainDev.dart",
-            "args": [
-                "--flavor",
-                "dev",
-                "--no-sound-null-safety"
-            ]
+            "args": ["--flavor", "dev", "--no-sound-null-safety"]
         },
         {
             "name": "stage",
@@ -22,11 +18,7 @@
             "request": "launch",
             "type": "dart",
             "program": "lib/core/flavors/mainStage.dart",
-            "args": [
-                "--flavor",
-                "stage",
-                "--no-sound-null-safety"
-            ]
+            "args": ["--flavor", "stage", "--no-sound-null-safety"]
         },
         {
             "name": "prod",
@@ -34,11 +26,7 @@
             "request": "launch",
             "type": "dart",
             "program": "lib/core/flavors/mainProd.dart",
-            "args": [
-                "--flavor",
-                "prod",
-                "--no-sound-null-safety"
-            ]
+            "args": ["--flavor", "prod", "--no-sound-null-safety"]
         }
     ]
 }

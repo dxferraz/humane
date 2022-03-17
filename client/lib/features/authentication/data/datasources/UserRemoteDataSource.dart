@@ -56,7 +56,7 @@ class UserRemoteDataSource extends IUserRemoteDataSource {
 
     if (result.data == null) {
       if (result.exception != null && result.exception!.graphqlErrors.isNotEmpty) {
-        final code = result.exception!.graphqlErrors[0].extensions!['exception']['response']['statusCode'];
+        final code = result.exception!.graphqlErrors[0].extensions!['data']['response']['statusCode'];
         if (code == 401) {
           //Unauthorized
           return const Left(LoginUserFailure(message: "Wrong email or password, please try again!"));

@@ -21,30 +21,33 @@ Map<int, Color> colorCodes = {
 MaterialColor orangeColor = MaterialColor(0xFFf16622, colorCodes);
 
 ThemeData lightTheme = ThemeData(
-
-    //app global colors
-    primarySwatch: orangeColor,
-    primaryColor: appDarkOrangeColor,
-    scaffoldBackgroundColor: Colors.white,
-    fontFamily: 'Cairo',
-    elevatedButtonTheme: ElevatedButtonThemeData(
-      style: ButtonStyle(
-        padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
-          const EdgeInsets.symmetric(horizontal: 40.0, vertical: 20.0),
-        ),
-        shape: MaterialStateProperty.all<OutlinedBorder>(
-          RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(50.0),
-          ),
+  //app global colors
+  primarySwatch: orangeColor,
+  primaryColor: appDarkOrangeColor,
+  scaffoldBackgroundColor: Colors.white,
+  fontFamily: 'Cairo',
+  elevatedButtonTheme: ElevatedButtonThemeData(
+    style: ButtonStyle(
+      padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
+        const EdgeInsets.symmetric(horizontal: 40.0, vertical: 20.0),
+      ),
+      shape: MaterialStateProperty.all<OutlinedBorder>(
+        RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(50.0),
         ),
       ),
     ),
-    textTheme: TextTheme(),
-    appBarTheme: const AppBarTheme(
-      backgroundColor: Colors.transparent,
-      elevation: 0,
-    ),
-    colorScheme: ColorScheme.fromSwatch().copyWith(secondary: appDarkBlueColor),
-    brightness: Brightness.light);
+  ),
+  //TODO set global textTheme
+  textTheme: const TextTheme(),
+  appBarTheme: const AppBarTheme(
+    backgroundColor: Colors.transparent,
+    elevation: 0,
+  ),
+  colorScheme: ColorScheme.fromSwatch().copyWith(
+    secondary: appDarkBlueColor,
+  ),
+  brightness: Brightness.light,
+);
 
 ThemeData darktheme = ThemeData(brightness: Brightness.dark);

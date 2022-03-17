@@ -8,7 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 ThemeManager _themeManager = ThemeManager();
 
-class HumaneApp extends StatefulWidget {
+class HumaneApp extends StatelessWidget {
   final FlavorConfig config;
   final SharedPreferences prefs;
 
@@ -49,16 +49,11 @@ class HumaneApp extends StatefulWidget {
         darkTheme: darktheme,
         themeMode: _themeManager.themeMode,
         //TODO Implement Theme switch button
-        initialRoute: showHome ? 'signIn' : 'intro',
+        //initialRoute: showHome ? 'signIn' : 'intro',
+        initialRoute: 'home',
         routes: routes,
       ),
     );
-  }
-
-  @override
-  State<StatefulWidget> createState() {
-    // TODO: implement createState
-    throw UnimplementedError();
   }
   //TODO set init state
 }
