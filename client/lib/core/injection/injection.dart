@@ -1,4 +1,3 @@
-import 'package:http/http.dart';
 import 'package:humane/core/flavors/flavorConfig.dart';
 import 'package:humane/core/injection/registerModule.dart';
 import 'package:humane/core/network/networkInfo.dart';
@@ -13,6 +12,7 @@ import 'package:humane/features/authentication/presentation/bloc/signUserBloc.da
 import 'package:data_connection_checker/data_connection_checker.dart';
 import 'package:get_it/get_it.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
+import 'package:humane/features/listActions/bloc/ListActionsBloc.dart';
 
 final getIt = GetIt.instance;
 
@@ -24,6 +24,7 @@ void setup(config) {
 
   //Scoped Models
   getIt.registerFactory<SignUserBloc>(() => SignUserBloc(signIn: getIt(), signUp: getIt(), forgotPassword: getIt()));
+  getIt.registerFactory<ListActionsBloc>(() => ListActionsBloc());
   getIt.registerLazySingleton<GraphQLClient>(() => registerModule.gqlClient);
 
   //Use cases

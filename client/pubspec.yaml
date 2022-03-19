@@ -104,18 +104,6 @@ flutter:
   # uses-material-design: true
 
   assets:
-    - .env.dev
-    - assets/icons/facebook.svg
-    - assets/icons/google.svg
-    - assets/icons/signin.svg
-    - assets/icons/storage.svg
-    - assets/icons/detailTop.svg
-    - assets/icons/detailTopOpacity.svg
-    - assets/icons/detailBottom.svg
-    - assets/icons/promobg.svg
-    - assets/icons/intro1.svg
-    - assets/icons/intro2.svg
-    - assets/icons/intro3.svg
     - lib/core/flavors/env/
     - assets/icons/
     - assets/images/
