@@ -1,18 +1,15 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:humane/Utils/colors.dart';
 import 'package:humane/core/components/RadialButtons.dart';
 import 'package:humane/features/listActions/bloc/ListActionsBloc.dart';
 import 'package:humane/features/listActions/components/MenuBackground.dart';
-import 'package:humane/features/listActions/presentation/listActions.dart';
 import 'package:humane/icons.dart';
 
 class MainMenu extends StatefulWidget {
-  ListActionsState state;
+  final ListActionsState state;
 
-  MainMenu({required this.state});
+  const MainMenu({Key? key, required this.state}) : super(key: key);
 
   @override
   MainMenuState createState() => MainMenuState();
@@ -47,9 +44,6 @@ class MainMenuState extends State<MainMenu> with TickerProviderStateMixin {
 
     double prevPos = curvePosition;
     int activeIndex = 2;
-    Widget donationIcon;
-    Widget missingPersonIcon;
-    Widget NecessitiesIcon;
 
     if (widget.state is ListDonationsState) {
       activeIndex = 2;
@@ -69,10 +63,6 @@ class MainMenuState extends State<MainMenu> with TickerProviderStateMixin {
       curvePosition = size.width * 0.33;
     }
 
-    double movePos = curvePosition;
-
-    print(activeIndex);
-
     Widget menuRadial = RadialMenu(
       showOpenButtons: showOpenButtons,
       opened: menuOpened,
@@ -85,29 +75,40 @@ class MainMenuState extends State<MainMenu> with TickerProviderStateMixin {
           height: buttomSize,
           width: buttomSize,
           child: FittedBox(
-            child: FloatingActionButton(
-              backgroundColor: orangeColor,
-              child: Offstage(
-                offstage: menuOpened,
-                child: Icon(Humane.close),
+            child: Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [
+                    orangeColor,
+                    Colors.orange,
+                  ],
+                ),
+                shape: BoxShape.circle,
               ),
-              // child: const Icon(Humane.donate),
-              elevation: 0.1,
-              onPressed: () async {
-                setState(() {
-                  menuOpened = !menuOpened;
-                  showOpenButtons = true;
-                });
-                if (!menuOpened) {
-                  openAnimationController.forward();
-                } else {
-                  await Future.delayed(const Duration(seconds: 1));
-                  openAnimationController.reverse();
+              child: FloatingActionButton(
+                onPressed: () async {
+                  if (activeIndex != 2) return;
                   setState(() {
-                    showOpenButtons = false;
+                    menuOpened = !menuOpened;
+                    showOpenButtons = true;
                   });
-                }
-              },
+                  if (!menuOpened) {
+                    openAnimationController.forward();
+                  } else {
+                    await Future.delayed(const Duration(seconds: 1));
+                    openAnimationController.reverse();
+                    setState(() {
+                      showOpenButtons = false;
+                    });
+                  }
+                },
+                backgroundColor: Colors.transparent,
+                elevation: 0,
+                child: Offstage(
+                  offstage: menuOpened,
+                  child: const Icon(Humane.close),
+                ),
+              ),
             ),
           ),
         ),
@@ -165,7 +166,7 @@ class MainMenuState extends State<MainMenu> with TickerProviderStateMixin {
       offstage: !menuOpened,
       child: Align(
         alignment: Alignment.bottomCenter,
-        child: Container(
+        child: SizedBox(
           width: size.width,
           height: 70,
           child: Padding(
@@ -197,7 +198,7 @@ class MainMenuState extends State<MainMenu> with TickerProviderStateMixin {
   Widget _buildSideButton(bool active, Size size, Offset translateOffset, String text, IconData icon, onTap) {
     return GestureDetector(
       onTap: onTap,
-      child: Container(
+      child: SizedBox(
         width: size.width * 0.33,
         child: Column(
           children: [
@@ -213,7 +214,7 @@ class MainMenuState extends State<MainMenu> with TickerProviderStateMixin {
               height: 25,
               child: Text(
                 text,
-                style: TextStyle(fontWeight: FontWeight.normal, color: Colors.white),
+                style: const TextStyle(fontWeight: FontWeight.normal, color: Colors.white),
               ),
             ),
           ],
@@ -227,33 +228,25 @@ class MainMenuState extends State<MainMenu> with TickerProviderStateMixin {
       backgroundColor: Colors.red,
       child: const Icon(Humane.clothes),
       elevation: 0,
-      onPressed: () async {
-        print('hey');
-      },
+      onPressed: () async {},
     ),
     FloatingActionButton(
       backgroundColor: Colors.green,
       child: const Icon(Humane.sleep),
       elevation: 0,
-      onPressed: () async {
-        print('hey');
-      },
+      onPressed: () async {},
     ),
     FloatingActionButton(
       backgroundColor: Colors.orange,
-      child: Transform.translate(offset: Offset(-5, 0), child: const Icon(Humane.furniture)),
+      child: Transform.translate(offset: const Offset(-5, 0), child: const Icon(Humane.furniture)),
       elevation: 0,
-      onPressed: () async {
-        print('hey');
-      },
+      onPressed: () async {},
     ),
     FloatingActionButton(
       backgroundColor: Colors.blue,
       child: const Icon(Humane.food),
       elevation: 0,
-      onPressed: () async {
-        print('hey');
-      },
+      onPressed: () async {},
     )
   ];
 

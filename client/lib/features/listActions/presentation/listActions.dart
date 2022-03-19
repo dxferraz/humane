@@ -17,8 +17,6 @@ class ListRecentPostsState extends State<ListActions> with SingleTickerProviderS
 
   @override
   Widget build(BuildContext context) {
-    final Size size = MediaQuery.of(context).size;
-
     return BlocProvider<ListActionsBloc>(
       create: (BuildContext context) => getIt<ListActionsBloc>(),
       child: Scaffold(
