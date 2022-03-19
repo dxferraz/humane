@@ -2,11 +2,10 @@ import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:humane/core/errors/failures.dart';
+import 'package:humane/features/authentication/domain/entities/User.dart';
 import 'package:humane/features/authentication/domain/usecases/forgotPassword.dart';
 import 'package:humane/features/authentication/domain/usecases/signIn.dart';
 import 'package:humane/features/authentication/domain/usecases/signUp.dart';
-
-import '../../domain/entities/User.dart';
 part 'signUserEvent.dart';
 part 'signUserState.dart';
 
