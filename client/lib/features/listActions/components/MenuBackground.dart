@@ -102,6 +102,7 @@ class MenuBackground extends CustomPainter {
     // linePath.close();
     menuPath.close();
     // canvas.drawPath(linePath, linePaint);
+    canvas.drawShadow(menuPath.shift(const Offset(0, -6)), Colors.black.withAlpha(80), 2.0, true);
     canvas.drawPath(menuPath, paint);
   }
 

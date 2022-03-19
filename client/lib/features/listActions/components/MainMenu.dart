@@ -83,6 +83,14 @@ class MainMenuState extends State<MainMenu> with TickerProviderStateMixin {
                     Colors.orange,
                   ],
                 ),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.2),
+                    spreadRadius: 3,
+                    blurRadius: 4,
+                    offset: Offset(0, 5), // changes position of shadow
+                  ),
+                ],
                 shape: BoxShape.circle,
               ),
               child: FloatingActionButton(
