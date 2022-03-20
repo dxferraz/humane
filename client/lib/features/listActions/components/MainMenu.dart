@@ -105,6 +105,7 @@ class MainMenuState extends State<MainMenu> with TickerProviderStateMixin {
                   } else {
                     await Future.delayed(const Duration(seconds: 1));
                     openAnimationController.reverse();
+                    await Future.delayed(const Duration(seconds: 1));
                     setState(() {
                       showOpenButtons = false;
                     });
@@ -123,25 +124,31 @@ class MainMenuState extends State<MainMenu> with TickerProviderStateMixin {
       ),
     );
 
-    Widget openMenuTitle = Center(
-      heightFactor: 5,
-      child: Opacity(
-        opacity: (1 - openAnimation.value),
-        child: const Padding(
-          padding: EdgeInsets.symmetric(horizontal: 50.0),
-          child: Text(
-            "What king of donation do you want to make?",
-            textAlign: TextAlign.center,
-            style: TextStyle(color: Colors.white, fontSize: 22),
+    Widget openMenuTitle = Offstage(
+      offstage: !showOpenButtons,
+      child: Center(
+        heightFactor: 5,
+        child: Opacity(
+          opacity: (1 - openAnimation.value),
+          child: const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 50.0),
+            child: Text(
+              "What king of donation do you want to make?",
+              textAlign: TextAlign.center,
+              style: TextStyle(color: Colors.white, fontSize: 22),
+            ),
           ),
         ),
       ),
     );
 
-    Widget blackBackground = Container(
-      width: size.width,
-      height: size.height,
-      color: Colors.black.withAlpha((200 * (1 - openAnimation.value)).toInt()),
+    Widget blackBackground = Offstage(
+      offstage: !showOpenButtons,
+      child: Container(
+        width: size.width,
+        height: size.height,
+        color: Colors.black.withAlpha((200 * (1 - openAnimation.value)).toInt()),
+      ),
     );
 
     Widget mainButton = Align(
