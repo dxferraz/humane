@@ -12,10 +12,10 @@ class MainMenu extends StatefulWidget {
   const MainMenu({Key? key, required this.state}) : super(key: key);
 
   @override
-  MainMenuState createState() => MainMenuState();
+  _MainMenuState createState() => _MainMenuState();
 }
 
-class MainMenuState extends State<MainMenu> with TickerProviderStateMixin {
+class _MainMenuState extends State<MainMenu> with TickerProviderStateMixin {
   late AnimationController openAnimationController;
 
   late Animation<double> openAnimation;
@@ -150,15 +150,12 @@ class MainMenuState extends State<MainMenu> with TickerProviderStateMixin {
         color: Colors.black.withAlpha((200 * (1 - openAnimation.value)).toInt()),
       ),
     );
-
     Widget mainButton = Align(
       alignment: Alignment.bottomLeft,
       child: SizedBox(
         width: size.width,
-        height: size.height,
-        child: Transform.translate(
-            offset: Offset(0, (size.height / 2.55 * (openAnimation.value)) + (size.height / 10) * (1 - openAnimation.value)),
-            child: menuRadial),
+        height: 150 + size.height * (1 - openAnimation.value),
+        child: menuRadial,
       ),
     );
 
