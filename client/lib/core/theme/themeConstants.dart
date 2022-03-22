@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 
 const appDarkOrangeColor = Color(0xFFF26419);
@@ -28,8 +30,12 @@ ThemeData lightTheme = ThemeData(
   fontFamily: 'Cairo',
   elevatedButtonTheme: ElevatedButtonThemeData(
     style: ButtonStyle(
+      textStyle: MaterialStateProperty.all<TextStyle>(
+        const TextStyle(fontSize: 16),
+      ),
+      backgroundColor: MaterialStateProperty.all<Color>(appDarkOrangeColor),
       padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
-        const EdgeInsets.symmetric(horizontal: 40.0, vertical: 20.0),
+        const EdgeInsets.symmetric(horizontal: 30.0, vertical: 20.0),
       ),
       shape: MaterialStateProperty.all<OutlinedBorder>(
         RoundedRectangleBorder(

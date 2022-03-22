@@ -37,7 +37,7 @@ class LoadingButtonState extends State<LoadingButton> {
           onEnd: () => setState(() {
                 isAnimating = !isAnimating;
               }),
-          width: widget.state == LoadingButtonStates.init ? buttonWidth : 60,
+          width: widget.state == LoadingButtonStates.init ? buttonWidth : 40,
 
           // If Button State is Submiting or Completed  show 'buttonCircular' widget as below
           child: buildButton(isDone)),

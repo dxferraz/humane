@@ -17,13 +17,15 @@ class HumaneApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    TextTheme textTheme= Theme.of(context).textTheme;
+    TextTheme textTheme = Theme.of(context).textTheme;
     final showHome = prefs.getBool('showHome') ?? false;
 
     FocusScopeNode currentFocus = FocusScope.of(context);
     if (!currentFocus.hasPrimaryFocus && currentFocus.focusedChild != null) {
       currentFocus.focusedChild?.unfocus();
     }
+
+    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
 
     return AnnotatedRegion<SystemUiOverlayStyle>(
       //Set status bar icon color
@@ -50,10 +52,9 @@ class HumaneApp extends StatelessWidget {
         themeMode: _themeManager.themeMode,
         //TODO Implement Theme switch button
         //initialRoute: showHome ? 'signIn' : 'intro',
-        initialRoute: 'home',
+        initialRoute: 'signIn',
         routes: routes,
       ),
     );
   }
-  //TODO set init state
 }
