@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:humane/Utils/colors.dart';
+import 'package:humane/core/theme/themeConstants.dart';
 
 class Profile extends StatelessWidget {
   final Widget firstIcon;
@@ -23,7 +23,7 @@ class Profile extends StatelessWidget {
             clipper: AppBarProfileClipper(childHeight),
             child: Container(
               padding: const EdgeInsets.only(top: 30.0),
-              color: appLightBlue,
+              color: appLightBlueColor,
               height: height,
               child: Container(),
             ),

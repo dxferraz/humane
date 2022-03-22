@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:humane/Utils/colors.dart';
+import 'package:humane/core/theme/themeConstants.dart';
 import 'package:humane/icons.dart';
 import 'package:material_floating_search_bar/material_floating_search_bar.dart';
 
@@ -90,7 +90,7 @@ class _TopMenuState extends State<TopMenu> {
                     child: const Icon(
                       Humane.menu,
                       size: 25,
-                      color: appDarkBlue,
+                      color: appDarkBlueColor,
                     ),
                   ),
                 ),
@@ -143,7 +143,7 @@ class _TopMenuState extends State<TopMenu> {
                     child: const Icon(
                       Humane.message,
                       size: 25,
-                      color: appDarkBlue,
+                      color: appDarkBlueColor,
                     ),
                   ),
                 ),
