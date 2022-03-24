@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:humane/Utils/colors.dart';
 import 'package:humane/core/components/RadialButtons.dart';
-import 'package:humane/features/listActions/bloc/ListActionsBloc.dart';
-import 'package:humane/features/listActions/components/MenuBackground.dart';
+import 'package:humane/features/listActions/presentation/bloc/ListActionsBloc.dart';
+import 'package:humane/features/listActions/presentation/components/MenuBackground.dart';
 import 'package:humane/icons.dart';
 
 class MainMenu extends StatefulWidget {
@@ -45,7 +45,7 @@ class _MainMenuState extends State<MainMenu> with TickerProviderStateMixin {
     double prevPos = curvePosition;
     int activeIndex = 2;
 
-    if (widget.state is ListDonationsState) {
+    if (widget.state is ListInitialState) {
       activeIndex = 2;
       menuRadialPosition = size.width * 0.5 - buttomSize / 2;
       curvePosition = 0;
@@ -202,8 +202,27 @@ class _MainMenuState extends State<MainMenu> with TickerProviderStateMixin {
       ),
     );
 
+    Widget gradient = Align(
+      alignment: Alignment.bottomCenter,
+      child: Container(
+        width: size.width,
+        height: 110,
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            stops: [0.15, 0.35],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              Color.fromARGB(0, 224, 233, 242),
+              Color.fromARGB(255, 224, 233, 242),
+            ],
+          ),
+        ),
+      ),
+    );
+
     return Stack(
-      children: [menuBackground, blackBackground, openMenuTitle, mainButton, sideButtons],
+      children: [gradient, menuBackground, blackBackground, openMenuTitle, mainButton, sideButtons],
     );
   }
 

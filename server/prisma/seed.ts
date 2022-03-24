@@ -9,10 +9,11 @@ async function main() {
 
     await prisma.image.deleteMany({});
     await prisma.missingPerson.deleteMany({});
+    await prisma.user.deleteMany({});
     await prisma.usersOnChatRoom.deleteMany({});
     await prisma.chatRoom.deleteMany({});
     await prisma.message.deleteMany({});
-    await prisma.user.deleteMany({});
+    await prisma.category.deleteMany({});
 
     // Missing Person Images
     await prisma.image.create({
@@ -34,6 +35,12 @@ async function main() {
         },
     });
 
+    const category = await prisma.category.create({
+        data: {
+            title: 'Clothes',
+        },
+    });
+
     const user2 = await prisma.user.create({
         data: {
             name: 'John Doe',
@@ -41,6 +48,118 @@ async function main() {
             birthdate: new Date(2002, 9, 11),
             phone: '123456',
             password: 'rooT123!@',
+            donations: {
+                create: [
+                    {
+                        title: 'Clothes for my son!',
+                        description:
+                            'My son is 12 years old and lorem ipsum dolor sit amet, consequat purus, eu aliquam sapien tellus commodo tortor. Donec vel nibh sit amet risus.',
+                        address: '27 Stoneybrook Crt',
+                        zipCode: 'B3M3K5',
+                        category: {
+                            connect: {
+                                id: category.id,
+                            },
+                        },
+                    },
+                    {
+                        title: 'Clothes for my son!1',
+                        description:
+                            'My son is 12 years old and lorem ipsum dolor sit amet, consequat purus, eu aliquam sapien tellus commodo tortor. Donec vel nibh sit amet risus.',
+                        address: '27 Stoneybrook Crt',
+                        zipCode: 'B3M3K5',
+                        category: {
+                            connect: {
+                                id: category.id,
+                            },
+                        },
+                    },
+                    {
+                        title: 'Clothes for my son!2',
+                        description:
+                            'My son is 12 years old and lorem ipsum dolor sit amet, consequat purus, eu aliquam sapien tellus commodo tortor. Donec vel nibh sit amet risus.',
+                        address: '27 Stoneybrook Crt',
+                        zipCode: 'B3M3K5',
+                        category: {
+                            connect: {
+                                id: category.id,
+                            },
+                        },
+                    },
+                    {
+                        title: 'Clothes for my son!3',
+                        description:
+                            'My son is 12 years old and lorem ipsum dolor sit amet, consequat purus, eu aliquam sapien tellus commodo tortor. Donec vel nibh sit amet risus.',
+                        address: '27 Stoneybrook Crt',
+                        zipCode: 'B3M3K5',
+                        category: {
+                            connect: {
+                                id: category.id,
+                            },
+                        },
+                    },
+                    {
+                        title: 'Clothes for my son!4',
+                        description:
+                            'My son is 12 years old and lorem ipsum dolor sit amet, consequat purus, eu aliquam sapien tellus commodo tortor. Donec vel nibh sit amet risus.',
+                        address: '27 Stoneybrook Crt',
+                        zipCode: 'B3M3K5',
+                        category: {
+                            connect: {
+                                id: category.id,
+                            },
+                        },
+                    },
+                    {
+                        title: 'Clothes for my son!5',
+                        description:
+                            'My son is 12 years old and lorem ipsum dolor sit amet, consequat purus, eu aliquam sapien tellus commodo tortor. Donec vel nibh sit amet risus.',
+                        address: '27 Stoneybrook Crt',
+                        zipCode: 'B3M3K5',
+                        category: {
+                            connect: {
+                                id: category.id,
+                            },
+                        },
+                    },
+                    {
+                        title: 'Clothes for my son!6',
+                        description:
+                            'My son is 12 years old and lorem ipsum dolor sit amet, consequat purus, eu aliquam sapien tellus commodo tortor. Donec vel nibh sit amet risus.',
+                        address: '27 Stoneybrook Crt',
+                        zipCode: 'B3M3K5',
+                        category: {
+                            connect: {
+                                id: category.id,
+                            },
+                        },
+                    },
+                    {
+                        title: 'Clothes for my son!7',
+                        description:
+                            'My son is 12 years old and lorem ipsum dolor sit amet, consequat purus, eu aliquam sapien tellus commodo tortor. Donec vel nibh sit amet risus.',
+                        address: '27 Stoneybrook Crt',
+                        zipCode: 'B3M3K5',
+                        category: {
+                            connect: {
+                                id: category.id,
+                            },
+                        },
+                    },
+                    {
+                        title: 'Clothes for my son!8',
+                        description:
+                            'My son is 12 years old and lorem ipsum dolor sit amet, consequat purus, eu aliquam sapien tellus commodo tortor. Donec vel nibh sit amet risus.',
+                        address: '27 Stoneybrook Crt',
+                        zipCode: 'B3M3K5',
+                        category: {
+                            connect: {
+                                id: category.id,
+                            },
+                        },
+                    },
+                ],
+            },
             thumbnail:
                 'https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_1280.png',
             reports: {
