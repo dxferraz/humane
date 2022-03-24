@@ -1,8 +1,6 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
-import { Prisma } from '@prisma/client';
 import * as bcrypt from 'bcrypt';
-import { AuthService } from 'src/modules/auth/auth.service';
-
+import { Injectable } from '@nestjs/common';
+import { Prisma } from '@prisma/client';
 import { UserRepository } from './user.repository';
 
 /**
@@ -42,10 +40,6 @@ export class UserService {
             return null;
         }
         return user;
-    }
-
-    async findOneRandom() {
-        return this.repository.randomUser();
     }
 
     async create(data: Prisma.UserCreateInput) {

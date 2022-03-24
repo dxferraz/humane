@@ -4,7 +4,7 @@ import {
     ForbiddenException,
 } from '@nestjs/common';
 import { GqlContextType } from '@nestjs/graphql';
-import { UserUpdateInput } from 'src/modules/user/models/user-update.input';
+import { UserUpdateInput } from 'src/modules/user/inputs/user-update.input';
 import {
     dateValidation,
     minMaxValidation,

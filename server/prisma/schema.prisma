@@ -97,7 +97,7 @@ model MissingPerson {
 model UsersOnChatRoom {
     user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
     userId     Int
-    chatRoom   ChatRoom @relation(fields: [chatRoomId], references: [id])
+    chatRoom   ChatRoom @relation(fields: [chatRoomId], references: [id], onDelete: Cascade)
     chatRoomId Int
     createdAt  DateTime @default(now())
 
