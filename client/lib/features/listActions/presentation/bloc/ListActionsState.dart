@@ -15,7 +15,7 @@ class LoadingDonationsState extends ListActionsState {
 }
 
 class LoadedDonationsState extends ListActionsState {
-  List<Donation> listDonation;
+  List<Edge<Donation>> listDonation;
 
   LoadedDonationsState({required this.listDonation});
 
@@ -24,6 +24,10 @@ class LoadedDonationsState extends ListActionsState {
 }
 
 class ErrorDonationsState extends ListActionsState {
+  String? message;
+
+  ErrorDonationsState({this.message});
+
   @override
   List<Object> get props => [];
 }

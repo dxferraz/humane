@@ -1,14 +1,14 @@
 import 'package:dartz/dartz.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:humane/core/errors/failures.dart';
-import 'package:humane/features/authentication/domain/entities/User.dart';
 import 'package:humane/features/listActions/data/datasources/gqlQueries.dart';
 import 'package:humane/features/listActions/data/models/donationModel.dart';
-import 'package:humane/features/listActions/domain/entities/category.dart';
+import 'package:humane/features/listActions/data/models/paginationModel.dart';
 import 'package:humane/features/listActions/domain/entities/donation.dart';
+import 'package:humane/features/listActions/domain/entities/pagination.dart';
 
 abstract class IDonationRemoteDatasource {
-  Future<Either<Failure, List<Donation>>> getDonations(int take, int? cursor);
+  Future<Either<Failure, Pagination<Donation>>> getDonations(int take, int? cursor);
 }
 
 class DonationRemoteDatasource extends IDonationRemoteDatasource {
@@ -17,7 +17,7 @@ class DonationRemoteDatasource extends IDonationRemoteDatasource {
   DonationRemoteDatasource(this._client);
 
   @override
-  Future<Either<Failure, List<Donation>>> getDonations(int take, int? cursor) async {
+  Future<Either<Failure, Pagination<Donation>>> getDonations(int take, int? cursor) async {
     final variables = {
       "input": {"take": take, "cursor": cursor}
     };
@@ -27,17 +27,19 @@ class DonationRemoteDatasource extends IDonationRemoteDatasource {
     ));
 
     if (result.data == null) {
-      return const Left(CreateUserFailure(messages: ['Something went wrong! Please Try again later... sorry!']));
+      return const Left(RequestErrorFailure(message: 'Something went wrong with your request! Please, try again later... Sorry!'));
     }
 
-    List<Donation> donations = [];
+    List<Edge<Donation>> edges = [];
 
-    List<dynamic> nodes = result.data!['donations']['edges'];
+    List<dynamic> edgesData = result.data!['donations']['edges'];
+    Map<String, dynamic> pageInfoData = result.data!['donations']['pageInfo'];
 
-    for (var node in nodes) {
-      donations.add(DonationModel.fromMap(node['node'])!);
+    for (var edge in edgesData) {
+      edges.add(Edge<Donation>(cursor: edge['cursor'], node: DonationModel.fromMap(edge['node'])!));
     }
 
-    return Right(donations);
+    PageInfo pageInfo = PageInfoModel.fromMap(pageInfoData)!;
+    return Right(Pagination(edges: edges as List<Edge<Donation>>, pageInfo: pageInfo));
   }
 }

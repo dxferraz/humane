@@ -45,7 +45,7 @@ class _MainMenuState extends State<MainMenu> with TickerProviderStateMixin {
     double prevPos = curvePosition;
     int activeIndex = 2;
 
-    if (widget.state is ListInitialState) {
+    if (widget.state is ListInitialState || (widget.state is LoadedDonationsState)) {
       activeIndex = 2;
       menuRadialPosition = size.width * 0.5 - buttomSize / 2;
       curvePosition = 0;

@@ -29,7 +29,7 @@ void setup(config) {
 
   //Scoped Models
   getIt.registerFactory<SignUserBloc>(() => SignUserBloc(signIn: getIt(), signUp: getIt(), forgotPassword: getIt()));
-  getIt.registerFactory<ListActionsBloc>(() => ListActionsBloc(listDonation: getIt()));
+  getIt.registerLazySingleton<ListActionsBloc>(() => ListActionsBloc(listDonation: getIt()));
   getIt.registerLazySingleton<GraphQLClient>(() => registerModule.gqlClient);
 
   //Use cases
