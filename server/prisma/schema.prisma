@@ -131,7 +131,7 @@ model Donation {
     id          Int      @id @default(autoincrement())
     thumbnails  Image[]
     title       String
-    description String
+    description String   @db.LongText
     timeStamp   DateTime @default(now())
     category    Category @relation(fields: [categoryId], references: [id])
     categoryId  Int

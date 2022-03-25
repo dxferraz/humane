@@ -8,13 +8,7 @@ class Title extends StatelessWidget {
   TextAlign align;
   EdgeInsets padding = const EdgeInsets.all(0);
 
-  Title(
-      {Key? key,
-      required this.text,
-      this.size = 30,
-      this.align = TextAlign.start,
-      this.color})
-      : super(key: key);
+  Title({Key? key, required this.text, this.size = 30, this.align = TextAlign.start, this.color}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +20,7 @@ class Title extends StatelessWidget {
         style: TextStyle(
           color: color ?? appDarkOrangeColor,
           fontFamily: 'Cairo',
-          fontSize: 28,
+          fontSize: 22,
           fontWeight: FontWeight.w700,
         ),
       ),

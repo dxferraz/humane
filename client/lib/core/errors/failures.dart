@@ -27,3 +27,12 @@ class LoginUserFailure extends Failure {
   @override
   List<Object?> get props => [message];
 }
+
+class RequestErrorFailure extends Failure {
+  final String message;
+
+  const RequestErrorFailure({required this.message});
+
+  @override
+  List<Object?> get props => [message];
+}

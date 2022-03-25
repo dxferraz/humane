@@ -3,6 +3,7 @@ import { ObjectType } from '@nestjs/graphql';
 import { Image } from './image.model';
 import { Category } from './category.model';
 import { Int } from '@nestjs/graphql';
+import { User } from 'src/modules/user/models/user.model';
 
 @ObjectType()
 export class Donation {
@@ -29,4 +30,7 @@ export class Donation {
 
     @Field(() => String, { nullable: false })
     zipCode!: string;
+
+    @Field(() => User, { nullable: false })
+    user!: User;
 }
