@@ -1,5 +1,4 @@
 import { Injectable } from '@nestjs/common';
-import { User } from '@prisma/client';
 import { PrismaRepository } from 'src/core/prisma';
 
 /**
@@ -14,11 +13,4 @@ export class UserRepository {
     count = this.prisma.user.count;
 
     constructor(private readonly prisma: PrismaRepository) {}
-
-    async randomUser() {
-        const [result] = await this.prisma.$queryRaw<
-            User[]
-        >/* SQL */ `SELECT * FROM "User" ORDER BY random() LIMIT 1`;
-        return result;
-    }
 }

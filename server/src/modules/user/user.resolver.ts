@@ -1,10 +1,5 @@
 import { UserWhereUniqueInput } from '@generated/user/user-where-unique.input';
-import {
-    ForbiddenException,
-    UnauthorizedException,
-    UseGuards,
-    UseInterceptors,
-} from '@nestjs/common';
+import { UnauthorizedException, UseGuards, UseInterceptors } from '@nestjs/common';
 import {
     Args,
     Context,
@@ -28,13 +23,13 @@ import { AuthService } from '../auth/auth.service';
 import { SessionService } from '../auth/session.service';
 import { GraphQLContext, PassportUserFields } from '../../core/types';
 import { User } from './models/user.model';
-import { UserCreateInput } from './models/user-create.input';
-import { UserLoginInput } from './models/user-login.input';
-import { UserUpdateInput } from './models/user-update.input';
+import { UserCreateInput } from '../user/inputs/user-create.input';
+import { UserLoginInput } from '../user/inputs/user-login.input';
+import { UserUpdateInput } from '../user/inputs/user-update.input';
 import { UserService } from './user.service';
 import { ResponseAddAccessTokenToHeaderInterceptor } from 'src/modules/auth/interceptors/response-add-access-token-to-header.interceptor';
 import { UpdateUserValidation } from 'src/core/update-user-decorator';
-import { ForgotPasswordInput } from './models/forgot-password.input';
+import { ForgotPasswordInput } from '../user/inputs/forgot-password.input';
 import { MailService } from '../mail/mail.service';
 
 /**

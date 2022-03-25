@@ -72,8 +72,9 @@ class _TopMenuState extends State<TopMenu> {
     }
 
     return Container(
+      color: Colors.white,
       child: SizedBox(
-        height: 65,
+        height: 70,
         child: Row(
           children: [
             Container(

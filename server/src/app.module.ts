@@ -14,6 +14,7 @@ import { NestologModule } from 'nestolog';
 import { AppEnvironment } from './app.environment';
 import { UserModule } from './modules/user/user.module';
 import { ConfigModule } from '@nestjs/config';
+import { DonationModule } from './modules/donations/donation.module';
 
 export async function graphqlModuleFactory(logger: Logger) {
     return {
@@ -68,6 +69,7 @@ export async function graphqlModuleFactory(logger: Logger) {
             isGlobal: true, // no need to import into other modules
         }),
         UserModule,
+        DonationModule,
         PrismaModule.registerAsync({
             inject: [AppEnvironment],
             useFactory: async (appEnvironment: AppEnvironment) => {

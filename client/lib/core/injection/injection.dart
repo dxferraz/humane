@@ -12,7 +12,12 @@ import 'package:humane/features/authentication/presentation/bloc/signUserBloc.da
 import 'package:data_connection_checker/data_connection_checker.dart';
 import 'package:get_it/get_it.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
-import 'package:humane/features/listActions/bloc/ListActionsBloc.dart';
+import 'package:humane/features/listActions/data/datasources/DonationLocalDatasource.dart';
+import 'package:humane/features/listActions/data/datasources/DonationRemoteDatasource.dart';
+import 'package:humane/features/listActions/data/repositories/DonationRepository.dart';
+import 'package:humane/features/listActions/domain/repositories/IDonationRepository.dart';
+import 'package:humane/features/listActions/domain/usecases/listDonations.dart';
+import 'package:humane/features/listActions/presentation/bloc/ListActionsBloc.dart';
 
 final getIt = GetIt.instance;
 
@@ -24,16 +29,17 @@ void setup(config) {
 
   //Scoped Models
   getIt.registerFactory<SignUserBloc>(() => SignUserBloc(signIn: getIt(), signUp: getIt(), forgotPassword: getIt()));
-  getIt.registerFactory<ListActionsBloc>(() => ListActionsBloc());
+  getIt.registerFactory<ListActionsBloc>(() => ListActionsBloc(listDonation: getIt()));
   getIt.registerLazySingleton<GraphQLClient>(() => registerModule.gqlClient);
 
   //Use cases
   getIt.registerLazySingleton<SignIn>(() => SignIn(getIt()));
   getIt.registerLazySingleton<SignUp>(() => SignUp(getIt()));
   getIt.registerLazySingleton<ForgotPassword>(() => ForgotPassword(getIt()));
-
+  getIt.registerLazySingleton<ListDonation>(() => ListDonation(getIt()));
   // Repository
   getIt.registerLazySingleton<IUserRepository>(() => UserRepository(remoteDataSource: getIt(), localDataSource: getIt()));
+  getIt.registerLazySingleton<IDonationRepository>(() => DonationRepository(remoteDatasource: getIt(), localDatasource: getIt()));
 
   // Data sources
   getIt.registerLazySingleton<IUserRemoteDataSource>(
@@ -41,6 +47,12 @@ void setup(config) {
   );
   getIt.registerLazySingleton<IUserLocalDataSource>(
     () => UserLocalDataSource(),
+  );
+  getIt.registerLazySingleton<IDonationRemoteDatasource>(
+    () => DonationRemoteDatasource(getIt<GraphQLClient>()),
+  );
+  getIt.registerLazySingleton<IDonationLocalDatasource>(
+    () => DonationLocalDatasource(),
   );
 
   // Network Checker

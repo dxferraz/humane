@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:humane/core/components/RadialButtons.dart';
 import 'package:humane/core/theme/themeConstants.dart';
-import 'package:humane/features/listActions/bloc/ListActionsBloc.dart';
-import 'package:humane/features/listActions/components/MenuBackground.dart';
+import 'package:humane/features/listActions/presentation/bloc/ListActionsBloc.dart';
+import 'package:humane/features/listActions/presentation/components/MenuBackground.dart';
 import 'package:humane/icons.dart';
 
 class MainMenu extends StatefulWidget {
@@ -28,12 +28,14 @@ class _MainMenuState extends State<MainMenu> with TickerProviderStateMixin {
 
   @override
   void initState() {
-    openAnimationController = AnimationController(vsync: this, duration: const Duration(milliseconds: 300));
+    openAnimationController = AnimationController(
+        vsync: this, duration: const Duration(milliseconds: 300));
 
-    openAnimation = Tween<double>(begin: 1, end: 0).animate(openAnimationController)
-      ..addListener(() {
-        setState(() {});
-      });
+    openAnimation =
+        Tween<double>(begin: 1, end: 0).animate(openAnimationController)
+          ..addListener(() {
+            setState(() {});
+          });
 
     super.initState();
   }
@@ -45,7 +47,7 @@ class _MainMenuState extends State<MainMenu> with TickerProviderStateMixin {
     double prevPos = curvePosition;
     int activeIndex = 2;
 
-    if (widget.state is ListDonationsState) {
+    if (widget.state is ListInitialState) {
       activeIndex = 2;
       menuRadialPosition = size.width * 0.5 - buttomSize / 2;
       curvePosition = 0;
@@ -77,9 +79,9 @@ class _MainMenuState extends State<MainMenu> with TickerProviderStateMixin {
           child: FittedBox(
             child: Container(
               decoration: BoxDecoration(
-                gradient: LinearGradient(
+                gradient: const LinearGradient(
                   colors: [
-                    orangeColor,
+                    appDarkOrangeColor,
                     Colors.orange,
                   ],
                 ),
@@ -147,7 +149,8 @@ class _MainMenuState extends State<MainMenu> with TickerProviderStateMixin {
       child: Container(
         width: size.width,
         height: size.height,
-        color: Colors.black.withAlpha((200 * (1 - openAnimation.value)).toInt()),
+        color:
+            Colors.black.withAlpha((200 * (1 - openAnimation.value)).toInt()),
       ),
     );
     Widget mainButton = Align(
@@ -168,7 +171,9 @@ class _MainMenuState extends State<MainMenu> with TickerProviderStateMixin {
         builder: (BuildContext context, double value, Widget? child) {
           return CustomPaint(
             size: Size(size.width, menuSize),
-            painter: MenuBackground(upDownAnimation: openAnimation.value, horizontalAnimation: value),
+            painter: MenuBackground(
+                upDownAnimation: openAnimation.value,
+                horizontalAnimation: value),
           );
         },
       ),
@@ -186,14 +191,32 @@ class _MainMenuState extends State<MainMenu> with TickerProviderStateMixin {
             child: Row(
               children: [
                 _buildSideButton(
-                    activeIndex == 1, size, Offset(activeIndex == 1 ? -8 : -6, activeIndex == 1 ? -29 : 0), "Necessities", Humane.help, () {
-                  BlocProvider.of<ListActionsBloc>(context).add(OpenNecessitiesEvent());
+                    activeIndex == 1,
+                    size,
+                    Offset(
+                        activeIndex == 1 ? -8 : -6, activeIndex == 1 ? -29 : 0),
+                    "Necessities",
+                    Humane.help, () {
+                  BlocProvider.of<ListActionsBloc>(context)
+                      .add(OpenNecessitiesEvent());
                 }),
-                _buildSideButton(activeIndex == 2, size, Offset(1, activeIndex == 2 ? -31 : 0), "Donations", Humane.donate, () {
-                  BlocProvider.of<ListActionsBloc>(context).add(OpenDonationEvent());
+                _buildSideButton(
+                    activeIndex == 2,
+                    size,
+                    Offset(1, activeIndex == 2 ? -31 : 0),
+                    "Donations",
+                    Humane.donate, () {
+                  BlocProvider.of<ListActionsBloc>(context)
+                      .add(OpenDonationEvent());
                 }),
-                _buildSideButton(activeIndex == 3, size, Offset(3, activeIndex == 3 ? -31 : 0), "Missing Persons", Humane.find, () {
-                  BlocProvider.of<ListActionsBloc>(context).add(OpenMissingPersonsEvent());
+                _buildSideButton(
+                    activeIndex == 3,
+                    size,
+                    Offset(3, activeIndex == 3 ? -31 : 0),
+                    "Missing Persons",
+                    Humane.find, () {
+                  BlocProvider.of<ListActionsBloc>(context)
+                      .add(OpenMissingPersonsEvent());
                 })
               ],
             ),
@@ -202,12 +225,39 @@ class _MainMenuState extends State<MainMenu> with TickerProviderStateMixin {
       ),
     );
 
+    Widget gradient = Align(
+      alignment: Alignment.bottomCenter,
+      child: Container(
+        width: size.width,
+        height: 110,
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            stops: [0.15, 0.35],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              Color.fromARGB(0, 224, 233, 242),
+              Color.fromARGB(255, 224, 233, 242),
+            ],
+          ),
+        ),
+      ),
+    );
+
     return Stack(
-      children: [menuBackground, blackBackground, openMenuTitle, mainButton, sideButtons],
+      children: [
+        gradient,
+        menuBackground,
+        blackBackground,
+        openMenuTitle,
+        mainButton,
+        sideButtons
+      ],
     );
   }
 
-  Widget _buildSideButton(bool active, Size size, Offset translateOffset, String text, IconData icon, onTap) {
+  Widget _buildSideButton(bool active, Size size, Offset translateOffset,
+      String text, IconData icon, onTap) {
     return GestureDetector(
       onTap: onTap,
       child: SizedBox(
@@ -226,7 +276,8 @@ class _MainMenuState extends State<MainMenu> with TickerProviderStateMixin {
               height: 25,
               child: Text(
                 text,
-                style: const TextStyle(fontWeight: FontWeight.normal, color: Colors.white),
+                style: const TextStyle(
+                    fontWeight: FontWeight.normal, color: Colors.white),
               ),
             ),
           ],
@@ -250,7 +301,8 @@ class _MainMenuState extends State<MainMenu> with TickerProviderStateMixin {
     ),
     FloatingActionButton(
       backgroundColor: Colors.orange,
-      child: Transform.translate(offset: const Offset(-5, 0), child: const Icon(Humane.furniture)),
+      child: Transform.translate(
+          offset: const Offset(-5, 0), child: const Icon(Humane.furniture)),
       elevation: 0,
       onPressed: () async {},
     ),
