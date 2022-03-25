@@ -17,6 +17,12 @@ export class UserService {
         return this.repository.update({ data, where });
     }
 
+    async findOneById(id: number) {
+        return await this.repository.findUnique({
+            where: { id },
+        });
+    }
+
     async findByCredentials(data: { email: string; password: string }) {
         let user = await this.repository.findUnique({
             where: { email: data.email },
