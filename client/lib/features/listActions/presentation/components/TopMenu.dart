@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:humane/Utils/colors.dart';
 import 'package:humane/core/theme/themeConstants.dart';
 import 'package:humane/icons.dart';
 import 'package:material_floating_search_bar/material_floating_search_bar.dart';
