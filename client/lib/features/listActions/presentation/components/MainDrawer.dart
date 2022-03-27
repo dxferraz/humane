@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:humane/core/components/Button.dart';
+import 'package:humane/core/components/PrimaryButton.dart';
+import 'package:humane/core/theme/themeConstants.dart';
 
 class MainDrawer extends StatefulWidget {
   MainDrawer({Key? key}) : super(key: key);
@@ -21,6 +22,7 @@ class _MainDrawerState extends State<MainDrawer> {
                 Navigator.pushNamed(context, 'signIn');
               },
               text: "Sign In",
+              background: appDarkOrangeColor,
             ),
             Divider(),
             Button(
@@ -28,6 +30,7 @@ class _MainDrawerState extends State<MainDrawer> {
                 Navigator.pushNamed(context, 'signUp');
               },
               text: "Sign Up",
+              background: appDarkOrangeColor,
             ),
           ],
         ),
