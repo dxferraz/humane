@@ -50,7 +50,6 @@ class UserRemoteDataSource extends IUserRemoteDataSource {
       variables: variables,
     ));
 
-    print(result);
     LoginUserFailure defaultFailure =
         const LoginUserFailure(message: 'Something went wrong with your request! Please Try again later... sorry!');
 
@@ -80,7 +79,6 @@ class UserRemoteDataSource extends IUserRemoteDataSource {
       variables: variables,
     ));
 
-    print(result);
     LoginUserFailure defaultFailure =
         const LoginUserFailure(message: 'Something went wrong with your request! Please Try again later... sorry!');
 

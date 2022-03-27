@@ -18,11 +18,15 @@ import 'package:humane/features/listActions/data/repositories/DonationRepository
 import 'package:humane/features/listActions/domain/repositories/IDonationRepository.dart';
 import 'package:humane/features/listActions/domain/usecases/listDonations.dart';
 import 'package:humane/features/listActions/presentation/bloc/ListActionsBloc.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 final getIt = GetIt.instance;
 
-void setup(config) {
+Future<void> setup(config) async {
   final registerModule = RegisterModule();
+
+  // Shared Preferences
+  getIt.registerSingleton(await SharedPreferences.getInstance());
 
   // Flavor Config
   getIt.registerLazySingleton<FlavorConfig>(() => config);

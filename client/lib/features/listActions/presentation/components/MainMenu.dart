@@ -196,33 +196,15 @@ class _MainMenuState extends State<MainMenu> with TickerProviderStateMixin {
                   padding: const EdgeInsets.only(top: 10.0),
                   child: Row(
                     children: [
-                      _buildSideButton(
-                          activeIndex == 1,
-                          size,
-                          Offset(activeIndex == 1 ? -8 : -6,
-                              activeIndex == 1 ? -29 : 0),
-                          "Necessities",
-                          Humane.help, () {
-                        BlocProvider.of<ListActionsBloc>(context)
-                            .add(OpenNecessitiesEvent());
+                      _buildSideButton(activeIndex == 1, size, Offset(activeIndex == 1 ? -8 : -6, activeIndex == 1 ? -29 : 0),
+                          "Necessities", Humane.help, () {
+                        BlocProvider.of<ListActionsBloc>(context).add(OpenNecessitiesEvent());
                       }),
-                      _buildSideButton(
-                          activeIndex == 2,
-                          size,
-                          Offset(1, activeIndex == 2 ? -31 : 0),
-                          "Donations",
-                          Humane.donate, () {
-                        BlocProvider.of<ListActionsBloc>(context)
-                            .add(OpenDonationEvent());
+                      _buildSideButton(activeIndex == 2, size, Offset(1, activeIndex == 2 ? -31 : 0), "Donations", Humane.donate, () {
+                        BlocProvider.of<ListActionsBloc>(context).add(OpenDonationEvent());
                       }),
-                      _buildSideButton(
-                          activeIndex == 3,
-                          size,
-                          Offset(3, activeIndex == 3 ? -31 : 0),
-                          "Missing Persons",
-                          Humane.find, () {
-                        BlocProvider.of<ListActionsBloc>(context)
-                            .add(OpenMissingPersonsEvent());
+                      _buildSideButton(activeIndex == 3, size, Offset(3, activeIndex == 3 ? -31 : 0), "Missing Persons", Humane.find, () {
+                        BlocProvider.of<ListActionsBloc>(context).add(OpenMissingPersonsEvent());
                       })
                     ],
                   ),

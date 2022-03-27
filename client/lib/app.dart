@@ -5,13 +5,14 @@ import 'package:humane/core/theme/themeConstants.dart';
 import 'package:humane/core/theme/themeManager.dart';
 import 'package:humane/routes.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:humane/core/injection/injection.dart';
 
 ThemeManager _themeManager = ThemeManager();
 
 class HumaneApp extends StatelessWidget {
   final FlavorConfig config;
-  final SharedPreferences prefs;
 
+<<<<<<< HEAD
   const HumaneApp({Key? key, required this.config, required this.prefs})
       : super(key: key);
 
@@ -19,6 +20,13 @@ class HumaneApp extends StatelessWidget {
   Widget build(BuildContext context) {
     TextTheme textTheme = Theme.of(context).textTheme;
     final showHome = prefs.getBool('showHome') ?? false;
+=======
+  const HumaneApp({Key? key, required this.config}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final showIntro = getIt<SharedPreferences>().getBool('showIntro') ?? true;
+>>>>>>> 799f59683be5ac3455ee72c081d3ca631514cdc1
 
     FocusScopeNode currentFocus = FocusScope.of(context);
     if (!currentFocus.hasPrimaryFocus && currentFocus.focusedChild != null) {

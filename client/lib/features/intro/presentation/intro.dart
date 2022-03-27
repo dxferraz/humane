@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:humane/core/theme/themeConstants.dart';
 import 'package:humane/core/components/GradientButton.dart';
+import 'package:humane/core/injection/injection.dart';
 import 'package:humane/features/intro/presentation/pages.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -116,7 +117,10 @@ class _IntroPageState extends State<IntroPage> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       TextButton(
-                        onPressed: () => Navigator.pushNamed(context, 'signUp'),
+                        onPressed: () {
+                          Navigator.pushNamed(context, 'home');
+                          getIt<SharedPreferences>().setBool('showIntro', false);
+                        },
                         child: const Text(
                           'Pular',
                           style: TextStyle(
