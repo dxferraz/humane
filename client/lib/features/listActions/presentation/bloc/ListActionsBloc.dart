@@ -12,6 +12,7 @@ part 'ListActionsState.dart';
 
 class ListActionsBloc extends Bloc<ListActionsEvent, ListActionsState> {
   ListDonation listDonation;
+  PageInfo? donationPageInfo;
 
   ListActionsBloc({required this.listDonation}) : super(ListInitialState()) {
     on<OpenDonationEvent>(_onOpenDonationEvent, transformer: (events, mapper) {
@@ -27,14 +28,21 @@ class ListActionsBloc extends Bloc<ListActionsEvent, ListActionsState> {
 
   _onOpenDonationEvent(ListActionsEvent event, Emitter<ListActionsState> emit) async {
     emit(LoadingDonationsState());
-    const page = PageParams(take: 10);
+    // Number of donations to return per request:
+    const TAKE = 10;
+    int? cursor = donationPageInfo == null ? null : int.parse(donationPageInfo!.endCursor);
+
+    PageParams page = PageParams(take: 10, cursor: cursor);
+    print(page.cursor);
     Either<Failure, Pagination<Donation>> FailuireOrDonation = await listDonation(page);
 
     FailuireOrDonation.fold(
         (error) => {
               if (error is RequestErrorFailure) {emit(ErrorDonationsState(message: error.message))}
-            },
-        (Pagination<Donation> page) => emit(LoadedDonationsState(listDonation: page.edges)));
+            }, (Pagination<Donation> page) {
+      donationPageInfo = page.pageInfo;
+      emit(LoadedDonationsState(listDonation: page.edges));
+    });
   }
 
   _onOpenMissingPersonsEvent(ListActionsEvent event, Emitter<ListActionsState> emit) {

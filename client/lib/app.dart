@@ -4,16 +4,16 @@ import 'package:humane/Utils/colors.dart';
 import 'package:humane/core/flavors/flavorConfig.dart';
 import 'package:humane/routes.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:humane/core/injection/injection.dart';
 
 class HumaneApp extends StatelessWidget {
   final FlavorConfig config;
-  final SharedPreferences prefs;
 
-  const HumaneApp({Key? key, required this.config, required this.prefs}) : super(key: key);
+  const HumaneApp({Key? key, required this.config}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final showHome = prefs.getBool('showHome') ?? false;
+    final showIntro = getIt<SharedPreferences>().getBool('showIntro') ?? true;
 
     FocusScopeNode currentFocus = FocusScope.of(context);
     if (!currentFocus.hasPrimaryFocus && currentFocus.focusedChild != null) {
@@ -36,7 +36,7 @@ class HumaneApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
             primarySwatch: orangeColor, primaryColor: primaryColor, secondaryHeaderColor: secondaryHeaderColor, fontFamily: 'Cairo'),
-        initialRoute: 'home',
+        initialRoute: showIntro ? 'intro' : 'home',
         routes: routes,
       ),
     );

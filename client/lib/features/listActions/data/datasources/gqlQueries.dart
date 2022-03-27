@@ -4,9 +4,18 @@ mixin GqlQuery {
     edges{
       node{
         title
+        zipCode
         description
+        timeStamp
+        category{
+          title
+        }
         thumbnails{
           url
+        }
+        user{
+          name
+          thumbnail
         }
       }
       cursor

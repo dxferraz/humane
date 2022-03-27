@@ -37,6 +37,6 @@ export class User {
     })
     birthdate?: String;
 
-    @Field(type => GraphQLUpload)
-    thumbnail?: GraphQLUpload;
+    @Field(() => String)
+    thumbnail?: String;
 }

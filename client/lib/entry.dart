@@ -7,6 +7,6 @@ import 'app.dart';
 
 Future<void> entry(FlavorConfig config) async {
   await dotenv.load(fileName: config.env);
-  setup(config);
-  runApp(HumaneApp(config: config, prefs: await SharedPreferences.getInstance()));
+  await setup(config);
+  runApp(HumaneApp(config: config));
 }
