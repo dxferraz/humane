@@ -7,6 +7,9 @@ import { UserCreateNestedOneWithoutNecessitiesInput } from '../user/user-create-
 @InputType()
 export class NecessityCreateInput {
 
+    @Field(() => ImageCreateNestedManyWithoutNecessityInput, {nullable:true})
+    thumbnails?: ImageCreateNestedManyWithoutNecessityInput;
+
     @Field(() => String, {nullable:false})
     title!: string;
 
@@ -16,17 +19,14 @@ export class NecessityCreateInput {
     @Field(() => Date, {nullable:true})
     timeStamp?: Date | string;
 
+    @Field(() => CategoryCreateNestedOneWithoutNecessityInput, {nullable:false})
+    category!: CategoryCreateNestedOneWithoutNecessityInput;
+
     @Field(() => String, {nullable:false})
     address!: string;
 
     @Field(() => String, {nullable:false})
     zipCode!: string;
-
-    @Field(() => ImageCreateNestedManyWithoutNecessityInput, {nullable:true})
-    thumbnails?: ImageCreateNestedManyWithoutNecessityInput;
-
-    @Field(() => CategoryCreateNestedOneWithoutNecessityInput, {nullable:false})
-    category!: CategoryCreateNestedOneWithoutNecessityInput;
 
     @Field(() => UserCreateNestedOneWithoutNecessitiesInput, {nullable:false})
     User!: UserCreateNestedOneWithoutNecessitiesInput;

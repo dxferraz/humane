@@ -7,6 +7,9 @@ import { UserUpdateOneRequiredWithoutNecessitiesInput } from '../user/user-updat
 @InputType()
 export class NecessityUpdateInput {
 
+    @Field(() => ImageUpdateManyWithoutNecessityInput, {nullable:true})
+    thumbnails?: ImageUpdateManyWithoutNecessityInput;
+
     @Field(() => String, {nullable:true})
     title?: string;
 
@@ -16,17 +19,14 @@ export class NecessityUpdateInput {
     @Field(() => Date, {nullable:true})
     timeStamp?: Date | string;
 
+    @Field(() => CategoryUpdateOneRequiredWithoutNecessityInput, {nullable:true})
+    category?: CategoryUpdateOneRequiredWithoutNecessityInput;
+
     @Field(() => String, {nullable:true})
     address?: string;
 
     @Field(() => String, {nullable:true})
     zipCode?: string;
-
-    @Field(() => ImageUpdateManyWithoutNecessityInput, {nullable:true})
-    thumbnails?: ImageUpdateManyWithoutNecessityInput;
-
-    @Field(() => CategoryUpdateOneRequiredWithoutNecessityInput, {nullable:true})
-    category?: CategoryUpdateOneRequiredWithoutNecessityInput;
 
     @Field(() => UserUpdateOneRequiredWithoutNecessitiesInput, {nullable:true})
     User?: UserUpdateOneRequiredWithoutNecessitiesInput;

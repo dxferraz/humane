@@ -6,6 +6,9 @@ import { UserUpdateOneRequiredWithoutDonationsInput } from '../user/user-update-
 @InputType()
 export class DonationUpdateWithoutCategoryInput {
 
+    @Field(() => ImageUpdateManyWithoutDonationInput, {nullable:true})
+    thumbnails?: ImageUpdateManyWithoutDonationInput;
+
     @Field(() => String, {nullable:true})
     title?: string;
 
@@ -20,9 +23,6 @@ export class DonationUpdateWithoutCategoryInput {
 
     @Field(() => String, {nullable:true})
     zipCode?: string;
-
-    @Field(() => ImageUpdateManyWithoutDonationInput, {nullable:true})
-    thumbnails?: ImageUpdateManyWithoutDonationInput;
 
     @Field(() => UserUpdateOneRequiredWithoutDonationsInput, {nullable:true})
     User?: UserUpdateOneRequiredWithoutDonationsInput;

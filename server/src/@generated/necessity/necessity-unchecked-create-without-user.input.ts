@@ -9,6 +9,9 @@ export class NecessityUncheckedCreateWithoutUserInput {
     @Field(() => Int, {nullable:true})
     id?: number;
 
+    @Field(() => ImageUncheckedCreateNestedManyWithoutNecessityInput, {nullable:true})
+    thumbnails?: ImageUncheckedCreateNestedManyWithoutNecessityInput;
+
     @Field(() => String, {nullable:false})
     title!: string;
 
@@ -26,7 +29,4 @@ export class NecessityUncheckedCreateWithoutUserInput {
 
     @Field(() => String, {nullable:false})
     zipCode!: string;
-
-    @Field(() => ImageUncheckedCreateNestedManyWithoutNecessityInput, {nullable:true})
-    thumbnails?: ImageUncheckedCreateNestedManyWithoutNecessityInput;
 }

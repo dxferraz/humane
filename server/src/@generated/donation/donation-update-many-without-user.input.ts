@@ -25,9 +25,6 @@ export class DonationUpdateManyWithoutUserInput {
     createMany?: DonationCreateManyUserInputEnvelope;
 
     @Field(() => [DonationWhereUniqueInput], {nullable:true})
-    connect?: Array<DonationWhereUniqueInput>;
-
-    @Field(() => [DonationWhereUniqueInput], {nullable:true})
     set?: Array<DonationWhereUniqueInput>;
 
     @Field(() => [DonationWhereUniqueInput], {nullable:true})
@@ -35,6 +32,9 @@ export class DonationUpdateManyWithoutUserInput {
 
     @Field(() => [DonationWhereUniqueInput], {nullable:true})
     delete?: Array<DonationWhereUniqueInput>;
+
+    @Field(() => [DonationWhereUniqueInput], {nullable:true})
+    connect?: Array<DonationWhereUniqueInput>;
 
     @Field(() => [DonationUpdateWithWhereUniqueWithoutUserInput], {nullable:true})
     update?: Array<DonationUpdateWithWhereUniqueWithoutUserInput>;

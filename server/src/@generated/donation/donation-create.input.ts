@@ -7,6 +7,9 @@ import { UserCreateNestedOneWithoutDonationsInput } from '../user/user-create-ne
 @InputType()
 export class DonationCreateInput {
 
+    @Field(() => ImageCreateNestedManyWithoutDonationInput, {nullable:true})
+    thumbnails?: ImageCreateNestedManyWithoutDonationInput;
+
     @Field(() => String, {nullable:false})
     title!: string;
 
@@ -16,17 +19,14 @@ export class DonationCreateInput {
     @Field(() => Date, {nullable:true})
     timeStamp?: Date | string;
 
+    @Field(() => CategoryCreateNestedOneWithoutDonationInput, {nullable:false})
+    category!: CategoryCreateNestedOneWithoutDonationInput;
+
     @Field(() => String, {nullable:false})
     address!: string;
 
     @Field(() => String, {nullable:false})
     zipCode!: string;
-
-    @Field(() => ImageCreateNestedManyWithoutDonationInput, {nullable:true})
-    thumbnails?: ImageCreateNestedManyWithoutDonationInput;
-
-    @Field(() => CategoryCreateNestedOneWithoutDonationInput, {nullable:false})
-    category!: CategoryCreateNestedOneWithoutDonationInput;
 
     @Field(() => UserCreateNestedOneWithoutDonationsInput, {nullable:false})
     User!: UserCreateNestedOneWithoutDonationsInput;

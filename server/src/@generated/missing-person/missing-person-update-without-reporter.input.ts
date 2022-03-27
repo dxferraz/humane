@@ -1,14 +1,17 @@
 import { Field } from '@nestjs/graphql';
 import { InputType } from '@nestjs/graphql';
+import { ImageUpdateManyWithoutMissingPersonInput } from '../image/image-update-many-without-missing-person.input';
 import { Int } from '@nestjs/graphql';
 import { Float } from '@nestjs/graphql';
 import { Skin } from '../prisma/skin.enum';
 import { EyeColor } from '../prisma/eye-color.enum';
 import { HairColor } from '../prisma/hair-color.enum';
-import { ImageUpdateManyWithoutMissingPersonInput } from '../image/image-update-many-without-missing-person.input';
 
 @InputType()
 export class MissingPersonUpdateWithoutReporterInput {
+
+    @Field(() => ImageUpdateManyWithoutMissingPersonInput, {nullable:true})
+    thumbnails?: ImageUpdateManyWithoutMissingPersonInput;
 
     @Field(() => String, {nullable:true})
     name?: string;
@@ -33,7 +36,4 @@ export class MissingPersonUpdateWithoutReporterInput {
 
     @Field(() => HairColor, {nullable:true})
     hairColor?: keyof typeof HairColor;
-
-    @Field(() => ImageUpdateManyWithoutMissingPersonInput, {nullable:true})
-    thumbnails?: ImageUpdateManyWithoutMissingPersonInput;
 }

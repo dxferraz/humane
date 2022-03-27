@@ -18,14 +18,14 @@ export class NecessityUpdateOneWithoutThumbnailsInput {
     @Field(() => NecessityUpsertWithoutThumbnailsInput, {nullable:true})
     upsert?: NecessityUpsertWithoutThumbnailsInput;
 
-    @Field(() => NecessityWhereUniqueInput, {nullable:true})
-    connect?: NecessityWhereUniqueInput;
-
     @Field(() => Boolean, {nullable:true})
     disconnect?: boolean;
 
     @Field(() => Boolean, {nullable:true})
     delete?: boolean;
+
+    @Field(() => NecessityWhereUniqueInput, {nullable:true})
+    connect?: NecessityWhereUniqueInput;
 
     @Field(() => NecessityUpdateWithoutThumbnailsInput, {nullable:true})
     update?: NecessityUpdateWithoutThumbnailsInput;

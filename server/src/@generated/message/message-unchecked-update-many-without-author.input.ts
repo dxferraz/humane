@@ -25,9 +25,6 @@ export class MessageUncheckedUpdateManyWithoutAuthorInput {
     createMany?: MessageCreateManyAuthorInputEnvelope;
 
     @Field(() => [MessageWhereUniqueInput], {nullable:true})
-    connect?: Array<MessageWhereUniqueInput>;
-
-    @Field(() => [MessageWhereUniqueInput], {nullable:true})
     set?: Array<MessageWhereUniqueInput>;
 
     @Field(() => [MessageWhereUniqueInput], {nullable:true})
@@ -35,6 +32,9 @@ export class MessageUncheckedUpdateManyWithoutAuthorInput {
 
     @Field(() => [MessageWhereUniqueInput], {nullable:true})
     delete?: Array<MessageWhereUniqueInput>;
+
+    @Field(() => [MessageWhereUniqueInput], {nullable:true})
+    connect?: Array<MessageWhereUniqueInput>;
 
     @Field(() => [MessageUpdateWithWhereUniqueWithoutAuthorInput], {nullable:true})
     update?: Array<MessageUpdateWithWhereUniqueWithoutAuthorInput>;

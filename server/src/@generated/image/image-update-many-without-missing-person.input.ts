@@ -25,9 +25,6 @@ export class ImageUpdateManyWithoutMissingPersonInput {
     createMany?: ImageCreateManyMissingPersonInputEnvelope;
 
     @Field(() => [ImageWhereUniqueInput], {nullable:true})
-    connect?: Array<ImageWhereUniqueInput>;
-
-    @Field(() => [ImageWhereUniqueInput], {nullable:true})
     set?: Array<ImageWhereUniqueInput>;
 
     @Field(() => [ImageWhereUniqueInput], {nullable:true})
@@ -35,6 +32,9 @@ export class ImageUpdateManyWithoutMissingPersonInput {
 
     @Field(() => [ImageWhereUniqueInput], {nullable:true})
     delete?: Array<ImageWhereUniqueInput>;
+
+    @Field(() => [ImageWhereUniqueInput], {nullable:true})
+    connect?: Array<ImageWhereUniqueInput>;
 
     @Field(() => [ImageUpdateWithWhereUniqueWithoutMissingPersonInput], {nullable:true})
     update?: Array<ImageUpdateWithWhereUniqueWithoutMissingPersonInput>;

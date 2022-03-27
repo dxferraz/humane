@@ -9,6 +9,9 @@ export class DonationUncheckedUpdateWithoutUserInput {
     @Field(() => Int, {nullable:true})
     id?: number;
 
+    @Field(() => ImageUncheckedUpdateManyWithoutDonationInput, {nullable:true})
+    thumbnails?: ImageUncheckedUpdateManyWithoutDonationInput;
+
     @Field(() => String, {nullable:true})
     title?: string;
 
@@ -26,7 +29,4 @@ export class DonationUncheckedUpdateWithoutUserInput {
 
     @Field(() => String, {nullable:true})
     zipCode?: string;
-
-    @Field(() => ImageUncheckedUpdateManyWithoutDonationInput, {nullable:true})
-    thumbnails?: ImageUncheckedUpdateManyWithoutDonationInput;
 }

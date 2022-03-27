@@ -17,6 +17,6 @@ export class ChatRoom {
     @Field(() => [UsersOnChatRoom], {nullable:true})
     usersOnChatRoom?: Array<UsersOnChatRoom>;
 
-    @Field(() => ChatRoomCount, {nullable:true})
-    _count?: ChatRoomCount | null;
+    @Field(() => ChatRoomCount, {nullable:false})
+    _count?: ChatRoomCount;
 }

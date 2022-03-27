@@ -25,9 +25,6 @@ export class MissingPersonUpdateManyWithoutReporterInput {
     createMany?: MissingPersonCreateManyReporterInputEnvelope;
 
     @Field(() => [MissingPersonWhereUniqueInput], {nullable:true})
-    connect?: Array<MissingPersonWhereUniqueInput>;
-
-    @Field(() => [MissingPersonWhereUniqueInput], {nullable:true})
     set?: Array<MissingPersonWhereUniqueInput>;
 
     @Field(() => [MissingPersonWhereUniqueInput], {nullable:true})
@@ -35,6 +32,9 @@ export class MissingPersonUpdateManyWithoutReporterInput {
 
     @Field(() => [MissingPersonWhereUniqueInput], {nullable:true})
     delete?: Array<MissingPersonWhereUniqueInput>;
+
+    @Field(() => [MissingPersonWhereUniqueInput], {nullable:true})
+    connect?: Array<MissingPersonWhereUniqueInput>;
 
     @Field(() => [MissingPersonUpdateWithWhereUniqueWithoutReporterInput], {nullable:true})
     update?: Array<MissingPersonUpdateWithWhereUniqueWithoutReporterInput>;

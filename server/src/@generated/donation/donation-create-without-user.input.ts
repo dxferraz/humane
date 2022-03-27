@@ -6,6 +6,9 @@ import { CategoryCreateNestedOneWithoutDonationInput } from '../category/categor
 @InputType()
 export class DonationCreateWithoutUserInput {
 
+    @Field(() => ImageCreateNestedManyWithoutDonationInput, {nullable:true})
+    thumbnails?: ImageCreateNestedManyWithoutDonationInput;
+
     @Field(() => String, {nullable:false})
     title!: string;
 
@@ -15,15 +18,12 @@ export class DonationCreateWithoutUserInput {
     @Field(() => Date, {nullable:true})
     timeStamp?: Date | string;
 
+    @Field(() => CategoryCreateNestedOneWithoutDonationInput, {nullable:false})
+    category!: CategoryCreateNestedOneWithoutDonationInput;
+
     @Field(() => String, {nullable:false})
     address!: string;
 
     @Field(() => String, {nullable:false})
     zipCode!: string;
-
-    @Field(() => ImageCreateNestedManyWithoutDonationInput, {nullable:true})
-    thumbnails?: ImageCreateNestedManyWithoutDonationInput;
-
-    @Field(() => CategoryCreateNestedOneWithoutDonationInput, {nullable:false})
-    category!: CategoryCreateNestedOneWithoutDonationInput;
 }

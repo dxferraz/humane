@@ -25,9 +25,6 @@ export class NecessityUncheckedUpdateManyWithoutCategoryInput {
     createMany?: NecessityCreateManyCategoryInputEnvelope;
 
     @Field(() => [NecessityWhereUniqueInput], {nullable:true})
-    connect?: Array<NecessityWhereUniqueInput>;
-
-    @Field(() => [NecessityWhereUniqueInput], {nullable:true})
     set?: Array<NecessityWhereUniqueInput>;
 
     @Field(() => [NecessityWhereUniqueInput], {nullable:true})
@@ -35,6 +32,9 @@ export class NecessityUncheckedUpdateManyWithoutCategoryInput {
 
     @Field(() => [NecessityWhereUniqueInput], {nullable:true})
     delete?: Array<NecessityWhereUniqueInput>;
+
+    @Field(() => [NecessityWhereUniqueInput], {nullable:true})
+    connect?: Array<NecessityWhereUniqueInput>;
 
     @Field(() => [NecessityUpdateWithWhereUniqueWithoutCategoryInput], {nullable:true})
     update?: Array<NecessityUpdateWithWhereUniqueWithoutCategoryInput>;

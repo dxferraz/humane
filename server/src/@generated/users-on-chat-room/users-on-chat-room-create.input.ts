@@ -6,12 +6,12 @@ import { ChatRoomCreateNestedOneWithoutUsersOnChatRoomInput } from '../chat-room
 @InputType()
 export class UsersOnChatRoomCreateInput {
 
-    @Field(() => Date, {nullable:true})
-    createdAt?: Date | string;
-
     @Field(() => UserCreateNestedOneWithoutUsersOnChatRoomInput, {nullable:false})
     user!: UserCreateNestedOneWithoutUsersOnChatRoomInput;
 
     @Field(() => ChatRoomCreateNestedOneWithoutUsersOnChatRoomInput, {nullable:false})
     chatRoom!: ChatRoomCreateNestedOneWithoutUsersOnChatRoomInput;
+
+    @Field(() => Date, {nullable:true})
+    createdAt?: Date | string;
 }

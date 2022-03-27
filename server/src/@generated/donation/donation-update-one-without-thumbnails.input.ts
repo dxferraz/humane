@@ -18,14 +18,14 @@ export class DonationUpdateOneWithoutThumbnailsInput {
     @Field(() => DonationUpsertWithoutThumbnailsInput, {nullable:true})
     upsert?: DonationUpsertWithoutThumbnailsInput;
 
-    @Field(() => DonationWhereUniqueInput, {nullable:true})
-    connect?: DonationWhereUniqueInput;
-
     @Field(() => Boolean, {nullable:true})
     disconnect?: boolean;
 
     @Field(() => Boolean, {nullable:true})
     delete?: boolean;
+
+    @Field(() => DonationWhereUniqueInput, {nullable:true})
+    connect?: DonationWhereUniqueInput;
 
     @Field(() => DonationUpdateWithoutThumbnailsInput, {nullable:true})
     update?: DonationUpdateWithoutThumbnailsInput;

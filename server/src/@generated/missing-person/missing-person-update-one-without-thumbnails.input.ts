@@ -18,14 +18,14 @@ export class MissingPersonUpdateOneWithoutThumbnailsInput {
     @Field(() => MissingPersonUpsertWithoutThumbnailsInput, {nullable:true})
     upsert?: MissingPersonUpsertWithoutThumbnailsInput;
 
-    @Field(() => MissingPersonWhereUniqueInput, {nullable:true})
-    connect?: MissingPersonWhereUniqueInput;
-
     @Field(() => Boolean, {nullable:true})
     disconnect?: boolean;
 
     @Field(() => Boolean, {nullable:true})
     delete?: boolean;
+
+    @Field(() => MissingPersonWhereUniqueInput, {nullable:true})
+    connect?: MissingPersonWhereUniqueInput;
 
     @Field(() => MissingPersonUpdateWithoutThumbnailsInput, {nullable:true})
     update?: MissingPersonUpdateWithoutThumbnailsInput;

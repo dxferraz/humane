@@ -25,9 +25,6 @@ export class UsersOnChatRoomUncheckedUpdateManyWithoutChatRoomInput {
     createMany?: UsersOnChatRoomCreateManyChatRoomInputEnvelope;
 
     @Field(() => [UsersOnChatRoomWhereUniqueInput], {nullable:true})
-    connect?: Array<UsersOnChatRoomWhereUniqueInput>;
-
-    @Field(() => [UsersOnChatRoomWhereUniqueInput], {nullable:true})
     set?: Array<UsersOnChatRoomWhereUniqueInput>;
 
     @Field(() => [UsersOnChatRoomWhereUniqueInput], {nullable:true})
@@ -35,6 +32,9 @@ export class UsersOnChatRoomUncheckedUpdateManyWithoutChatRoomInput {
 
     @Field(() => [UsersOnChatRoomWhereUniqueInput], {nullable:true})
     delete?: Array<UsersOnChatRoomWhereUniqueInput>;
+
+    @Field(() => [UsersOnChatRoomWhereUniqueInput], {nullable:true})
+    connect?: Array<UsersOnChatRoomWhereUniqueInput>;
 
     @Field(() => [UsersOnChatRoomUpdateWithWhereUniqueWithoutChatRoomInput], {nullable:true})
     update?: Array<UsersOnChatRoomUpdateWithWhereUniqueWithoutChatRoomInput>;

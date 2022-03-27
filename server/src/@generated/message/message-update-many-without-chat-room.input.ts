@@ -25,9 +25,6 @@ export class MessageUpdateManyWithoutChatRoomInput {
     createMany?: MessageCreateManyChatRoomInputEnvelope;
 
     @Field(() => [MessageWhereUniqueInput], {nullable:true})
-    connect?: Array<MessageWhereUniqueInput>;
-
-    @Field(() => [MessageWhereUniqueInput], {nullable:true})
     set?: Array<MessageWhereUniqueInput>;
 
     @Field(() => [MessageWhereUniqueInput], {nullable:true})
@@ -35,6 +32,9 @@ export class MessageUpdateManyWithoutChatRoomInput {
 
     @Field(() => [MessageWhereUniqueInput], {nullable:true})
     delete?: Array<MessageWhereUniqueInput>;
+
+    @Field(() => [MessageWhereUniqueInput], {nullable:true})
+    connect?: Array<MessageWhereUniqueInput>;
 
     @Field(() => [MessageUpdateWithWhereUniqueWithoutChatRoomInput], {nullable:true})
     update?: Array<MessageUpdateWithWhereUniqueWithoutChatRoomInput>;
