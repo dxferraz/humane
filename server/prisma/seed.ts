@@ -59,6 +59,64 @@ async function main() {
                 description: faker.lorem.paragraph(),
                 address: faker.address.city(),
                 zipCode: faker.address.zipCode(),
+                thumbnails: {
+                    create: [
+                        {
+                            url:
+                                'https://picsum.photos/seed/' +
+                                getRandomArbitrary(1, 100) +
+                                '/' +
+                                getRandomArbitrary(200, 300) +
+                                '/' +
+                                getRandomArbitrary(200, 300),
+                        },
+                        {
+                            url:
+                                'https://picsum.photos/seed/' +
+                                getRandomArbitrary(1, 100) +
+                                '/' +
+                                getRandomArbitrary(200, 300) +
+                                '/' +
+                                getRandomArbitrary(200, 300),
+                        },
+                        {
+                            url:
+                                'https://picsum.photos/seed/' +
+                                getRandomArbitrary(1, 100) +
+                                '/' +
+                                getRandomArbitrary(200, 300) +
+                                '/' +
+                                getRandomArbitrary(200, 300),
+                        },
+                        {
+                            url:
+                                'https://picsum.photos/seed/' +
+                                getRandomArbitrary(1, 100) +
+                                '/' +
+                                getRandomArbitrary(200, 300) +
+                                '/' +
+                                getRandomArbitrary(200, 300),
+                        },
+                        {
+                            url:
+                                'https://picsum.photos/seed/' +
+                                getRandomArbitrary(1, 100) +
+                                '/' +
+                                getRandomArbitrary(200, 300) +
+                                '/' +
+                                getRandomArbitrary(200, 300),
+                        },
+                        {
+                            url:
+                                'https://picsum.photos/seed/' +
+                                getRandomArbitrary(1, 100) +
+                                '/' +
+                                getRandomArbitrary(200, 300) +
+                                '/' +
+                                getRandomArbitrary(200, 300),
+                        },
+                    ],
+                },
                 category: {
                     connect: {
                         id: categories[Math.floor(Math.random() * categories.length)]

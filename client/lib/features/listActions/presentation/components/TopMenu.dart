@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:humane/Utils/colors.dart';
 import 'package:humane/icons.dart';
 import 'package:material_floating_search_bar/material_floating_search_bar.dart';
 
 class TopMenu extends StatefulWidget {
-  TopMenu({Key? key}) : super(key: key);
+  GlobalKey<ScaffoldState> drawersKey;
+
+  TopMenu({Key? key, required this.drawersKey}) : super(key: key);
 
   @override
   State<TopMenu> createState() => _TopMenuState();
@@ -17,7 +20,7 @@ class _TopMenuState extends State<TopMenu> {
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
 
-    final actions = [
+    List<Widget> actions = [
       FloatingSearchBarAction.searchToClear(
         showIfClosed: false,
       ),
@@ -71,89 +74,125 @@ class _TopMenuState extends State<TopMenu> {
           );
     }
 
-    return Container(
-      color: Colors.white,
-      child: SizedBox(
-        height: 70,
-        child: Row(
-          children: [
-            Container(
-              width: size.width * 0.2,
-              child: Padding(
-                padding: const EdgeInsets.only(top: 25, right: 10, left: 10, bottom: 10),
-                child: Center(
-                  child: FloatingActionButton(
-                    elevation: 0,
-                    backgroundColor: Colors.transparent,
-                    onPressed: () {
-                      print('hey');
-                    },
-                    child: const Icon(
-                      Humane.menu,
-                      size: 25,
-                      color: appDarkBlue,
-                    ),
-                  ),
-                ),
+    return Stack(
+      children: [
+        Align(
+          alignment: Alignment.topCenter,
+          child: Container(
+            width: size.width,
+            height: 110,
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                stops: [0.15, 0.35],
+                begin: Alignment.bottomCenter,
+                end: Alignment.topCenter,
+                colors: [
+                  Color.fromARGB(0, 224, 233, 242),
+                  Color.fromARGB(255, 224, 233, 242),
+                ],
               ),
             ),
-            SizedBox(
-              width: size.width * 0.6,
-              child: Padding(
-                padding: const EdgeInsets.only(top: 15),
-                child: FloatingSearchBar(
-                  margins: const EdgeInsets.all(0),
-                  backdropColor: Colors.transparent,
-                  automaticallyImplyBackButton: false,
-                  controller: controller,
-                  clearQueryOnClose: true,
-                  hint: 'Search...',
-                  iconColor: Colors.grey,
-                  transitionDuration: const Duration(milliseconds: 800),
-                  transitionCurve: Curves.easeInOutCubic,
-                  physics: const BouncingScrollPhysics(),
-                  openAxisAlignment: 0.0,
-                  actions: actions,
-                  progress: null,
-                  debounceDelay: const Duration(milliseconds: 500),
-                  onQueryChanged: (String query) {},
-                  onKeyEvent: (KeyEvent keyEvent) {
-                    // if (keyEvent.logicalKey == LogicalKeyboardKey.escape) {
-                    //   controller.query = "";
-                    //   controller.close();
-                    // }
-                  },
-                  scrollPadding: EdgeInsets.zero,
-                  transition: CircularFloatingSearchBarTransition(spacing: 16),
-                  builder: (context, _) => buildExpandableBody(),
-                  body: buildBody(),
-                ),
-              ),
-            ),
-            SizedBox(
-              width: size.width * 0.2,
-              child: Padding(
-                padding: const EdgeInsets.only(top: 15, right: 10, left: 10, bottom: 0),
-                child: Center(
-                  child: FloatingActionButton(
-                    elevation: 0,
-                    backgroundColor: Colors.transparent,
-                    onPressed: () {
-                      print('hey');
-                    },
-                    child: const Icon(
-                      Humane.message,
-                      size: 25,
-                      color: appDarkBlue,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ],
+          ),
         ),
-      ),
+        Container(
+          color: Colors.white,
+          child: SizedBox(
+            height: 70,
+            child: Row(
+              children: [
+                SizedBox(
+                  width: size.width * 0.2,
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 25, right: 10, left: 10, bottom: 10),
+                    child: Center(
+                      child: FloatingActionButton(
+                        elevation: 0,
+                        backgroundColor: Colors.transparent,
+                        onPressed: () {
+                          widget.drawersKey.currentState!.openDrawer();
+                        },
+                        child: const Icon(
+                          Humane.menu,
+                          size: 25,
+                          color: appDarkBlue,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  width: size.width * 0.6,
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 15),
+                    child: FloatingSearchBar(
+                      automaticallyImplyDrawerHamburger: false,
+                      leadingActions: [
+                        ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                              primary: appDarkBlue, shape: const CircleBorder(), padding: const EdgeInsets.all(15)),
+                          onPressed: () {
+                            widget.drawersKey.currentState!.openEndDrawer();
+                          },
+                          child: const Icon(
+                            Humane.filter,
+                            size: 20,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ],
+                      margins: const EdgeInsets.all(0),
+                      backdropColor: Colors.transparent,
+                      automaticallyImplyBackButton: false,
+                      controller: controller,
+                      clearQueryOnClose: true,
+                      hint: 'Search...',
+                      iconColor: Colors.grey,
+                      transitionDuration: const Duration(milliseconds: 800),
+                      transitionCurve: Curves.easeInOutCubic,
+                      physics: const BouncingScrollPhysics(),
+                      openAxisAlignment: 0.0,
+                      actions: actions,
+                      progress: null,
+                      debounceDelay: const Duration(milliseconds: 500),
+                      onQueryChanged: (String query) {},
+                      onKeyEvent: (KeyEvent keyEvent) {
+                        if (keyEvent.logicalKey == LogicalKeyboardKey.escape) {
+                          controller.query = "";
+                          controller.close();
+                        }
+                      },
+                      onFocusChanged: (bool focus) {},
+                      closeOnBackdropTap: true,
+                      scrollPadding: EdgeInsets.zero,
+                      transition: CircularFloatingSearchBarTransition(spacing: 16),
+                      builder: (context, _) => buildExpandableBody(),
+                      body: buildBody(),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  width: size.width * 0.2,
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 15, right: 10, left: 10, bottom: 0),
+                    child: Center(
+                      child: FloatingActionButton(
+                        elevation: 0,
+                        backgroundColor: Colors.transparent,
+                        onPressed: () {},
+                        child: const Icon(
+                          Humane.message,
+                          size: 25,
+                          color: appDarkBlue,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ],
     );
-    ;
   }
 }

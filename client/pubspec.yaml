@@ -42,15 +42,28 @@ dependencies:
   
   #graphql
   graphql_flutter: ^5.0.1
+
+  #Carousel Image
+  carousel_slider: ^4.0.0
   
+  #Interceptor
   http_interceptor: ^1.0.0
+
   path: ^1.8.0
   path_provider: ^2.0.9
+
   dartz: ^0.10.1
+
   data_connection_checker: ^0.3.4
+
   smooth_page_indicator: ^1.0.0+2
+
   shared_preferences: ^2.0.12
+  
+  #Search Bar
   material_floating_search_bar: ^0.3.7
+
+  intl: ^0.17.0
   
 dev_dependencies:
   flutter_test:
