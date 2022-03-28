@@ -59,6 +59,8 @@ dependencies:
   smooth_page_indicator: ^1.0.0+2
 
   shared_preferences: ^2.0.12
+
+  cached_network_image: ^3.2.0
   
   #Search Bar
   material_floating_search_bar: ^0.3.7
