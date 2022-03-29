@@ -10,6 +10,7 @@ import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class Card extends HookWidget {
   String title;
@@ -188,47 +189,44 @@ class Card extends HookWidget {
                             initialPage: 0,
                             enableInfiniteScroll: true),
                         items: thumbnails!.map((i) {
-                          NetworkImage image = NetworkImage(
-                            i.url,
-                          );
-
-                          return Stack(
-                            children: <Widget>[
-                              Opacity(
-                                opacity: 0.7,
-                                child: ClipRect(
-                                  child: Container(
-                                    child: BackdropFilter(
-                                      filter: ImageFilter.blur(
-                                          sigmaX: 6.0, sigmaY: 6.0),
-                                      child: Container(),
-                                    ),
-                                    decoration: BoxDecoration(
-                                      image: DecorationImage(
-                                        fit: BoxFit.fitWidth,
-                                        image: image,
+                          return CachedNetworkImage(
+                            imageUrl: i.url,
+                            placeholder: (context, url) => const SizedBox(
+                              width: 100,
+                              child: Image(
+                                image: AssetImage('assets/images/pulse.gif'),
+                              ),
+                            ),
+                            imageBuilder: (context, imageProvider) => Stack(
+                              children: <Widget>[
+                                Opacity(
+                                  opacity: 0.7,
+                                  child: ClipRect(
+                                    child: Container(
+                                      child: BackdropFilter(
+                                        filter: ImageFilter.blur(sigmaX: 6.0, sigmaY: 6.0),
+                                        child: Container(),
+                                      ),
+                                      decoration: BoxDecoration(
+                                        image: DecorationImage(
+                                          fit: BoxFit.fitWidth,
+                                          image: imageProvider,
+                                        ),
                                       ),
                                     ),
                                   ),
                                 ),
-                              ),
-                              Container(
-                                decoration: BoxDecoration(
-                                  image: DecorationImage(
-                                    fit: BoxFit.contain,
-                                    image: image,
+                                Container(
+                                  decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                      fit: BoxFit.contain,
+                                      image: imageProvider,
+                                    ),
                                   ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           );
-
-                          // return Container(
-                          //   width: MediaQuery.of(context).size.width,
-                          //   margin: EdgeInsets.symmetric(horizontal: 5.0),
-                          //   decoration: BoxDecoration(color: Colors.amber),
-                          //   child: Image.network(i.url),
-                          // );
                         }).toList(),
                       ),
                     );

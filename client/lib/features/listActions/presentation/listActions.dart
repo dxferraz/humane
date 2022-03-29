@@ -5,9 +5,12 @@ import 'package:humane/core/injection/injection.dart';
 import 'package:humane/features/listActions/domain/entities/donation.dart';
 import 'package:humane/features/listActions/domain/entities/pagination.dart';
 import 'package:humane/features/listActions/presentation/bloc/ListActionsBloc.dart';
+import 'package:humane/features/listActions/presentation/components/DonationList.dart';
 import 'package:humane/features/listActions/presentation/components/FilterDrawer.dart';
 import 'package:humane/features/listActions/presentation/components/MainDrawer.dart';
 import 'package:humane/features/listActions/presentation/components/MainMenu.dart';
+import 'package:humane/features/listActions/presentation/components/MissingPersonsList.dart';
+import 'package:humane/features/listActions/presentation/components/NecessitiesList.dart';
 import 'package:humane/features/listActions/presentation/components/TopMenu.dart';
 
 class ListActions extends StatefulWidget {
@@ -17,90 +20,57 @@ class ListActions extends StatefulWidget {
 
 class ListRecentPostsState extends State<ListActions> with SingleTickerProviderStateMixin {
   final GlobalKey<ScaffoldState> _drawersKey = GlobalKey(); // Create a key
-  final ScrollController _scrollController = ScrollController();
   final ListActionsBloc _listActionsBloc = getIt<ListActionsBloc>();
-
-  List<Edge<Donation>> list = [];
-  bool loading = false;
+  final int _currentIndex = 0;
+  late PageController _pageController;
+  late List<Widget> pages;
 
   @override
   void initState() {
-    _listActionsBloc.add(OpenDonationEvent());
+    _pageController = PageController(initialPage: _currentIndex);
+    pages = [
+      DonationList(),
+      NecessitiesList(),
+      MissingPersonsList(),
+    ];
 
-    _scrollController.addListener(() {
-      if (_scrollController.position.pixels >= _scrollController.position.maxScrollExtent && !loading) {
-        _listActionsBloc.add(OpenDonationEvent());
-      }
-      super.initState();
-    });
+    super.initState();
   }
 
-  @override
-  void dispose() {
-    _scrollController.dispose();
-    super.dispose();
+  void goToPage(int index) {
+    if (_pageController.hasClients) {
+      _pageController.jumpToPage(index);
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    final Size size = MediaQuery.of(context).size;
-
     return Scaffold(
       key: _drawersKey,
       drawer: MainDrawer(),
       endDrawer: FilterDrawer(),
       backgroundColor: const Color.fromARGB(255, 224, 233, 242),
-      body: BlocListener(
+      body: BlocBuilder<ListActionsBloc, ListActionsState>(
         bloc: _listActionsBloc,
-        listener: (BuildContext context, state) async {
-          if (state is LoadedDonationsState) {
-            setState(() {
-              list = list + state.listDonation;
-            });
-            await Future.delayed(const Duration(seconds: 1));
-            setState(() {
-              loading = false;
-            });
-          }
-
-          if (state is LoadingDonationsState) {
-            setState(() {
-              loading = true;
-            });
-          }
+        builder: (BuildContext context, state) {
+          return Stack(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(top: 70.0, bottom: 70),
+                child: PageView(children: pages, controller: _pageController, physics: const NeverScrollableScrollPhysics()),
+              ),
+              TopMenu(drawersKey: _drawersKey),
+              Offstage(
+                offstage: state is! LoadingDonationsState,
+                child: const Padding(
+                  padding: EdgeInsets.only(top: 70),
+                  child: LinearProgressIndicator(),
+                ),
+              ),
+              MainMenu(state: state, onTabChange: goToPage)
+            ],
+          );
         },
-        child: BlocBuilder<ListActionsBloc, ListActionsState>(
-          bloc: _listActionsBloc,
-          builder: (BuildContext context, state) {
-            return Stack(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(top: 70.0, bottom: 70),
-                  child: SingleChildScrollView(
-                    controller: _scrollController,
-                    child: Padding(
-                      padding: const EdgeInsets.only(top: 20.0),
-                      child: Column(
-                        children: Card.buildDonationCards(list),
-                      ),
-                    ),
-                  ),
-                ),
-                TopMenu(drawersKey: _drawersKey),
-                Offstage(
-                  offstage: state is! LoadingDonationsState,
-                  child: const Padding(
-                    padding: EdgeInsets.only(top: 70),
-                    child: LinearProgressIndicator(),
-                  ),
-                ),
-                MainMenu(
-                  state: state,
-                )
-              ],
-            );
-          },
-        ),
       ),
     );
   }

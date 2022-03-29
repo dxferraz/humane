@@ -13,6 +13,7 @@ part 'ListActionsState.dart';
 class ListActionsBloc extends Bloc<ListActionsEvent, ListActionsState> {
   ListDonation listDonation;
   PageInfo? donationPageInfo;
+  int TAKE_NUMBER_OF_ITEMS_PER_REQUEST = 10;
 
   ListActionsBloc({required this.listDonation}) : super(ListInitialState()) {
     on<OpenDonationEvent>(_onOpenDonationEvent, transformer: (events, mapper) {
@@ -20,6 +21,7 @@ class ListActionsBloc extends Bloc<ListActionsEvent, ListActionsState> {
     });
     on<OpenMissingPersonsEvent>(_onOpenMissingPersonsEvent);
     on<OpenNecessitiesEvent>(_onOpenNecessitiesEvent);
+    on<GetDonationsEvent>(_onGetDonationEvent);
   }
 
   EventTransformer<Event> debounceSequential<Event>(Duration duration) {
@@ -27,13 +29,17 @@ class ListActionsBloc extends Bloc<ListActionsEvent, ListActionsState> {
   }
 
   _onOpenDonationEvent(ListActionsEvent event, Emitter<ListActionsState> emit) async {
+    emit(ShowDonationsState());
+  }
+
+  _onGetDonationEvent(ListActionsEvent event, Emitter<ListActionsState> emit) async {
     emit(LoadingDonationsState());
     // Number of donations to return per request:
-    const TAKE = 10;
+
     int? cursor = donationPageInfo == null ? null : int.parse(donationPageInfo!.endCursor);
 
-    PageParams page = PageParams(take: 10, cursor: cursor);
-    print(page.cursor);
+    PageParams page = PageParams(take: TAKE_NUMBER_OF_ITEMS_PER_REQUEST, cursor: cursor);
+
     Either<Failure, Pagination<Donation>> FailuireOrDonation = await listDonation(page);
 
     FailuireOrDonation.fold(
@@ -46,10 +52,10 @@ class ListActionsBloc extends Bloc<ListActionsEvent, ListActionsState> {
   }
 
   _onOpenMissingPersonsEvent(ListActionsEvent event, Emitter<ListActionsState> emit) {
-    emit(ListMissingPersonsState());
+    emit(ShowMissingPersonsState());
   }
 
   _onOpenNecessitiesEvent(ListActionsEvent event, Emitter<ListActionsState> emit) {
-    emit(ListNecessitiesState());
+    emit(ShowNecessitiesState());
   }
 }

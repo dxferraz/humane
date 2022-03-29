@@ -81,14 +81,14 @@ class _TopMenuState extends State<TopMenu> {
           child: Container(
             width: size.width,
             height: 110,
-            decoration: const BoxDecoration(
+            decoration: BoxDecoration(
               gradient: LinearGradient(
-                stops: [0.15, 0.35],
+                stops: const [0.15, 0.35],
                 begin: Alignment.bottomCenter,
                 end: Alignment.topCenter,
                 colors: [
-                  Color.fromARGB(0, 224, 233, 242),
-                  Color.fromARGB(255, 224, 233, 242),
+                  const Color.fromARGB(0, 224, 233, 242),
+                  const Color.fromARGB(255, 224, 233, 242).withAlpha(180),
                 ],
               ),
             ),

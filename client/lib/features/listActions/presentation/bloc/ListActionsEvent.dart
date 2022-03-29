@@ -5,6 +5,8 @@ abstract class ListActionsEvent extends Equatable {
   List<Object> get props => [];
 }
 
+// Tab events
+
 class OpenNecessitiesEvent extends ListActionsEvent {
   @override
   List<Object> get props => [];
@@ -16,6 +18,13 @@ class OpenDonationEvent extends ListActionsEvent {
 }
 
 class OpenMissingPersonsEvent extends ListActionsEvent {
+  @override
+  List<Object> get props => [];
+}
+
+// Donation events
+
+class GetDonationsEvent extends ListActionsEvent {
   @override
   List<Object> get props => [];
 }
