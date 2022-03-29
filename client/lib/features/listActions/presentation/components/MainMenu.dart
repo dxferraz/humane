@@ -9,8 +9,13 @@ import 'package:humane/icons.dart';
 
 class MainMenu extends StatefulWidget {
   final ListActionsState state;
+  final Function? onTabChange;
 
-  const MainMenu({Key? key, required this.state}) : super(key: key);
+  const MainMenu({
+    Key? key,
+    required this.onTabChange,
+    required this.state,
+  }) : super(key: key);
 
   @override
   _MainMenuState createState() => _MainMenuState();
@@ -22,10 +27,12 @@ class _MainMenuState extends State<MainMenu> with TickerProviderStateMixin {
   late Animation<double> openAnimation;
   bool showOpenButtons = false;
   bool menuOpened = true;
+  bool isAnimating = false;
   double buttomSize = 70;
   double menuSize = 70;
   double menuRadialPosition = 0;
   double curvePosition = 0;
+  int activeIndex = 0;
 
   @override
   void initState() {
@@ -36,7 +43,24 @@ class _MainMenuState extends State<MainMenu> with TickerProviderStateMixin {
         setState(() {});
       });
 
+    openAnimation.addStatusListener((AnimationStatus status) {
+      if (status == AnimationStatus.completed || status == AnimationStatus.dismissed) {
+        setState(() {
+          isAnimating = false;
+        });
+      }
+    });
+
     super.initState();
+  }
+
+  void onTabMenuTap(int index) {
+    if (widget.onTabChange != null) {
+      setState(() {
+        activeIndex = index;
+      });
+      widget.onTabChange!(index);
+    }
   }
 
   @override
@@ -44,22 +68,18 @@ class _MainMenuState extends State<MainMenu> with TickerProviderStateMixin {
     final Size size = MediaQuery.of(context).size;
 
     double prevPos = curvePosition;
-    int activeIndex = 2;
 
-    if (widget.state is ListInitialState || (widget.state is LoadedDonationsState)) {
-      activeIndex = 2;
+    if (widget.state is ShowDonationsState || widget.state is ListInitialState) {
       menuRadialPosition = size.width * 0.5 - buttomSize / 2;
       curvePosition = 0;
     }
 
-    if (widget.state is ListNecessitiesState) {
-      activeIndex = 1;
+    if (widget.state is ShowNecessitiesState) {
       menuRadialPosition = size.width * 0.17 - buttomSize / 2;
       curvePosition = -size.width * 0.33;
     }
 
-    if (widget.state is ListMissingPersonsState) {
-      activeIndex = 3;
+    if (widget.state is ShowMissingPersonsState) {
       menuRadialPosition = size.width * 0.83 - buttomSize / 2;
       curvePosition = size.width * 0.33;
     }
@@ -89,24 +109,25 @@ class _MainMenuState extends State<MainMenu> with TickerProviderStateMixin {
                     color: Colors.black.withOpacity(0.2),
                     spreadRadius: 3,
                     blurRadius: 4,
-                    offset: Offset(0, 5), // changes position of shadow
+                    offset: const Offset(0, 5), // changes position of shadow
                   ),
                 ],
                 shape: BoxShape.circle,
               ),
               child: FloatingActionButton(
                 onPressed: () async {
-                  if (activeIndex != 2) return;
+                  if (activeIndex != 0 || isAnimating) return;
                   setState(() {
+                    isAnimating = true;
                     menuOpened = !menuOpened;
                     showOpenButtons = true;
                   });
                   if (!menuOpened) {
                     openAnimationController.forward();
                   } else {
-                    await Future.delayed(const Duration(seconds: 1));
+                    await Future.delayed(const Duration(milliseconds: 1000));
                     openAnimationController.reverse();
-                    await Future.delayed(const Duration(seconds: 1));
+                    await Future.delayed(const Duration(microseconds: 100));
                     setState(() {
                       showOpenButtons = false;
                     });
@@ -193,12 +214,15 @@ class _MainMenuState extends State<MainMenu> with TickerProviderStateMixin {
                       _buildSideButton(activeIndex == 1, size, Offset(activeIndex == 1 ? -8 : -6, activeIndex == 1 ? -29 : 0),
                           "Necessities", Humane.help, () {
                         BlocProvider.of<ListActionsBloc>(context).add(OpenNecessitiesEvent());
+                        onTabMenuTap(1);
                       }),
-                      _buildSideButton(activeIndex == 2, size, Offset(1, activeIndex == 2 ? -31 : 0), "Donations", Humane.donate, () {
+                      _buildSideButton(activeIndex == 0, size, Offset(1, activeIndex == 0 ? -31 : 0), "Donations", Humane.donate, () {
                         BlocProvider.of<ListActionsBloc>(context).add(OpenDonationEvent());
+                        onTabMenuTap(0);
                       }),
-                      _buildSideButton(activeIndex == 3, size, Offset(3, activeIndex == 3 ? -31 : 0), "Missing Persons", Humane.find, () {
+                      _buildSideButton(activeIndex == 2, size, Offset(3, activeIndex == 2 ? -31 : 0), "Missing Persons", Humane.find, () {
                         BlocProvider.of<ListActionsBloc>(context).add(OpenMissingPersonsEvent());
+                        onTabMenuTap(2);
                       })
                     ],
                   ),
@@ -215,14 +239,14 @@ class _MainMenuState extends State<MainMenu> with TickerProviderStateMixin {
       child: Container(
         width: size.width,
         height: 110,
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           gradient: LinearGradient(
-            stops: [0.15, 0.35],
+            stops: const [0.15, 0.35],
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             colors: [
-              Color.fromARGB(0, 224, 233, 242),
-              Color.fromARGB(255, 224, 233, 242),
+              const Color.fromARGB(0, 224, 233, 242),
+              const Color.fromARGB(255, 224, 233, 242).withAlpha(200),
             ],
           ),
         ),
