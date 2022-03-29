@@ -9,6 +9,7 @@ import 'package:humane/Utils/colors.dart';
 import 'package:humane/Utils/string.dart';
 import 'package:humane/features/listActions/domain/entities/Image.dart' as image;
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class Card extends HookWidget {
   String title;
@@ -173,46 +174,44 @@ class Card extends HookWidget {
                       child: CarouselSlider(
                         options: CarouselOptions(height: 300.0, viewportFraction: 1, initialPage: 0, enableInfiniteScroll: true),
                         items: thumbnails!.map((i) {
-                          NetworkImage image = NetworkImage(
-                            i.url,
-                          );
-
-                          return Stack(
-                            children: <Widget>[
-                              Opacity(
-                                opacity: 0.7,
-                                child: ClipRect(
-                                  child: Container(
-                                    child: BackdropFilter(
-                                      filter: ImageFilter.blur(sigmaX: 6.0, sigmaY: 6.0),
-                                      child: Container(),
-                                    ),
-                                    decoration: BoxDecoration(
-                                      image: DecorationImage(
-                                        fit: BoxFit.fitWidth,
-                                        image: image,
+                          return CachedNetworkImage(
+                            imageUrl: i.url,
+                            placeholder: (context, url) => const SizedBox(
+                              width: 100,
+                              child: Image(
+                                image: AssetImage('assets/images/pulse.gif'),
+                              ),
+                            ),
+                            imageBuilder: (context, imageProvider) => Stack(
+                              children: <Widget>[
+                                Opacity(
+                                  opacity: 0.7,
+                                  child: ClipRect(
+                                    child: Container(
+                                      child: BackdropFilter(
+                                        filter: ImageFilter.blur(sigmaX: 6.0, sigmaY: 6.0),
+                                        child: Container(),
+                                      ),
+                                      decoration: BoxDecoration(
+                                        image: DecorationImage(
+                                          fit: BoxFit.fitWidth,
+                                          image: imageProvider,
+                                        ),
                                       ),
                                     ),
                                   ),
                                 ),
-                              ),
-                              Container(
-                                decoration: BoxDecoration(
-                                  image: DecorationImage(
-                                    fit: BoxFit.contain,
-                                    image: image,
+                                Container(
+                                  decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                      fit: BoxFit.contain,
+                                      image: imageProvider,
+                                    ),
                                   ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           );
-
-                          // return Container(
-                          //   width: MediaQuery.of(context).size.width,
-                          //   margin: EdgeInsets.symmetric(horizontal: 5.0),
-                          //   decoration: BoxDecoration(color: Colors.amber),
-                          //   child: Image.network(i.url),
-                          // );
                         }).toList(),
                       ),
                     );
