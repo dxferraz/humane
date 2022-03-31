@@ -10,5 +10,5 @@ abstract class IDonationRepository {
       List<String> thumbnails, String title, String description, Category category, String address, String zipCode);
   // Future<Either<Failure, User>> updateDonation(String name, String email, String password);
   // Future<Either<Failure, User>> deleteDonation(String password);
-  Future<Either<Failure, Pagination<Donation>>> getDonations(int take, int? cursor);
+  Future<Either<Failure, Pagination<Donation>>> getDonations(int take, int? cursor, Map<String, dynamic>? where);
 }

@@ -46,9 +46,7 @@ class _DonationListState extends State<DonationList> with AutomaticKeepAliveClie
       bloc: _listActionsBloc,
       listener: (BuildContext context, state) async {
         if (state is LoadedDonationsState) {
-          setState(() {
-            list = list + state.listDonation;
-          });
+          list = state.listDonation;
           await Future.delayed(const Duration(seconds: 1));
           setState(() {
             loading = false;
@@ -61,23 +59,24 @@ class _DonationListState extends State<DonationList> with AutomaticKeepAliveClie
           });
         }
       },
-      child: BlocBuilder<ListActionsBloc, ListActionsState>(
-        bloc: _listActionsBloc,
-        builder: (BuildContext context, state) {
-          if (state is ListInitialState) {
-            _listActionsBloc.add(GetDonationsEvent());
-          }
-
-          return SingleChildScrollView(
-            controller: _scrollController,
-            child: Padding(
-              padding: const EdgeInsets.only(top: 20.0),
-              child: Column(
-                children: Card.buildDonationCards(list),
-              ),
-            ),
-          );
-        },
+      child: Padding(
+        padding: const EdgeInsets.only(top: 20.0),
+        child: BlocBuilder<ListActionsBloc, ListActionsState>(
+          bloc: _listActionsBloc,
+          builder: (BuildContext context, state) {
+            if (state is ListInitialState) {
+              _listActionsBloc.add(GetDonationsEvent());
+            }
+            // Using ListView.builder is has a better performance than scrollview
+            return ListView.builder(
+              controller: _scrollController,
+              itemCount: list.length,
+              itemBuilder: (context, index) {
+                return Card.buildDonationCard(list[index]);
+              },
+            );
+          },
+        ),
       ),
     );
   }

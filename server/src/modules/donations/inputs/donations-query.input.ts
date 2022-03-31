@@ -1,5 +1,5 @@
+import { DonationWhereInput } from '@generated/donation/donation-where.input';
 import { Field, InputType } from '@nestjs/graphql';
-import { IsNotEmpty, IsNumber } from 'class-validator';
 
 /**
  * Input type for create user mutation.
@@ -11,4 +11,7 @@ export class DonationsPageInput {
 
     @Field(() => Number, { nullable: true })
     cursor: number;
+
+    @Field(() => DonationWhereInput, { nullable: true })
+    where: DonationWhereInput;
 }

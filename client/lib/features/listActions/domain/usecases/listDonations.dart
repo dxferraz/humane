@@ -13,15 +13,16 @@ class ListDonation extends UseCase<Pagination<Donation>, PageParams> {
 
   @override
   Future<Either<Failure, Pagination<Donation>>> call(PageParams param) async {
-    return repository.getDonations(param.take, param.cursor);
+    return repository.getDonations(param.take, param.cursor, param.where);
   }
 }
 
 class PageParams extends Equatable {
   final int take;
-  final int? cursor;
+  int? cursor;
+  Map<String, dynamic>? where;
 
-  const PageParams({required this.take, this.cursor});
+  PageParams({required this.take, this.cursor, this.where});
 
   @override
   List<Object> get props => [take];

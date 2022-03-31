@@ -12,7 +12,7 @@ class Donation extends Equatable {
   final String address;
   final String zipCode;
   final String createdAt;
-  final User? user;
+  final User user;
 
   const Donation(
       {this.id,
@@ -23,7 +23,7 @@ class Donation extends Equatable {
       required this.address,
       required this.zipCode,
       required this.createdAt,
-      this.user});
+      required this.user});
 
   @override
   List<Object> get props => [thumbnails, title, description, category, address, zipCode, createdAt];

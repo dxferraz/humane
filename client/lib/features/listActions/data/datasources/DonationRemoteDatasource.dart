@@ -8,7 +8,7 @@ import 'package:humane/features/listActions/domain/entities/donation.dart';
 import 'package:humane/features/listActions/domain/entities/pagination.dart';
 
 abstract class IDonationRemoteDatasource {
-  Future<Either<Failure, Pagination<Donation>>> getDonations(int take, int? cursor);
+  Future<Either<Failure, Pagination<Donation>>> getDonations(int take, int? cursor, Map<String, dynamic>? where);
 }
 
 class DonationRemoteDatasource extends IDonationRemoteDatasource {
@@ -17,14 +17,24 @@ class DonationRemoteDatasource extends IDonationRemoteDatasource {
   DonationRemoteDatasource(this._client);
 
   @override
-  Future<Either<Failure, Pagination<Donation>>> getDonations(int take, int? cursor) async {
-    final variables = {
-      "input": {"take": take, "cursor": cursor}
+  Future<Either<Failure, Pagination<Donation>>> getDonations(int take, int? cursor, Map<String, dynamic>? where) async {
+    Map<String, dynamic> input = {
+      "take": take,
+      "cursor": cursor,
     };
-    QueryResult result = await _client.mutate(MutationOptions(
-      document: gql(GqlQuery.getDonations),
-      variables: variables,
-    ));
+    // Add where clause if defined
+    if (where != null) {
+      input['where'] = where;
+    }
+
+    Map<String, dynamic> variables = {"input": input};
+
+    QueryResult result = await _client.query(
+      QueryOptions(
+        document: gql(GqlQuery.getDonations),
+        variables: variables,
+      ),
+    );
 
     if (result.data == null) {
       return const Left(RequestErrorFailure(message: 'Something went wrong with your request! Please, try again later... Sorry!'));

@@ -33,7 +33,7 @@ Future<void> setup(config) async {
 
   //Scoped Models
   getIt.registerFactory<SignUserBloc>(() => SignUserBloc(signIn: getIt(), signUp: getIt(), forgotPassword: getIt()));
-  getIt.registerLazySingleton<ListActionsBloc>(() => ListActionsBloc(listDonation: getIt()));
+  getIt.registerLazySingleton<ListActionsBloc>(() => ListActionsBloc(listDonationUseCase: getIt()));
   getIt.registerLazySingleton<GraphQLClient>(() => registerModule.gqlClient);
 
   //Use cases

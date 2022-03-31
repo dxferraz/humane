@@ -10,12 +10,16 @@ import 'package:rxdart/transformers.dart';
 part 'ListActionsEvent.dart';
 part 'ListActionsState.dart';
 
-class ListActionsBloc extends Bloc<ListActionsEvent, ListActionsState> {
-  ListDonation listDonation;
-  PageInfo? donationPageInfo;
-  int TAKE_NUMBER_OF_ITEMS_PER_REQUEST = 10;
+// Number of donations to return per request:
+const TAKE_NUMBER_OF_ITEMS_PER_REQUEST = 10;
 
-  ListActionsBloc({required this.listDonation}) : super(ListInitialState()) {
+class ListActionsBloc extends Bloc<ListActionsEvent, ListActionsState> {
+  ListDonation listDonationUseCase;
+  PageInfo? donationPageInfo;
+  Map<String, dynamic>? donationWhereClause;
+  List<Edge<Donation>> list = [];
+
+  ListActionsBloc({required this.listDonationUseCase}) : super(ListInitialState()) {
     on<OpenDonationEvent>(_onOpenDonationEvent, transformer: (events, mapper) {
       return events.debounceTime(const Duration(milliseconds: 100)).asyncExpand(mapper);
     });
@@ -34,20 +38,39 @@ class ListActionsBloc extends Bloc<ListActionsEvent, ListActionsState> {
 
   _onGetDonationEvent(ListActionsEvent event, Emitter<ListActionsState> emit) async {
     emit(LoadingDonationsState());
-    // Number of donations to return per request:
 
-    int? cursor = donationPageInfo == null ? null : int.parse(donationPageInfo!.endCursor);
+    // Check if page info has end cursor, if no edges are returned, the end cursor is null.
+    int? cursor = donationPageInfo == null
+        ? null
+        : donationPageInfo!.endCursor != null
+            ? int.parse(donationPageInfo!.endCursor!)
+            : null;
 
     PageParams page = PageParams(take: TAKE_NUMBER_OF_ITEMS_PER_REQUEST, cursor: cursor);
 
-    Either<Failure, Pagination<Donation>> FailuireOrDonation = await listDonation(page);
+    // Check for where clauses (filter/search)
+    // If the term/filter changed, we clean all the cursors and the list.
+    if (event is GetDonationsEvent && event.where != null) {
+      if (event.where != donationWhereClause) {
+        page.cursor = null;
+        list = [];
+      }
+      donationWhereClause = event.where;
+    }
+
+    // We set the where clause here so it can be reused in future calls (scrolling the page for example).
+    page.where = donationWhereClause;
+
+    Either<Failure, Pagination<Donation>> FailuireOrDonation = await listDonationUseCase(page);
 
     FailuireOrDonation.fold(
         (error) => {
               if (error is RequestErrorFailure) {emit(ErrorDonationsState(message: error.message))}
             }, (Pagination<Donation> page) {
       donationPageInfo = page.pageInfo;
-      emit(LoadedDonationsState(listDonation: page.edges));
+      list = list + page.edges;
+
+      emit(LoadedDonationsState(listDonation: list));
     });
   }
 
