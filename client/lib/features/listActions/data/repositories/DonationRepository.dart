@@ -22,7 +22,7 @@ class DonationRepository extends IDonationRepository {
   }
 
   @override
-  Future<Either<Failure, Pagination<Donation>>> getDonations(int take, int? cursor) async {
-    return this.remoteDatasource.getDonations(take, cursor);
+  Future<Either<Failure, Pagination<Donation>>> getDonations(int take, int? cursor, Map<String, dynamic>? where) async {
+    return this.remoteDatasource.getDonations(take, cursor, where);
   }
 }

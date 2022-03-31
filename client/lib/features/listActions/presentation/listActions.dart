@@ -50,27 +50,15 @@ class ListRecentPostsState extends State<ListActions> with SingleTickerProviderS
       drawer: MainDrawer(),
       endDrawer: FilterDrawer(),
       backgroundColor: const Color.fromARGB(255, 224, 233, 242),
-      body: BlocBuilder<ListActionsBloc, ListActionsState>(
-        bloc: _listActionsBloc,
-        builder: (BuildContext context, state) {
-          return Stack(
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(top: 70.0, bottom: 70),
-                child: PageView(children: pages, controller: _pageController, physics: const NeverScrollableScrollPhysics()),
-              ),
-              TopMenu(drawersKey: _drawersKey),
-              Offstage(
-                offstage: state is! LoadingDonationsState,
-                child: const Padding(
-                  padding: EdgeInsets.only(top: 70),
-                  child: LinearProgressIndicator(),
-                ),
-              ),
-              MainMenu(state: state, onTabChange: goToPage)
-            ],
-          );
-        },
+      body: Stack(
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(top: 70.0, bottom: 70),
+            child: PageView(children: pages, controller: _pageController, physics: const NeverScrollableScrollPhysics()),
+          ),
+          TopMenu(drawersKey: _drawersKey),
+          MainMenu(onTabChange: goToPage)
+        ],
       ),
     );
   }

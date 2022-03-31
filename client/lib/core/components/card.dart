@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
 class Card extends HookWidget {
   String title;
@@ -32,25 +33,22 @@ class Card extends HookWidget {
       required this.date})
       : super(key: key);
 
-  static List<Widget> buildDonationCards(List<Edge<Donation>> donations) {
-    return donations
-        .map(
-          (donation) => Card(
-            author: donation.node.user!.name,
-            authorThumbnail: donation.node.user!.thumbnail,
-            title: donation.node.title,
-            description: donation.node.description,
-            thumbnails: donation.node.thumbnails,
-            date: donation.node.createdAt,
-            category: donation.node.category.title,
-          ),
-        )
-        .toList();
+  static Widget buildDonationCard(Edge<Donation> donation) {
+    return Card(
+      author: donation.node.user.name,
+      authorThumbnail: donation.node.user.thumbnail,
+      title: donation.node.title,
+      description: donation.node.description,
+      thumbnails: donation.node.thumbnails,
+      date: donation.node.createdAt,
+      category: donation.node.category.title,
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     DateTime tempDate = DateFormat("yyyy-MM-ddThh:mm:ssZ").parse(date, true);
+
     return Stack(
       children: <Widget>[
         Container(
@@ -94,10 +92,13 @@ class Card extends HookWidget {
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              SizedBox(
-                                width: 50,
-                                child: ClipOval(
-                                  child: Image.network(authorThumbnail!),
+                              Offstage(
+                                offstage: authorThumbnail == null,
+                                child: SizedBox(
+                                  width: 50,
+                                  child: ClipOval(
+                                    child: Image.network(authorThumbnail!),
+                                  ),
                                 ),
                               ),
                               author != null ? Text(author!) : Container()
@@ -129,15 +130,16 @@ class Card extends HookWidget {
                               ),
                               Row(
                                 children: [
-                                  category != null
-                                      ? CategoryChip(category: category!)
-                                      : Container(),
-                                  Text("Posted on " +
-                                      tempDate.day.toString() +
-                                      '-' +
-                                      tempDate.month.toString() +
-                                      "-" +
-                                      tempDate.year.toString()),
+                                  category != null ? CategoryChip(category: category!) : Container(),
+                                  Text(
+                                    "Posted on " +
+                                        tempDate.day.toString() +
+                                        '-' +
+                                        tempDate.month.toString() +
+                                        "-" +
+                                        tempDate.year.toString(),
+                                    style: const TextStyle(fontSize: 12),
+                                  ),
                                 ],
                               )
                             ],
@@ -150,14 +152,29 @@ class Card extends HookWidget {
                           Icons.more_vert,
                           color: appDarkBlueColor,
                         ),
+                        onSelected: (result) {
+                          if (result == 1) {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const WebView(
+                                  initialUrl: 'https://flutter.dev',
+                                ),
+                              ),
+                            );
+                          }
+                        },
                         itemBuilder: (context) => [
                           PopupMenuItem(
-                            child: Text("First"),
+                            child: Text("See Location"),
                             value: 1,
                             onTap: () {},
                           ),
                           PopupMenuItem(
-                              child: Text("Second"), value: 2, onTap: () {})
+                            child: Text("Second"),
+                            value: 2,
+                            onTap: () {},
+                          )
                         ],
                       ),
                     ],

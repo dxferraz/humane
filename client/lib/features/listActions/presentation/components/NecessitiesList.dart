@@ -7,9 +7,15 @@ class NecessitiesList extends StatefulWidget {
   State<NecessitiesList> createState() => _NecessitiesListState();
 }
 
-class _NecessitiesListState extends State<NecessitiesList> {
+class _NecessitiesListState extends State<NecessitiesList> with AutomaticKeepAliveClientMixin<NecessitiesList> {
+  @override
+  bool shouldKeepAlive = true;
+  @override
+  bool get wantKeepAlive => shouldKeepAlive;
+
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Container(
       child: Text("Necessities"),
     );

@@ -10,7 +10,11 @@ export class DonationService {
 
     constructor(private readonly repository: DonationRepository) {}
 
-    async getDonations(take: number, cursor?: Prisma.DonationWhereUniqueInput) {
+    async getDonations(
+        take: number,
+        cursor?: Prisma.DonationWhereUniqueInput,
+        where: Prisma.DonationWhereInput = {},
+    ) {
         const { findManyArgs, toConnection } = parsePaginationArgs({
             first: take,
             //@ts-ignore
@@ -18,7 +22,10 @@ export class DonationService {
         });
 
         //@ts-ignore
-        const donations = await this.findMany(findManyArgs);
+        const donations = await this.findMany({
+            ...findManyArgs,
+            where,
+        });
 
         //@ts-ignore
         return toConnection(donations);

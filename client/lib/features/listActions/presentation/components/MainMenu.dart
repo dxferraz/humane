@@ -8,13 +8,11 @@ import 'package:humane/features/listActions/presentation/components/MenuBackgrou
 import 'package:humane/icons.dart';
 
 class MainMenu extends StatefulWidget {
-  final ListActionsState state;
   final Function? onTabChange;
 
   const MainMenu({
     Key? key,
     required this.onTabChange,
-    required this.state,
   }) : super(key: key);
 
   @override
@@ -39,11 +37,7 @@ class _MainMenuState extends State<MainMenu> with TickerProviderStateMixin {
     openAnimationController = AnimationController(
         vsync: this, duration: const Duration(milliseconds: 300));
 
-    openAnimation =
-        Tween<double>(begin: 1, end: 0).animate(openAnimationController)
-          ..addListener(() {
-            setState(() {});
-          });
+    openAnimation = Tween<double>(begin: 1, end: 0).animate(openAnimationController);
 
     openAnimation.addStatusListener((AnimationStatus status) {
       if (status == AnimationStatus.completed || status == AnimationStatus.dismissed) {
@@ -69,83 +63,82 @@ class _MainMenuState extends State<MainMenu> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
 
-    double prevPos = curvePosition;
+    Widget menuRadial = BlocProvider<ListActionsBloc>(
+      create: (BuildContext context) => getIt<ListActionsBloc>(),
+      child: BlocBuilder<ListActionsBloc, ListActionsState>(builder: (context, state) {
+        if (state is ShowDonationsState || state is ListInitialState) {
+          menuRadialPosition = size.width * 0.5 - buttomSize / 2;
+        }
 
-    if (widget.state is ShowDonationsState || widget.state is ListInitialState) {
-      menuRadialPosition = size.width * 0.5 - buttomSize / 2;
-      curvePosition = 0;
-    }
+        if (state is ShowNecessitiesState) {
+          menuRadialPosition = size.width * 0.17 - buttomSize / 2;
+        }
 
-    if (widget.state is ShowNecessitiesState) {
-      menuRadialPosition = size.width * 0.17 - buttomSize / 2;
-      curvePosition = -size.width * 0.33;
-    }
-
-    if (widget.state is ShowMissingPersonsState) {
-      menuRadialPosition = size.width * 0.83 - buttomSize / 2;
-      curvePosition = size.width * 0.33;
-    }
-
-    Widget menuRadial = RadialMenu(
-      showOpenButtons: showOpenButtons,
-      opened: menuOpened,
-      optionButtons: openMenuButtons,
-      mainButton: AnimatedPositioned(
-        curve: Curves.ease,
-        duration: const Duration(milliseconds: 300),
-        left: menuRadialPosition,
-        child: SizedBox(
-          height: buttomSize,
-          width: buttomSize,
-          child: FittedBox(
-            child: Container(
-              decoration: BoxDecoration(
-                gradient: const LinearGradient(
-                  colors: [
-                    appDarkOrangeColor,
-                    Colors.orange,
-                  ],
-                ),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.2),
-                    spreadRadius: 3,
-                    blurRadius: 4,
-                    offset: const Offset(0, 5), // changes position of shadow
+        if (state is ShowMissingPersonsState) {
+          menuRadialPosition = size.width * 0.83 - buttomSize / 2;
+        }
+        return RadialMenu(
+          showOpenButtons: showOpenButtons,
+          opened: menuOpened,
+          optionButtons: openMenuButtons,
+          mainButton: AnimatedPositioned(
+            curve: Curves.ease,
+            duration: const Duration(milliseconds: 300),
+            left: menuRadialPosition,
+            child: SizedBox(
+              height: buttomSize,
+              width: buttomSize,
+              child: FittedBox(
+                child: Container(
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [
+                        orangeColor,
+                        Colors.orange,
+                      ],
+                    ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.2),
+                        spreadRadius: 3,
+                        blurRadius: 4,
+                        offset: const Offset(0, 5), // changes position of shadow
+                      ),
+                    ],
+                    shape: BoxShape.circle,
                   ),
-                ],
-                shape: BoxShape.circle,
-              ),
-              child: FloatingActionButton(
-                onPressed: () async {
-                  if (activeIndex != 0 || isAnimating) return;
-                  setState(() {
-                    isAnimating = true;
-                    menuOpened = !menuOpened;
-                    showOpenButtons = true;
-                  });
-                  if (!menuOpened) {
-                    openAnimationController.forward();
-                  } else {
-                    await Future.delayed(const Duration(milliseconds: 1000));
-                    openAnimationController.reverse();
-                    await Future.delayed(const Duration(microseconds: 100));
-                    setState(() {
-                      showOpenButtons = false;
-                    });
-                  }
-                },
-                backgroundColor: Colors.transparent,
-                elevation: 0,
-                child: Offstage(
-                  offstage: menuOpened,
-                  child: const Icon(Humane.close),
+                  child: FloatingActionButton(
+                    onPressed: () async {
+                      if (activeIndex != 0 || isAnimating) return;
+                      setState(() {
+                        isAnimating = true;
+                        menuOpened = !menuOpened;
+                        showOpenButtons = true;
+                      });
+                      if (!menuOpened) {
+                        openAnimationController.forward();
+                      } else {
+                        await Future.delayed(const Duration(milliseconds: 1000));
+                        openAnimationController.reverse();
+                        await Future.delayed(const Duration(microseconds: 100));
+                        setState(() {
+                          showOpenButtons = false;
+                        });
+                      }
+                    },
+                    backgroundColor: Colors.transparent,
+                    elevation: 0,
+                    child: Offstage(
+                      offstage: menuOpened,
+                      child: const Icon(Humane.close),
+                    ),
+                  ),
                 ),
               ),
             ),
           ),
-        ),
-      ),
+        );
+      }),
     );
 
     Widget openMenuTitle = Offstage(
@@ -175,6 +168,7 @@ class _MainMenuState extends State<MainMenu> with TickerProviderStateMixin {
             Colors.black.withAlpha((200 * (1 - openAnimation.value)).toInt()),
       ),
     );
+
     Widget mainButton = Align(
       alignment: Alignment.bottomLeft,
       child: SizedBox(
@@ -186,56 +180,68 @@ class _MainMenuState extends State<MainMenu> with TickerProviderStateMixin {
 
     Widget menuBackground = Align(
       alignment: Alignment.bottomCenter,
-      child: TweenAnimationBuilder(
-        curve: Curves.ease,
-        duration: const Duration(milliseconds: 300),
-        tween: Tween<double>(begin: prevPos, end: curvePosition),
-        builder: (BuildContext context, double value, Widget? child) {
-          return CustomPaint(
-            size: Size(size.width, menuSize),
-            painter: MenuBackground(
-                upDownAnimation: openAnimation.value,
-                horizontalAnimation: value),
-          );
-        },
+      child: BlocProvider<ListActionsBloc>(
+        create: (BuildContext context) => getIt<ListActionsBloc>(),
+        child: BlocBuilder<ListActionsBloc, ListActionsState>(
+          builder: (context, state) {
+            double prevPos = curvePosition;
+
+            if (state is ShowDonationsState || state is ListInitialState) {
+              curvePosition = 0;
+            }
+
+            if (state is ShowNecessitiesState) {
+              curvePosition = -size.width * 0.33;
+            }
+
+            if (state is ShowMissingPersonsState) {
+              curvePosition = size.width * 0.33;
+            }
+
+            return TweenAnimationBuilder(
+              curve: Curves.ease,
+              duration: const Duration(milliseconds: 300),
+              tween: Tween<double>(begin: prevPos, end: curvePosition),
+              builder: (BuildContext context, double value, Widget? child) {
+                return CustomPaint(
+                  size: Size(size.width, menuSize),
+                  painter: MenuBackground(upDownAnimation: openAnimation.value, horizontalAnimation: value),
+                );
+              },
+            );
+          },
+        ),
       ),
     );
 
-    Widget sideButtons = BlocProvider<ListActionsBloc>(
-      create: (BuildContext context) => getIt<ListActionsBloc>(),
-      child: BlocBuilder<ListActionsBloc, ListActionsState>(
-        builder: (context, state) {
-          return Offstage(
-            offstage: !menuOpened,
-            child: Align(
-              alignment: Alignment.bottomCenter,
-              child: SizedBox(
-                width: size.width,
-                height: 70,
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 10.0),
-                  child: Row(
-                    children: [
-                      _buildSideButton(activeIndex == 1, size, Offset(activeIndex == 1 ? -8 : -6, activeIndex == 1 ? -29 : 0),
-                          "Necessities", Humane.help, () {
-                        BlocProvider.of<ListActionsBloc>(context).add(OpenNecessitiesEvent());
-                        onTabMenuTap(1);
-                      }),
-                      _buildSideButton(activeIndex == 0, size, Offset(1, activeIndex == 0 ? -31 : 0), "Donations", Humane.donate, () {
-                        BlocProvider.of<ListActionsBloc>(context).add(OpenDonationEvent());
-                        onTabMenuTap(0);
-                      }),
-                      _buildSideButton(activeIndex == 2, size, Offset(3, activeIndex == 2 ? -31 : 0), "Missing Persons", Humane.find, () {
-                        BlocProvider.of<ListActionsBloc>(context).add(OpenMissingPersonsEvent());
-                        onTabMenuTap(2);
-                      })
-                    ],
-                  ),
-                ),
-              ),
+    Widget sideButtons = Offstage(
+      offstage: !menuOpened,
+      child: Align(
+        alignment: Alignment.bottomCenter,
+        child: SizedBox(
+          width: size.width,
+          height: 70,
+          child: Padding(
+            padding: const EdgeInsets.only(top: 10.0),
+            child: Row(
+              children: [
+                _buildSideButton(
+                    activeIndex == 1, size, Offset(activeIndex == 1 ? -8 : -6, activeIndex == 1 ? -29 : 0), "Necessities", Humane.help, () {
+                  getIt<ListActionsBloc>().add(OpenNecessitiesEvent());
+                  onTabMenuTap(1);
+                }),
+                _buildSideButton(activeIndex == 0, size, Offset(1, activeIndex == 0 ? -31 : 0), "Donations", Humane.donate, () {
+                  getIt<ListActionsBloc>().add(OpenDonationEvent());
+                  onTabMenuTap(0);
+                }),
+                _buildSideButton(activeIndex == 2, size, Offset(3, activeIndex == 2 ? -31 : 0), "Missing Persons", Humane.find, () {
+                  getIt<ListActionsBloc>().add(OpenMissingPersonsEvent());
+                  onTabMenuTap(2);
+                })
+              ],
             ),
-          );
-        },
+          ),
+        ),
       ),
     );
 
