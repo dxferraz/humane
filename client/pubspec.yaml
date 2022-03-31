@@ -63,6 +63,7 @@ dependencies:
   cached_network_image: ^3.2.0
   
   #Search Bar
+  implicitly_animated_list: ^2.1.0
   material_floating_search_bar: ^0.3.7
 
   intl: ^0.17.0

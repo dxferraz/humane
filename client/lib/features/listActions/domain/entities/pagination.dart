@@ -2,13 +2,13 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 
 class PageInfo extends Equatable {
-  final String endCursor;
+  final String? endCursor;
   final bool hasNextPage;
 
   const PageInfo({required this.endCursor, required this.hasNextPage});
 
   @override
-  List<Object> get props => [endCursor, hasNextPage];
+  List<Object> get props => [hasNextPage];
 }
 
 class Edge<T> extends Equatable {

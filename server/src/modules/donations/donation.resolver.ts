@@ -33,6 +33,10 @@ export class DonationResolver {
 
     @Query(() => Page)
     async donations(@Args('data') data: DonationsPageInput) {
-        return await this.donationService.getDonations(data.take, { id: data.cursor });
+        return await this.donationService.getDonations(
+            data.take,
+            { id: data.cursor },
+            data.where,
+        );
     }
 }
