@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:humane/core/theme/themeConstants.dart';
 
 class TextLine extends StatefulWidget {
   String text;
@@ -28,7 +29,8 @@ class TextLineState extends State<TextLine> {
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
-    double lineWidth = textBoxSize != null ? (width - textBoxSize! - 60) / 2 : 50;
+    double lineWidth =
+        textBoxSize != null ? (width - textBoxSize! - 60) / 2 : 40;
     return Container(
       padding: EdgeInsets.only(bottom: widget.bottom),
       width: double.infinity,
@@ -46,13 +48,16 @@ class TextLineState extends State<TextLine> {
             ),
           ),
           Container(
-              key: _textBox,
-              padding: const EdgeInsets.only(left: 5, right: 5),
-              child: Text(widget.text,
-                  style: const TextStyle(
-                    color: Colors.black,
-                    fontFamily: "Montserrat-light",
-                  ))),
+            key: _textBox,
+            padding: const EdgeInsets.only(left: 10, right: 10),
+            child: Text(
+              widget.text,
+              style: const TextStyle(
+                color: appGreyColor,
+                fontSize: 16,
+              ),
+            ),
+          ),
           Container(
             width: lineWidth,
             margin: const EdgeInsets.symmetric(vertical: 10.0),

@@ -7,6 +7,7 @@ import 'package:humane/core/components/Background.dart';
 import 'package:humane/core/components/InputField.dart' as i;
 import 'package:humane/core/components/LoadingButton.dart';
 import 'package:humane/core/injection/injection.dart';
+import 'package:humane/core/theme/themeConstants.dart';
 import 'package:humane/features/authentication/presentation/bloc/signUserBloc.dart';
 import 'package:humane/features/authentication/presentation/pages/validators/regex.dart';
 import 'package:humane/icons.dart';
@@ -42,221 +43,189 @@ class SignIn extends HookWidget {
               state.messages != null &&
               state.messages!.isNotEmpty) {
             String message = state.messages!.join("\n");
-            _scaffoldKey.currentState!.showSnackBar(SnackBar(
-              content: Text(message),
-              duration: const Duration(seconds: 2),
-              action: SnackBarAction(
-                label: 'HIDE',
-                onPressed: () {},
+            _scaffoldKey.currentState!.showSnackBar(
+              SnackBar(
+                content: Text(message),
+                duration: const Duration(seconds: 2),
+                action: SnackBarAction(
+                  label: 'HIDE',
+                  onPressed: () {},
+                ),
               ),
-            ));
+            );
           }
         },
         child: Scaffold(
+          appBar: AppBar(
+            leading: IconButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              icon: Icon(
+                Humane.back,
+                color: appDarkBlueColor,
+              ),
+            ),
+            centerTitle: true,
+            title: const Text(
+              'Sign In',
+              style: TextStyle(
+                fontSize: 26,
+                fontWeight: FontWeight.w600,
+                color: appDarkBlueColor,
+              ),
+            ),
+          ),
           key: _scaffoldKey,
           body: SingleChildScrollView(
             child: Background(
               child: BlocBuilder<SignUserBloc, SignUserState>(
-                  builder: (context, state) {
-                LoadingButtonStates buttonState = LoadingButtonStates.init;
-                if (state is ErrorUser) {
-                  buttonState = LoadingButtonStates.init;
-                }
+                builder: (context, state) {
+                  LoadingButtonStates buttonState = LoadingButtonStates.init;
+                  if (state is ErrorUser) {
+                    buttonState = LoadingButtonStates.init;
+                  }
 
-                if (state is LoadingUser) {
-                  buttonState = LoadingButtonStates.submitting;
-                }
+                  if (state is LoadingUser) {
+                    buttonState = LoadingButtonStates.submitting;
+                  }
 
-                return (SafeArea(
-                  child: Container(
-                    padding: const EdgeInsets.only(left: 30, right: 30),
-                    alignment: Alignment.center,
-                    height: MediaQuery.of(context).size.height,
-                    child: Form(
-                      key: _formKey,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.pop(context);
-                            },
-                            child: Container(
-                              padding: const EdgeInsets.only(bottom: 5),
-                              child: Icon(Humane.back,
-                                  color: Theme.of(context).primaryColor),
+                  return (SafeArea(
+                    child: Container(
+                      padding: const EdgeInsets.only(left: 30, right: 30),
+                      height: MediaQuery.of(context).size.height,
+                      child: Form(
+                        key: _formKey,
+                        child: Column(
+                          //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: <Widget>[
+                            const SizedBox(height: 30),
+                            SvgPicture.asset(
+                              'assets/images/SignInIllustration.svg',
+                              width: MediaQuery.of(context).size.width / 2,
                             ),
-                          ),
-                          Title(text: "Sign In"),
-                          const Line(),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: const [
-                              Text(
-                                'Entre com a sua conta:',
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 16,
-                                ),
-                                textAlign: TextAlign.center,
-                              ),
-                            ],
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              SizedBox(
-                                width: 40,
-                                height: 40,
-                                child: SvgPicture.asset(
-                                  "assets/icons/facebook.svg",
-                                  semanticsLabel: 'Facebook Logo',
-                                ),
-                              ),
-                              Container(
-                                width: 0.8,
-                                height: 40,
-                                margin: const EdgeInsets.symmetric(
-                                    horizontal: 15.0),
-                                decoration: BoxDecoration(
-                                  border: Border.all(
-                                    color: Colors.grey,
-                                    width: 0.5,
+                            const SizedBox(height: 30),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: const [
+                                Text(
+                                  'Fazer login com:',
+                                  style: TextStyle(
+                                    color: appGreyColor,
+                                    fontSize: 18,
                                   ),
+                                  textAlign: TextAlign.center,
                                 ),
-                              ),
-                              Container(
-                                width: 40,
-                                height: 40,
-                                decoration: const BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(5)),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.black12,
-                                      blurRadius:
-                                          4.0, // has the effect of softening the shadow
-                                      spreadRadius:
-                                          1.0, // has the effect of extending the shadow
-                                      offset: Offset(
-                                        0, // horizontal, move right 10
-                                        0, // vertical, move down 10
-                                      ),
-                                    )
-                                  ],
-                                ),
-                                padding: const EdgeInsets.all(5),
-                                child: SvgPicture.asset(
+                              ],
+                            ),
+                            const SizedBox(height: 15),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                FloatingActionButton.extended(
+                                  onPressed: () {},
+                                  label: const Text("Google"),
+                                  icon: SvgPicture.asset(
                                     "assets/icons/google.svg",
-                                    semanticsLabel: 'Google Logo'),
-                              ),
-                            ],
-                          ),
-                          TextLine(text: "or continue with"),
-                          i.InputField(
-                            onChanged: (_email) {
-                              email = _email!;
-                            },
-                            hint: "Email",
-                            textInputAction: TextInputAction.next,
-                            focusNode: _emailFocus,
-                            nextFocusNode: _passwordFocus,
-                            type: TextInputType.emailAddress,
-                            icon: const Icon(Humane.mail),
-                            validator: (value) {
-                              return emailValidator(value!);
-                            },
-                          ),
-                          i.InputField(
-                              onChanged: ([_password]) {
-                                password = _password!;
-                              },
-                              hint: "Password",
-                              textInputAction: TextInputAction.done,
-                              focusNode: _passwordFocus,
-                              icon: const Icon(Humane.padlock),
-                              hidden: true,
-                              validator: (value) {
-                                return isEmpty(value!);
-                              },
-                              onSubmit: () => submitForm(context),
-                              paddingBottom: 3),
-                          Container(
-                            padding: const EdgeInsets.only(bottom: 20),
-                            alignment: Alignment.centerRight,
-                            child: GestureDetector(
-                              onTap: () {
-                                Navigator.of(context)
-                                    .pushNamed('forgotPassword');
-                              },
-                              child: Text(
-                                'Esqueceu a senha?',
-                                style: TextStyle(
-                                  color: Theme.of(context).primaryColor,
-                                  decoration: TextDecoration.underline,
-                                  fontSize: 16,
-                                ),
-                              ),
-                            ),
-                          ),
-                          LoadingButton(
-                            state: buttonState,
-                            text: 'Entrar',
-                            onPress: () {
-                              if (buttonState !=
-                                  LoadingButtonStates.submitting) {
-                                submitForm(context);
-                              }
-                            },
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              ElevatedButton(
-                                onPressed: () {
-                                  Navigator.of(context).pushNamed('signUp');
-                                },
-                                child: const Text(
-                                  'Criar uma conta',
-                                ),
-                              ),
-                            ],
-                          ),
-                          Container(
-                            padding: const EdgeInsets.only(bottom: 40),
-                            child: Center(
-                              child: Text.rich(
-                                TextSpan(
-                                  text: "Não tem uma conta? ",
-                                  style: const TextStyle(
-                                    color: Colors.grey,
+                                    width: 30,
+                                    height: 30,
                                   ),
-                                  children: <InlineSpan>[
-                                    TextSpan(
-                                      recognizer: TapGestureRecognizer()
-                                        ..onTap = () {
-                                          Navigator.of(context)
-                                              .pushNamed('signUp');
-                                        },
-                                      text: 'Criar uma conta',
-                                      style: TextStyle(
-                                        color: Theme.of(context).primaryColor,
-                                        decoration: TextDecoration.underline,
-                                      ),
-                                    ),
-                                  ],
+                                  backgroundColor: Colors.white,
+                                  foregroundColor: Colors.black,
+                                ),
+                                const SizedBox(width: 20),
+                                FloatingActionButton.extended(
+                                  onPressed: () {},
+                                  label: const Text("Facebook"),
+                                  icon: SvgPicture.asset(
+                                    "assets/icons/facebook.svg",
+                                    width: 32,
+                                    height: 32,
+                                  ),
+                                  backgroundColor: Color(0xFF3b5999),
+                                  foregroundColor: Colors.white,
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 20),
+                            TextLine(text: "ou preencha os campos abaixo:"),
+                            i.InputField(
+                              onChanged: (_email) {
+                                email = _email!;
+                              },
+                              hint: "Email",
+                              textInputAction: TextInputAction.next,
+                              focusNode: _emailFocus,
+                              nextFocusNode: _passwordFocus,
+                              type: TextInputType.emailAddress,
+                              icon: const Icon(Humane.mail),
+                              validator: (value) {
+                                return emailValidator(value!);
+                              },
+                            ),
+                            i.InputField(
+                                onChanged: ([_password]) {
+                                  password = _password!;
+                                },
+                                hint: "Password",
+                                textInputAction: TextInputAction.done,
+                                focusNode: _passwordFocus,
+                                icon: const Icon(Humane.padlock),
+                                hidden: true,
+                                validator: (value) {
+                                  return isEmpty(value!);
+                                },
+                                onSubmit: () => submitForm(context),
+                                paddingBottom: 3),
+                            Container(
+                              alignment: Alignment.centerRight,
+                              child: GestureDetector(
+                                onTap: () {
+                                  Navigator.of(context)
+                                      .pushNamed('forgotPassword');
+                                },
+                                child: Text(
+                                  'Esqueceu a senha?',
+                                  style: TextStyle(
+                                    color: Theme.of(context).primaryColor,
+                                    decoration: TextDecoration.underline,
+                                    fontSize: 16,
+                                  ),
                                 ),
                               ),
                             ),
-                          )
-                        ],
+                            const SizedBox(height: 20),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                ElevatedButton(
+                                  onPressed: () {
+                                    Navigator.of(context).pushNamed('signUp');
+                                  },
+                                  child: const Text(
+                                    'Criar uma conta',
+                                  ),
+                                ),
+                                LoadingButton(
+                                  state: buttonState,
+                                  text: 'Entrar',
+                                  onPress: () {
+                                    if (buttonState !=
+                                        LoadingButtonStates.submitting) {
+                                      submitForm(context);
+                                    }
+                                  },
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                ));
-              }),
+                  ));
+                },
+              ),
             ),
           ),
         ),

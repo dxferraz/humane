@@ -13,22 +13,23 @@ class NetworkError extends StatelessWidget {
     return Opacity(
       opacity: 0.75,
       child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            SvgPicture.asset(
-              "assets/icons/no-connection.svg",
-              width: 120,
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          SvgPicture.asset(
+            "assets/icons/no-connection.svg",
+            width: 120,
+          ),
+          Padding(
+            padding: const EdgeInsets.all(50.0),
+            child: Title(
+              color: appDarkBlueColor,
+              text: message ?? "",
+              align: TextAlign.center,
             ),
-            Padding(
-              padding: const EdgeInsets.all(50.0),
-              child: Title(
-                color: appDarkBlueColor,
-                text: message ?? "",
-                align: TextAlign.center,
-              ),
-            ),
-          ]),
+          ),
+        ],
+      ),
     );
   }
 }

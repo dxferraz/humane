@@ -6,7 +6,12 @@ class LoadingButton extends StatefulWidget {
   VoidCallback onPress;
   String text;
   LoadingButtonStates state;
-  LoadingButton({Key? key, required this.onPress, required this.state, required this.text}) : super(key: key);
+  LoadingButton(
+      {Key? key,
+      required this.onPress,
+      required this.state,
+      required this.text})
+      : super(key: key);
 
   @override
   LoadingButtonState createState() => LoadingButtonState();
@@ -33,24 +38,36 @@ class LoadingButtonState extends State<LoadingButton> {
     return Container(
       alignment: Alignment.center,
       child: AnimatedContainer(
-          duration: const Duration(milliseconds: 200),
-          onEnd: () => setState(() {
-                isAnimating = !isAnimating;
-              }),
-          width: widget.state == LoadingButtonStates.init ? buttonWidth : 40,
+        duration: const Duration(milliseconds: 200),
+        onEnd: () => setState(
+          () {
+            isAnimating = !isAnimating;
+          },
+        ),
+        //width: widget.state == LoadingButtonStates.init ? buttonWidth : 40,
 
-          // If Button State is Submiting or Completed  show 'buttonCircular' widget as below
-          child: buildButton(isDone)),
+        // If Button State is Submiting or Completed  show 'buttonCircular' widget as below
+        child: buildButton(isDone),
+      ),
       // child: circularContainer(true)),
     );
   }
 
   // If Button State is init : show Normal submit button
   Widget buildButton(bool done) => ElevatedButton(
-        style: ElevatedButton.styleFrom(shape: const StadiumBorder(), primary: done ? Colors.green : Theme.of(context).primaryColor),
+        style: ElevatedButton.styleFrom(
+          shape: const StadiumBorder(),
+          primary: done ? Colors.green : Theme.of(context).primaryColor,
+        ),
         onPressed: widget.onPress,
         child: widget.state == LoadingButtonStates.init
-            ? Text(widget.text, style: const TextStyle(fontSize: 16, fontFamily: "Montserrat-regular"))
+            ? Text(
+                widget.text,
+                style: const TextStyle(
+                  fontSize: 16,
+                  fontFamily: "Montserrat-regular",
+                ),
+              )
             : done
                 ? const Icon(Icons.done, size: 20, color: Colors.white)
                 : spinner,
