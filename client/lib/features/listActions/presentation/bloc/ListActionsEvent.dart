@@ -25,7 +25,7 @@ class OpenMissingPersonsEvent extends ListActionsEvent {
 // Donation events
 
 class GetDonationsEvent extends ListActionsEvent {
-  Map<String, dynamic>? where;
+  final Map<String, dynamic>? where;
 
   GetDonationsEvent({this.where});
 

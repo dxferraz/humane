@@ -5,6 +5,9 @@ import 'package:humane/core/flavors/flavorConfig.dart';
 import 'package:humane/routes.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:humane/core/injection/injection.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
+
+const isWebPlatform = kIsWeb;
 
 class HumaneApp extends StatelessWidget {
   final FlavorConfig config;

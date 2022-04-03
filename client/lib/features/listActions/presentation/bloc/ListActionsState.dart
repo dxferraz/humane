@@ -9,7 +9,7 @@ abstract class ListActionsState extends Equatable {
   const ListActionsState();
 }
 
-/***** List Tab state *****/
+///  List Tab state
 class ShowDonationsState extends ListActionsState {
   @override
   List<Object> get props => [];
@@ -25,27 +25,25 @@ class ShowNecessitiesState extends ListActionsState {
   List<Object> get props => [];
 }
 
-/***** End of List Tab state *****/
-
-/***** Get Donations state *****/
+/// Get Donations state
 class LoadingDonationsState extends ListActionsState {
   @override
   List<Object> get props => [];
 }
 
 class LoadedDonationsState extends ListActionsState {
-  List<Edge<Donation>> listDonation;
+  final List<Edge<Donation>> listDonation;
 
-  LoadedDonationsState({required this.listDonation});
+  const LoadedDonationsState({required this.listDonation});
 
   @override
   List<Object> get props => [listDonation];
 }
 
 class ErrorDonationsState extends ListActionsState {
-  String? message;
+  final String? message;
 
-  ErrorDonationsState({this.message});
+  const ErrorDonationsState({this.message});
 
   @override
   List<Object> get props => [];

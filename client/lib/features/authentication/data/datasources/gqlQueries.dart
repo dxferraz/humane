@@ -3,7 +3,7 @@ mixin GqlQuery {
   mutation CreateUser(\$input: UserCreateInput!){
     createUser(data: \$input){
       name,
-      email
+      email,
     }
   }
   ''';
@@ -11,7 +11,9 @@ mixin GqlQuery {
   static String loginUserQuery = '''
   mutation LoginUser(\$input: UserLoginInput!){
     loginUser(data: \$input){
-      name
+      name,
+      email,
+      thumbnail
     }
   }
   ''';

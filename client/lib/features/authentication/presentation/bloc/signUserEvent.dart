@@ -26,6 +26,13 @@ class SignUpUserEvent extends SignUserEvent {
   List<Object> get props => [name, email, password];
 }
 
+class AmISignedInEvent extends SignUserEvent {
+  AmISignedInEvent();
+
+  @override
+  List<Object> get props => [];
+}
+
 class UpdateUserEvent extends SignUserEvent {
   final String? name;
   final String? email;
@@ -57,4 +64,9 @@ class ForgetPasswordEvent extends SignUserEvent {
 
   @override
   List<Object> get props => [email];
+}
+
+class SignOutUserEvent extends SignUserEvent {
+  @override
+  List<Object> get props => [];
 }

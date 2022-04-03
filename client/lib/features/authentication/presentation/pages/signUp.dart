@@ -14,6 +14,7 @@ import 'package:flutter/material.dart' hide Title;
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_svg/svg.dart';
 
+// ignore: must_be_immutable
 class SignUp extends HookWidget {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final FocusNode _nameFocus = FocusNode();
@@ -25,10 +26,10 @@ class SignUp extends HookWidget {
   String password = '';
   String confirmPassword = '';
 
+  SignUp({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    ValueNotifier<bool> recaptchaToggle = useState(false);
-
     final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
     return BlocProvider<SignUserBloc>(
@@ -59,7 +60,7 @@ class SignUp extends HookWidget {
             }
             if (state is ErrorUser && state.messages != null && state.messages!.isNotEmpty) {
               String message = state.messages!.join("\n");
-              _scaffoldKey.currentState!.showSnackBar(SnackBar(
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                 content: Text(message),
                 duration: const Duration(seconds: 2),
                 action: SnackBarAction(
@@ -103,7 +104,7 @@ class SignUp extends HookWidget {
                                   child: Icon(Humane.back, color: Theme.of(context).primaryColor),
                                 ),
                               ),
-                              Title(text: "Sign Up"),
+                              const Title(text: "Sign Up"),
                               const Line(),
                               const Text(
                                 'Register here',
@@ -156,7 +157,7 @@ class SignUp extends HookWidget {
                                   ],
                                 ),
                               ),
-                              TextLine(text: "or register with"),
+                              const TextLine(text: "or register with"),
                               InputField(
                                   textCapitalization: TextCapitalization.words,
                                   hint: "Full Name",
@@ -169,6 +170,7 @@ class SignUp extends HookWidget {
                                   },
                                   onChanged: (value) {
                                     name = value!.trim();
+                                    return;
                                   }),
                               InputField(
                                   hint: "Email",
@@ -182,6 +184,7 @@ class SignUp extends HookWidget {
                                   },
                                   onChanged: (value) {
                                     email = value!.trim();
+                                    return;
                                   }),
                               InputField(
                                   tooltip:
@@ -197,6 +200,7 @@ class SignUp extends HookWidget {
                                   },
                                   onChanged: (value) {
                                     password = value!;
+                                    return;
                                   }),
                               InputField(
                                 hint: "Confirm Password",
@@ -210,9 +214,10 @@ class SignUp extends HookWidget {
                                 },
                                 onChanged: (value) {
                                   confirmPassword = value!;
+                                  return;
                                 },
                               ),
-                              Text("I have read and agree to Humane's Privacy Policy and Terms and Conditions."),
+                              const Text("I have read and agree to Humane's Privacy Policy and Terms and Conditions."),
                               LoadingButton(
                                 state: buttonState,
                                 text: 'Sign Up',

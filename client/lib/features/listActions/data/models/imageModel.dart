@@ -1,7 +1,7 @@
 import 'package:humane/features/listActions/domain/entities/Image.dart';
 
 class ImageModel extends Image {
-  ImageModel({
+  const ImageModel({
     required url,
   }) : super(
           url: url,

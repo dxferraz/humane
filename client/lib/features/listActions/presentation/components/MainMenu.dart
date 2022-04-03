@@ -65,9 +65,7 @@ class _MainMenuState extends State<MainMenu> with TickerProviderStateMixin {
     Widget menuRadial = BlocProvider<ListActionsBloc>(
       create: (BuildContext context) => getIt<ListActionsBloc>(),
       child: BlocBuilder<ListActionsBloc, ListActionsState>(builder: (context, state) {
-        if (state is ShowDonationsState || state is ListInitialState) {
-          menuRadialPosition = size.width * 0.5 - buttomSize / 2;
-        }
+        menuRadialPosition = size.width * 0.5 - buttomSize / 2;
 
         if (state is ShowNecessitiesState) {
           menuRadialPosition = size.width * 0.17 - buttomSize / 2;
@@ -243,20 +241,23 @@ class _MainMenuState extends State<MainMenu> with TickerProviderStateMixin {
       ),
     );
 
-    Widget gradient = Align(
-      alignment: Alignment.bottomCenter,
-      child: Container(
-        width: size.width,
-        height: 110,
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            stops: const [0.15, 0.35],
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [
-              const Color.fromARGB(0, 224, 233, 242),
-              const Color.fromARGB(255, 224, 233, 242).withAlpha(200),
-            ],
+    Widget gradient = Padding(
+      padding: EdgeInsets.only(bottom: menuSize),
+      child: Align(
+        alignment: Alignment.bottomCenter,
+        child: Container(
+          width: size.width,
+          height: 10,
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              stops: const [0.2, 0.9],
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [
+                const Color.fromARGB(0, 224, 233, 242),
+                const Color.fromARGB(255, 224, 233, 242).withAlpha(255),
+              ],
+            ),
           ),
         ),
       ),
@@ -297,24 +298,28 @@ class _MainMenuState extends State<MainMenu> with TickerProviderStateMixin {
 
   List<Widget> openMenuButtons = [
     FloatingActionButton(
+      heroTag: "ClothesDonation",
       backgroundColor: Colors.red,
       child: const Icon(Humane.clothes),
       elevation: 0,
       onPressed: () async {},
     ),
     FloatingActionButton(
+      heroTag: "SleepDonation",
       backgroundColor: Colors.green,
       child: const Icon(Humane.sleep),
       elevation: 0,
       onPressed: () async {},
     ),
     FloatingActionButton(
+      heroTag: "FurnitureDonation",
       backgroundColor: Colors.orange,
       child: Transform.translate(offset: const Offset(-5, 0), child: const Icon(Humane.furniture)),
       elevation: 0,
       onPressed: () async {},
     ),
     FloatingActionButton(
+      heroTag: "FoodDonation",
       backgroundColor: Colors.blue,
       child: const Icon(Humane.food),
       elevation: 0,

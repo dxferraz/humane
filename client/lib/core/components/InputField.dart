@@ -2,22 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:humane/icons.dart';
 
 class InputField extends StatefulWidget {
-  late String? hint;
-  late String? Function(String?)? validator;
-  late String? Function(String?)? onChanged;
-  late Icon? icon;
-  TextInputType type;
-  bool hidden;
-  double paddingBottom;
-  TextCapitalization? textCapitalization;
-  String? tooltip;
-  AutovalidateMode? autovalidateMode;
-  VoidCallback? onSubmit;
-  late TextInputAction? textInputAction;
-  late FocusNode? focusNode;
-  late FocusNode? nextFocusNode;
+  final String? hint;
+  final String? Function(String?)? validator;
+  final String? Function(String?)? onChanged;
+  final Icon? icon;
+  final TextInputType type;
+  final bool hidden;
+  final double paddingBottom;
+  final TextCapitalization? textCapitalization;
+  final String? tooltip;
+  final AutovalidateMode? autovalidateMode;
+  final VoidCallback? onSubmit;
+  final TextInputAction? textInputAction;
+  final FocusNode? focusNode;
+  final FocusNode? nextFocusNode;
 
-  InputField(
+  const InputField(
       {Key? key,
       this.textInputAction,
       this.nextFocusNode,

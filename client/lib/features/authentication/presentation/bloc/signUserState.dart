@@ -10,9 +10,9 @@ class SignUserInitial extends SignUserState {
 }
 
 class ErrorUser extends SignUserState {
-  List<String>? messages;
+  final List<String>? messages;
 
-  ErrorUser({this.messages});
+  const ErrorUser({this.messages});
 
   @override
   List<Object?> get props => [messages];

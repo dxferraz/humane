@@ -30,7 +30,7 @@ class PaginationModel extends Pagination {
 }
 
 class EdgeModel<T> extends Edge {
-  EdgeModel({
+  const EdgeModel({
     required cursor,
     required node,
   }) : super(
@@ -58,7 +58,7 @@ class EdgeModel<T> extends Edge {
 }
 
 class PageInfoModel extends PageInfo {
-  PageInfoModel({
+  const PageInfoModel({
     required endCursor,
     required hasNextPage,
   }) : super(

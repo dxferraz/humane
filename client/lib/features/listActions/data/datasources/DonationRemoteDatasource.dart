@@ -50,6 +50,6 @@ class DonationRemoteDatasource extends IDonationRemoteDatasource {
     }
 
     PageInfo pageInfo = PageInfoModel.fromMap(pageInfoData)!;
-    return Right(Pagination(edges: edges as List<Edge<Donation>>, pageInfo: pageInfo));
+    return Right(Pagination(edges: edges, pageInfo: pageInfo));
   }
 }

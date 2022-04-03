@@ -1,11 +1,9 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart' hide Title;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:humane/core/components/Background.dart';
 import 'package:humane/core/components/InputField.dart';
 import 'package:humane/core/components/Line.dart';
 import 'package:humane/core/components/Title.dart';
-import 'package:humane/core/components/Button.dart';
 import 'package:humane/core/injection/injection.dart';
 import 'package:humane/features/authentication/presentation/bloc/signUserBloc.dart';
 import 'package:humane/features/authentication/presentation/pages/validators/regex.dart';
@@ -13,6 +11,8 @@ import 'package:humane/icons.dart';
 import 'package:humane/core/components/LoadingButton.dart';
 
 class ForgotPassword extends StatefulWidget {
+  const ForgotPassword({Key? key}) : super(key: key);
+
   @override
   ForgotPasswordState createState() {
     return ForgotPasswordState();
@@ -40,7 +40,7 @@ class ForgotPasswordState extends State<ForgotPassword> {
           // Go to Home Page
           if (state is EmailSent) {
             String message = state.message;
-            _scaffoldKey.currentState!.showSnackBar(
+            ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 content: Text(message),
                 duration: const Duration(seconds: 5),
@@ -52,7 +52,8 @@ class ForgotPasswordState extends State<ForgotPassword> {
                 ),
               ),
             );
-            await Future.delayed(Duration(seconds: 5));
+
+            await Future.delayed(const Duration(seconds: 5));
             Navigator.of(context).pushNamed('signIn');
           }
         },
@@ -90,7 +91,7 @@ class ForgotPasswordState extends State<ForgotPassword> {
                                   child: Icon(Humane.back, color: Theme.of(context).primaryColor),
                                 ),
                               ),
-                              Title(text: "Forgot Password"),
+                              const Title(text: "Forgot Password"),
                               const Line(),
                               const Padding(
                                 padding: EdgeInsets.symmetric(vertical: 8.0),
@@ -105,6 +106,7 @@ class ForgotPasswordState extends State<ForgotPassword> {
                               InputField(
                                 onChanged: (_email) {
                                   email = _email!;
+                                  return;
                                 },
                                 hint: "Email",
                                 type: TextInputType.emailAddress,

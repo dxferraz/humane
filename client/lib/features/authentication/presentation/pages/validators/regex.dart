@@ -1,7 +1,7 @@
 import 'package:validators/validators.dart';
 
-RegExp twoNamesRegex = new RegExp(r"(\w.+\s).+");
-RegExp passwordRegex = new RegExp(r"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$#!%*?&]{6,20}$");
+RegExp twoNamesRegex = RegExp(r"(\w.+\s).+");
+RegExp passwordRegex = RegExp(r"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$#!%*?&]{6,20}$");
 
 String? twoNamesValidator(String value) {
   if (twoNamesRegex.hasMatch(value)) return null;
@@ -9,7 +9,7 @@ String? twoNamesValidator(String value) {
 }
 
 String? emailValidator(String value) {
-  if (isEmail(value)) return null;
+  if (isEmail(value.trim())) return null;
   return "Please, enter a valid email.";
 }
 

@@ -11,15 +11,15 @@ Color primaryColor = const Color(0xFFf16622);
 Color secondaryHeaderColor = const Color(0xFF34658a);
 
 Map<int, Color> colorCodes = {
-  50: Color.fromRGBO(241, 102, 34, .1),
-  100: Color.fromRGBO(241, 102, 34, .2),
-  200: Color.fromRGBO(241, 102, 34, .3),
-  300: Color.fromRGBO(241, 102, 34, .4),
-  400: Color.fromRGBO(241, 102, 34, .5),
-  500: Color.fromRGBO(241, 102, 34, .6),
-  600: Color.fromRGBO(241, 102, 34, .7),
-  700: Color.fromRGBO(241, 102, 34, .8),
-  800: Color.fromRGBO(241, 102, 34, .9),
-  900: Color.fromRGBO(241, 102, 34, 1),
+  50: const Color.fromRGBO(241, 102, 34, .1),
+  100: const Color.fromRGBO(241, 102, 34, .2),
+  200: const Color.fromRGBO(241, 102, 34, .3),
+  300: const Color.fromRGBO(241, 102, 34, .4),
+  400: const Color.fromRGBO(241, 102, 34, .5),
+  500: const Color.fromRGBO(241, 102, 34, .6),
+  600: const Color.fromRGBO(241, 102, 34, .7),
+  700: const Color.fromRGBO(241, 102, 34, .8),
+  800: const Color.fromRGBO(241, 102, 34, .9),
+  900: const Color.fromRGBO(241, 102, 34, 1),
 };
 MaterialColor orangeColor = MaterialColor(0xFFf16622, colorCodes);
