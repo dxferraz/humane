@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:humane/Utils/colors.dart';
 import 'package:humane/core/components/Card.dart';
+import 'package:humane/core/components/CardShimmed.dart';
 import 'package:humane/core/injection/injection.dart';
 import 'package:humane/features/listActions/domain/entities/donation.dart';
 import 'package:humane/features/listActions/domain/entities/pagination.dart';
@@ -67,6 +68,16 @@ class _DonationListState extends State<DonationList> with AutomaticKeepAliveClie
       child: BlocBuilder<ListActionsBloc, ListActionsState>(
         bloc: _listActionsBloc,
         builder: (BuildContext context, state) {
+          if (state is LoadingDonationsState) {
+            return ListView.builder(
+              controller: _scrollController,
+              itemCount: 2,
+              itemBuilder: (context, index) {
+                return const CardShimmed();
+              },
+            );
+          }
+
           if (state is ErrorDonationsState) {
             return Opacity(
               opacity: 0.6,

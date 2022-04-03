@@ -29,19 +29,16 @@ class SignUserBloc extends Bloc<SignUserEvent, SignUserState> {
   }
 
   void _onSignOutUserEvent(SignOutUserEvent event, Emitter<SignUserState> emit) async {
-    print(loggedUser);
     if (loggedUser == null) return;
     Either<Failure, int> failureOrInt = await signOut(SignOutParams(id: loggedUser!.id));
-    print(failureOrInt);
-    failureOrInt.fold((error) {
-      print(error);
-    }, (id) {
+    failureOrInt.fold((error) {}, (id) {
       loggedUser = null;
       emit(SignUserInitial());
     });
   }
 
   void _onAmISignedInEvent(AmISignedInEvent event, Emitter<SignUserState> emit) async {
+    emit(LoadingUser());
     Either<Failure, User> failureOrUser = await amISignedIn(const AmIsignedParams());
 
     failureOrUser.fold((error) {}, (user) {

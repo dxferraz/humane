@@ -2,7 +2,6 @@ import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:humane/core/errors/failures.dart';
 import 'package:humane/core/usecases/usecase.dart';
-import 'package:humane/features/authentication/domain/entities/User.dart';
 import '../repositories/IUserRepository.dart';
 
 class SignOut extends UseCase<int, SignOutParams> {

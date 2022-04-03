@@ -55,6 +55,9 @@ dependencies:
   drift_dev: ^1.5.2
   sqlite3_flutter_libs: ^0.5.0
 
+  #Loading
+  shimmer: ^2.0.0
+
   #Observables
   dartz: ^0.10.1
 
