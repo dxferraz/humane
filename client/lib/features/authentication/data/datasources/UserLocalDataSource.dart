@@ -1,22 +1,31 @@
-import '../models/userModel.dart';
+import 'package:dartz/dartz.dart';
+import 'package:humane/core/errors/failures.dart';
+import 'package:humane/features/authentication/data/datasources/database/user.dao.dart';
+import 'package:humane/features/authentication/domain/entities/User.dart';
 
 abstract class IUserLocalDataSource {
-  Future<UserModel?> signIn({required String email, required String password});
-  Future<UserModel?> signUp({required String name, required String email, required String password});
+  Future<Either<Failure, User>> getUser();
+  Future<Either<Failure, int>> deleteUser(int id);
+  Future<int> insertUser(User user);
 }
 
 class UserLocalDataSource extends IUserLocalDataSource {
-  UserLocalDataSource();
+  IUserDao userDB;
+
+  UserLocalDataSource(this.userDB);
 
   @override
-  Future<UserModel?> signIn({required String email, required String password}) {
-    // TODO: implement signIn
-    throw UnimplementedError();
+  Future<Either<Failure, int>> deleteUser(int id) {
+    return userDB.deleteUser(id);
   }
 
   @override
-  Future<UserModel?> signUp({required String name, required String email, required String password}) {
-    // TODO: implement signUp
-    throw UnimplementedError();
+  Future<Either<Failure, User>> getUser() {
+    return userDB.getUser();
+  }
+
+  @override
+  Future<int> insertUser(User user) {
+    return userDB.addUser(user);
   }
 }

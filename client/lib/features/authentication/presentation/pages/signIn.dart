@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:humane/core/components/Background.dart';
-import 'package:humane/core/components/InputField.dart' as I;
+import 'package:humane/core/components/InputField.dart' as input;
 import 'package:humane/core/components/LoadingButton.dart';
 import 'package:humane/core/injection/injection.dart';
 import 'package:humane/features/authentication/presentation/bloc/signUserBloc.dart';
@@ -13,8 +13,8 @@ import 'package:humane/icons.dart';
 import 'package:humane/core/components/Line.dart';
 import 'package:humane/core/components/TextLine.dart';
 import 'package:humane/core/components/Title.dart';
-import 'package:humane/core/components/Button.dart';
 
+// ignore: must_be_immutable
 class SignIn extends HookWidget {
   final _formKey = GlobalKey<FormState>();
   final FocusNode _emailFocus = FocusNode();
@@ -22,10 +22,11 @@ class SignIn extends HookWidget {
   late String email;
   late String password;
 
+  SignIn({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-    ValueNotifier<bool> recaptchaToggle = useState(false);
 
     return BlocProvider<SignUserBloc>(
       create: (BuildContext context) => getIt<SignUserBloc>(),
@@ -33,19 +34,22 @@ class SignIn extends HookWidget {
         listener: (context, state) {
           if (state is SignedUser) {
             // Clear form on success
+            Navigator.of(context).pushNamed('home');
             _formKey.currentState?.reset();
           }
           // Go to Home Page
           if (state is ErrorUser && state.messages != null && state.messages!.isNotEmpty) {
             String message = state.messages!.join("\n");
-            _scaffoldKey.currentState!.showSnackBar(SnackBar(
-              content: Text(message),
-              duration: const Duration(seconds: 2),
-              action: SnackBarAction(
-                label: 'HIDE',
-                onPressed: () {},
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(message),
+                duration: const Duration(seconds: 2),
+                action: SnackBarAction(
+                  label: 'HIDE',
+                  onPressed: () {},
+                ),
               ),
-            ));
+            );
           }
         },
         child: Scaffold(
@@ -82,7 +86,7 @@ class SignIn extends HookWidget {
                               child: Icon(Humane.back, color: Theme.of(context).primaryColor),
                             ),
                           ),
-                          Title(text: "Sign In"),
+                          const Title(text: "Sign In"),
                           const Line(),
                           const Text(
                             'Enter via social networks',
@@ -135,10 +139,11 @@ class SignIn extends HookWidget {
                               ],
                             ),
                           ),
-                          TextLine(text: "or continue with"),
-                          I.InputField(
+                          const TextLine(text: "or continue with"),
+                          input.InputField(
                             onChanged: (_email) {
                               email = _email!;
+                              return;
                             },
                             hint: "Email",
                             textInputAction: TextInputAction.next,
@@ -150,9 +155,10 @@ class SignIn extends HookWidget {
                               return emailValidator(value!);
                             },
                           ),
-                          I.InputField(
+                          input.InputField(
                               onChanged: ([_password]) {
                                 password = _password!;
+                                return;
                               },
                               hint: "Password",
                               textInputAction: TextInputAction.done,
@@ -202,7 +208,7 @@ class SignIn extends HookWidget {
                                         ..onTap = () {
                                           Navigator.of(context).pushNamed('signUp');
                                         },
-                                      text: 'SIGN UP',
+                                      text: 'SIGN IN',
                                       style: TextStyle(fontFamily: "Montserrat-medium", color: Theme.of(context).primaryColor),
                                     ),
                                   ],
@@ -226,7 +232,7 @@ class SignIn extends HookWidget {
   submitForm(BuildContext context) {
     FocusManager.instance.primaryFocus?.unfocus();
     if (_formKey.currentState?.validate() != false) {
-      BlocProvider.of<SignUserBloc>(context).add(SignInUserEvent(email: email, password: password));
+      BlocProvider.of<SignUserBloc>(context).add(SignInUserEvent(email: email.trim(), password: password));
     }
   }
 }

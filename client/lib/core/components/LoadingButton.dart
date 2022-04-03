@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 enum LoadingButtonStates { init, submitting, completed }
 
 class LoadingButton extends StatefulWidget {
-  VoidCallback onPress;
-  String text;
-  LoadingButtonStates state;
-  LoadingButton({Key? key, required this.onPress, required this.state, required this.text}) : super(key: key);
+  final VoidCallback onPress;
+  final String text;
+  final LoadingButtonStates state;
+  const LoadingButton({Key? key, required this.onPress, required this.state, required this.text}) : super(key: key);
 
   @override
   LoadingButtonState createState() => LoadingButtonState();
@@ -27,7 +27,6 @@ class LoadingButtonState extends State<LoadingButton> {
   Widget build(BuildContext context) {
     final buttonWidth = MediaQuery.of(context).size.width;
     // update the UI depending on below variable values
-    final isInit = widget.state == LoadingButtonStates.init || isAnimating;
     final isDone = widget.state == LoadingButtonStates.completed;
 
     return Container(

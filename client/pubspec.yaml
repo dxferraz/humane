@@ -49,9 +49,13 @@ dependencies:
   #Interceptor
   http_interceptor: ^1.0.0
 
+  #Database
+  path_provider: ^2.0.0
   path: ^1.8.0
-  path_provider: ^2.0.9
+  drift_dev: ^1.5.2
+  sqlite3_flutter_libs: ^0.5.0
 
+  #Observables
   dartz: ^0.10.1
 
   data_connection_checker: ^0.3.4

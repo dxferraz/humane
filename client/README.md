@@ -25,3 +25,8 @@ samples, guidance on mobile development, and a full API reference.
 
 The icons in this project are created using https://www.fluttericon.com/
 Upload the .zip file on the assert folder to edit the icons.a
+
+## Generate Drift classes
+
+- Watch -> `flutter pub run build_runner watch`
+- Build -> `flutter pub run build_runner build`

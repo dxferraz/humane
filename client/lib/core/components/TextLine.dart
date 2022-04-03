@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 
 class TextLine extends StatefulWidget {
-  String text;
-  double bottom;
+  final String text;
+  final double bottom;
 
-  TextLine({Key? key, required this.text, this.bottom = 20}) : super(key: key);
+  const TextLine({Key? key, required this.text, this.bottom = 20}) : super(key: key);
+
+  @override
   TextLineState createState() => TextLineState();
 }
 
 class TextLineState extends State<TextLine> {
-  GlobalKey _textBox = GlobalKey();
+  final GlobalKey _textBox = GlobalKey();
   double? textBoxSize;
 
   void getSizes(_) {

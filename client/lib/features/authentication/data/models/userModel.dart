@@ -2,8 +2,8 @@ import 'dart:convert';
 import 'package:humane/features/authentication/domain/entities/User.dart';
 
 class UserModel extends User {
-  const UserModel({required name, required email, birthdate, role, phone, thumbnail})
-      : super(name: name, email: email, birthdate: birthdate, role: role, phone: phone);
+  const UserModel({required id, required name, required email, birthdate, role, phone, thumbnail})
+      : super(id: id, name: name, email: email, birthdate: birthdate, role: role, phone: phone);
 
   Map<String, dynamic> toMap() {
     return {
@@ -18,6 +18,7 @@ class UserModel extends User {
 
   static User? fromMap(Map<String, dynamic> map) {
     return User(
+      id: map['id'],
       name: map['name'],
       email: map['email'],
       birthdate: map['birthdate'],

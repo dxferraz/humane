@@ -11,7 +11,7 @@ part 'ListActionsEvent.dart';
 part 'ListActionsState.dart';
 
 // Number of donations to return per request:
-const TAKE_NUMBER_OF_ITEMS_PER_REQUEST = 10;
+const take = 10;
 
 class ListActionsBloc extends Bloc<ListActionsEvent, ListActionsState> {
   ListDonation listDonationUseCase;
@@ -46,7 +46,7 @@ class ListActionsBloc extends Bloc<ListActionsEvent, ListActionsState> {
             ? int.parse(donationPageInfo!.endCursor!)
             : null;
 
-    PageParams page = PageParams(take: TAKE_NUMBER_OF_ITEMS_PER_REQUEST, cursor: cursor);
+    PageParams page = PageParams(take: take, cursor: cursor);
 
     // Check for where clauses (filter/search)
     // If the term/filter changed, we clean all the cursors and the list.
@@ -61,12 +61,13 @@ class ListActionsBloc extends Bloc<ListActionsEvent, ListActionsState> {
     // We set the where clause here so it can be reused in future calls (scrolling the page for example).
     page.where = donationWhereClause;
 
-    Either<Failure, Pagination<Donation>> FailuireOrDonation = await listDonationUseCase(page);
+    Either<Failure, Pagination<Donation>> failuireOrDonation = await listDonationUseCase(page);
 
-    FailuireOrDonation.fold(
-        (error) => {
-              if (error is RequestErrorFailure) {emit(ErrorDonationsState(message: error.message))}
-            }, (Pagination<Donation> page) {
+    failuireOrDonation.fold((error) {
+      if (error is RequestErrorFailure) {
+        emit(ErrorDonationsState(message: error.message));
+      }
+    }, (Pagination<Donation> page) {
       donationPageInfo = page.pageInfo;
       list = list + page.edges;
 

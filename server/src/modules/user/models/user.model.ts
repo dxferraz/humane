@@ -1,6 +1,6 @@
 import { Field, HideField, ID, ObjectType } from '@nestjs/graphql';
 import { Role } from '@prisma/client';
-import { GraphQLUpload } from 'graphql-upload';
+// import { GraphQLUpload } from 'graphql-upload';
 
 @ObjectType({})
 export class User {
@@ -37,6 +37,8 @@ export class User {
     })
     birthdate?: String;
 
-    @Field(() => String)
+    @Field(() => String, {
+        nullable: true,
+    })
     thumbnail?: String;
 }

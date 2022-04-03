@@ -1,5 +1,7 @@
-import 'package:flutter/material.dart' hide Card;
+import 'package:flutter/material.dart' hide Card, Title;
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:humane/Utils/colors.dart';
 import 'package:humane/core/components/Card.dart';
 import 'package:humane/core/injection/injection.dart';
 import 'package:humane/features/listActions/domain/entities/donation.dart';
@@ -7,7 +9,7 @@ import 'package:humane/features/listActions/domain/entities/pagination.dart';
 import 'package:humane/features/listActions/presentation/bloc/ListActionsBloc.dart';
 
 class DonationList extends StatefulWidget {
-  DonationList({Key? key}) : super(key: key);
+  const DonationList({Key? key}) : super(key: key);
 
   @override
   State<DonationList> createState() => _DonationListState();
@@ -27,10 +29,14 @@ class _DonationListState extends State<DonationList> with AutomaticKeepAliveClie
   void initState() {
     _scrollController.addListener(() {
       if (_scrollController.position.pixels >= _scrollController.position.maxScrollExtent && !loading) {
-        _listActionsBloc.add(GetDonationsEvent());
+        getDonations();
       }
     });
     super.initState();
+  }
+
+  getDonations() {
+    _listActionsBloc.add(GetDonationsEvent());
   }
 
   @override
@@ -46,7 +52,6 @@ class _DonationListState extends State<DonationList> with AutomaticKeepAliveClie
       bloc: _listActionsBloc,
       listener: (BuildContext context, state) async {
         if (state is LoadedDonationsState) {
-          list = state.listDonation;
           await Future.delayed(const Duration(seconds: 1));
           setState(() {
             loading = false;
@@ -59,24 +64,41 @@ class _DonationListState extends State<DonationList> with AutomaticKeepAliveClie
           });
         }
       },
-      child: Padding(
-        padding: const EdgeInsets.only(top: 20.0),
-        child: BlocBuilder<ListActionsBloc, ListActionsState>(
-          bloc: _listActionsBloc,
-          builder: (BuildContext context, state) {
-            if (state is ListInitialState) {
-              _listActionsBloc.add(GetDonationsEvent());
-            }
-            // Using ListView.builder is has a better performance than scrollview
-            return ListView.builder(
-              controller: _scrollController,
-              itemCount: list.length,
-              itemBuilder: (context, index) {
-                return Card.buildDonationCard(list[index]);
-              },
+      child: BlocBuilder<ListActionsBloc, ListActionsState>(
+        bloc: _listActionsBloc,
+        builder: (BuildContext context, state) {
+          if (state is ErrorDonationsState) {
+            return Opacity(
+              opacity: 0.6,
+              child: Column(
+                children: [
+                  SizedBox(width: 150, child: SvgPicture.asset("assets/icons/no-connection.svg")),
+                  state.message != null
+                      ? Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 80.0),
+                          child: Text(
+                            state.message!,
+                            textAlign: TextAlign.center,
+                            style: const TextStyle(color: appDarkBlue, fontSize: 20, fontWeight: FontWeight.bold),
+                          ),
+                        )
+                      : Container()
+                ],
+              ),
             );
-          },
-        ),
+          }
+          if (state is ListInitialState) {
+            _listActionsBloc.add(GetDonationsEvent());
+          }
+          // Using ListView.builder is has a better performance than scrollview
+          return ListView.builder(
+            controller: _scrollController,
+            itemCount: _listActionsBloc.list.length,
+            itemBuilder: (context, index) {
+              return Card.buildDonationCard(_listActionsBloc.list[index]);
+            },
+          );
+        },
       ),
     );
   }

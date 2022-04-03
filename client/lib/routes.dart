@@ -9,8 +9,8 @@ import 'features/intro/presentation/intro.dart';
 final routes = {
   'intro': (BuildContext context) => const IntroPage(),
   'profile': (BuildContext context) => const Profile(),
-  'home': (BuildContext context) => ListActions(),
+  'home': (BuildContext context) => const ListActions(),
   'signIn': (BuildContext context) => SignIn(),
   'signUp': (BuildContext context) => SignUp(),
-  'forgotPassword': (BuildContext context) => ForgotPassword(),
+  'forgotPassword': (BuildContext context) => const ForgotPassword(),
 };

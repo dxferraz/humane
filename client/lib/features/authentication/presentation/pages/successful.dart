@@ -1,7 +1,9 @@
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart' hide Title;
 import 'package:humane/core/components/Background.dart';
+import 'package:humane/core/components/GradientButton.dart';
 import 'package:humane/core/components/Title.dart';
+import 'package:humane/utils/colors.dart';
 
 class Successful extends StatefulWidget {
   final String title;
@@ -9,7 +11,7 @@ class Successful extends StatefulWidget {
   final String nextPage;
   final int seconds;
 
-  Successful({required this.nextPage, this.title = '', this.paragraph = '', this.seconds = 2});
+  const Successful({Key? key, required this.nextPage, this.title = '', this.paragraph = '', this.seconds = 2}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => SuccessfulState();
@@ -25,7 +27,17 @@ class SuccessfulState extends State<Successful> with SingleTickerProviderStateMi
     animation = Tween<double>(begin: 0, end: 1).animate(controller!);
 
     startAnimation();
+    navigateToHomeAfterTime();
     super.initState();
+  }
+
+  void navigateToHomeAfterTime() async {
+    Future.delayed(
+      const Duration(milliseconds: 1800),
+      () {
+        Navigator.pushNamed(context, 'home');
+      },
+    );
   }
 
   void startAnimation() async {
@@ -66,12 +78,22 @@ class SuccessfulState extends State<Successful> with SingleTickerProviderStateMi
                         text: widget.title,
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(top: 15.0),
+                        padding: const EdgeInsets.symmetric(horizontal: 25.0, vertical: 15),
                         child: Text(
                           widget.paragraph,
                           textAlign: TextAlign.center,
                         ),
                       ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: GradientButton(
+                            onPressed: () {
+                              Navigator.pushNamed(context, 'home');
+                            },
+                            text: "Go to Home",
+                            bottomLeftColor: appDarkOrange,
+                            topRightColor: Colors.orange),
+                      )
                     ],
                   ),
                 ),

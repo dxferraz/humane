@@ -4,7 +4,6 @@ import 'package:humane/core/errors/failures.dart';
 import 'package:humane/features/authentication/data/datasources/gqlQueries.dart';
 import 'package:humane/features/authentication/data/models/userModel.dart';
 import 'package:humane/features/authentication/domain/entities/User.dart';
-import 'package:humane/features/authentication/presentation/pages/forgotPassword.dart';
 
 abstract class IUserRemoteDataSource {
   Future<Either<Failure, User>> signIn({required String email, required String password});

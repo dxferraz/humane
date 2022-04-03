@@ -4,9 +4,9 @@ import 'package:humane/Utils/colors.dart';
 import 'package:humane/core/components/Title.dart';
 
 class NetworkError extends StatelessWidget {
-  String? message;
+  final String? message;
 
-  NetworkError({Key? key, this.message}) : super(key: key);
+  const NetworkError({Key? key, this.message}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -27,6 +27,5 @@ class NetworkError extends StatelessWidget {
         ),
       ]),
     );
-    ;
   }
 }

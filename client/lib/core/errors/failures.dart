@@ -11,7 +11,10 @@ class CreateUserFailure extends Failure {
 
   static List<String>? fromMap(List<dynamic> map) {
     List<String> list = [];
-    map.forEach((c) => list.add(c));
+    for (var c in map) {
+      list.add(c);
+    }
+
     return list;
   }
 
@@ -23,6 +26,15 @@ class LoginUserFailure extends Failure {
   final String message;
 
   const LoginUserFailure({required this.message});
+
+  @override
+  List<Object?> get props => [message];
+}
+
+class SignOutUserFailure extends Failure {
+  final String? message;
+
+  const SignOutUserFailure({this.message});
 
   @override
   List<Object?> get props => [message];
