@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:convert';
-import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:injectable/injectable.dart';
@@ -35,7 +34,7 @@ abstract class IRegisterModule {
       getToken: () async {
         final prefs = await SharedPreferences.getInstance();
         String? token = prefs.getString('sign_token');
-        if (token != null) {
+        if (token != null || token != '') {
           return token;
         }
         return null;

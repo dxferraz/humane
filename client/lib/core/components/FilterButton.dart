@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:humane/icons.dart';
 
 class FilterButton extends StatelessWidget {
-  VoidCallback openDrawer;
-  FilterButton({required this.openDrawer});
+  final VoidCallback openDrawer;
+  const FilterButton({Key? key, required this.openDrawer}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -15,8 +15,8 @@ class FilterButton extends StatelessWidget {
         radius: 100,
         splashColor: Theme.of(context).secondaryHeaderColor,
         onTap: openDrawer,
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
+        child: const Padding(
+          padding: EdgeInsets.all(8.0),
           child: Icon(
             Humane.filter,
             size: 25,

@@ -11,18 +11,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+// ignore: import_of_legacy_library_into_null_safe
 import 'package:webview_flutter/webview_flutter.dart';
 
 class Card extends HookWidget {
-  String title;
-  String description;
-  List<image.Image>? thumbnails;
-  String? author;
-  String? authorThumbnail;
-  String date;
-  String? category;
+  final String title;
+  final String description;
+  final List<image.Image>? thumbnails;
+  final String? author;
+  final String? authorThumbnail;
+  final String date;
+  final String? category;
+  final String? zipCode;
 
-  Card(
+  const Card(
       {Key? key,
       required this.title,
       this.description = "",
@@ -30,6 +32,7 @@ class Card extends HookWidget {
       this.thumbnails,
       this.author,
       this.authorThumbnail,
+      this.zipCode,
       required this.date})
       : super(key: key);
 
@@ -42,6 +45,7 @@ class Card extends HookWidget {
       thumbnails: donation.node.thumbnails,
       date: donation.node.createdAt,
       category: donation.node.category.title,
+      zipCode: donation.node.zipCode,
     );
   }
 
@@ -52,10 +56,10 @@ class Card extends HookWidget {
     return Stack(
       children: <Widget>[
         Container(
-          margin: const EdgeInsets.only(left: 25, right: 25, bottom: 15),
+          margin: const EdgeInsets.only(left: 15, right: 15, bottom: 15),
           decoration: BoxDecoration(
             color: Colors.white.withOpacity(0.9),
-            borderRadius: BorderRadius.all(Radius.circular(10)),
+            borderRadius: const BorderRadius.all(Radius.circular(10)),
             boxShadow: [
               BoxShadow(
                 color: Colors.black.withOpacity(0.1),
@@ -156,28 +160,30 @@ class Card extends HookWidget {
                         ),
                         onSelected: (result) {
                           if (result == 1) {
+                            // For text purpose only
+
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => const WebView(
-                                  initialUrl: 'https://flutter.dev',
+                                builder: (context) => WebView(
+                                  initialUrl: 'http://www.google.com/maps/search/' + zipCode!,
                                 ),
                               ),
                             );
                           }
                         },
-                        itemBuilder: (context) => [
-                          PopupMenuItem(
-                            child: Text("See Location"),
-                            value: 1,
-                            onTap: () {},
-                          ),
-                          PopupMenuItem(
-                            child: Text("Second"),
-                            value: 2,
-                            onTap: () {},
-                          )
-                        ],
+                        itemBuilder: (context) {
+                          List<PopupMenuItem> selectOptions = [];
+                          if (zipCode != null) {
+                            selectOptions.add(PopupMenuItem(
+                              child: const Text("See Location"),
+                              value: 1,
+                              onTap: () {},
+                            ));
+                          }
+
+                          return selectOptions;
+                        },
                       ),
                     ],
                   ),

@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:humane/core/components/Background.dart';
-import 'package:humane/core/components/InputField.dart' as i;
+import 'package:humane/core/components/InputField.dart' as input;
 import 'package:humane/core/components/LoadingButton.dart';
 import 'package:humane/core/injection/injection.dart';
 import 'package:humane/core/theme/themeConstants.dart';
@@ -11,7 +11,9 @@ import 'package:humane/features/authentication/presentation/bloc/signUserBloc.da
 import 'package:humane/features/authentication/presentation/pages/validators/regex.dart';
 import 'package:humane/icons.dart';
 import 'package:humane/core/components/TextLine.dart';
+import 'package:humane/core/components/Title.dart';
 
+// ignore: must_be_immutable
 class SignIn extends HookWidget {
   final _formKey = GlobalKey<FormState>();
   final FocusNode _emailFocus = FocusNode();
@@ -25,7 +27,6 @@ class SignIn extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-    ValueNotifier<bool> recaptchaToggle = useState(false);
 
     return BlocProvider<SignUserBloc>(
       create: (BuildContext context) => getIt<SignUserBloc>(),
@@ -33,6 +34,7 @@ class SignIn extends HookWidget {
         listener: (context, state) {
           if (state is SignedUser) {
             // Clear form on success
+            Navigator.of(context).pushNamed('home');
             _formKey.currentState?.reset();
           }
           // Go to Home Page
@@ -40,7 +42,7 @@ class SignIn extends HookWidget {
               state.messages != null &&
               state.messages!.isNotEmpty) {
             String message = state.messages!.join("\n");
-            _scaffoldKey.currentState!.showSnackBar(
+            ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 content: Text(message),
                 duration: const Duration(seconds: 2),
@@ -147,7 +149,7 @@ class SignIn extends HookWidget {
                             ),
                             const SizedBox(height: 10),
                             TextLine(text: "ou preencha os campos abaixo:"),
-                            i.InputField(
+                            input.InputField(
                               onChanged: (_email) {
                                 email = _email!;
                               },
@@ -161,9 +163,10 @@ class SignIn extends HookWidget {
                                 return emailValidator(value!);
                               },
                             ),
-                            i.InputField(
+                            input.InputField(
                               onChanged: ([_password]) {
                                 password = _password!;
+                                return;
                               },
                               hint: "Password",
                               textInputAction: TextInputAction.done,

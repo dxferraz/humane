@@ -17,12 +17,13 @@ class ListDonation extends UseCase<Pagination<Donation>, PageParams> {
   }
 }
 
+// ignore: must_be_immutable
 class PageParams extends Equatable {
   final int take;
   int? cursor;
   Map<String, dynamic>? where;
 
-  PageParams({required this.take, this.cursor, this.where});
+  PageParams({required this.take, required this.cursor, this.where});
 
   @override
   List<Object> get props => [take];

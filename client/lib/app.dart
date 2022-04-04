@@ -6,6 +6,9 @@ import 'package:humane/core/theme/themeManager.dart';
 import 'package:humane/routes.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:humane/core/injection/injection.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
+
+const isWebPlatform = kIsWeb;
 
 ThemeManager _themeManager = ThemeManager();
 

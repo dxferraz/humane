@@ -1,7 +1,7 @@
 import 'package:humane/features/listActions/domain/entities/category.dart';
 
 class CategoryModel extends Category {
-  CategoryModel({
+  const CategoryModel({
     required id,
     required title,
   }) : super(

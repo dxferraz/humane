@@ -1,5 +1,4 @@
 import 'package:equatable/equatable.dart';
-import 'package:flutter/material.dart';
 
 class PageInfo extends Equatable {
   final String? endCursor;
@@ -12,10 +11,10 @@ class PageInfo extends Equatable {
 }
 
 class Edge<T> extends Equatable {
-  String cursor;
-  T node;
+  final String cursor;
+  final T node;
 
-  Edge({required this.cursor, required this.node});
+  const Edge({required this.cursor, required this.node});
 
   @override
   List<Object> get props => [cursor];

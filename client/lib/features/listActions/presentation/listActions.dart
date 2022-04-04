@@ -1,10 +1,4 @@
 import 'package:flutter/material.dart' hide Card, Title;
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:humane/core/components/Card.dart';
-import 'package:humane/core/injection/injection.dart';
-import 'package:humane/features/listActions/domain/entities/donation.dart';
-import 'package:humane/features/listActions/domain/entities/pagination.dart';
-import 'package:humane/features/listActions/presentation/bloc/ListActionsBloc.dart';
 import 'package:humane/features/listActions/presentation/components/DonationList.dart';
 import 'package:humane/features/listActions/presentation/components/FilterDrawer.dart';
 import 'package:humane/features/listActions/presentation/components/MainDrawer.dart';
@@ -14,13 +8,14 @@ import 'package:humane/features/listActions/presentation/components/NecessitiesL
 import 'package:humane/features/listActions/presentation/components/TopMenu.dart';
 
 class ListActions extends StatefulWidget {
+  const ListActions({Key? key}) : super(key: key);
+
   @override
   ListRecentPostsState createState() => ListRecentPostsState();
 }
 
 class ListRecentPostsState extends State<ListActions> with SingleTickerProviderStateMixin {
   final GlobalKey<ScaffoldState> _drawersKey = GlobalKey(); // Create a key
-  final ListActionsBloc _listActionsBloc = getIt<ListActionsBloc>();
   final int _currentIndex = 0;
   late PageController _pageController;
   late List<Widget> pages;
@@ -29,9 +24,9 @@ class ListRecentPostsState extends State<ListActions> with SingleTickerProviderS
   void initState() {
     _pageController = PageController(initialPage: _currentIndex);
     pages = [
-      DonationList(),
-      NecessitiesList(),
-      MissingPersonsList(),
+      const DonationList(),
+      const NecessitiesList(),
+      const MissingPersonsList(),
     ];
 
     super.initState();
@@ -47,8 +42,8 @@ class ListRecentPostsState extends State<ListActions> with SingleTickerProviderS
   Widget build(BuildContext context) {
     return Scaffold(
       key: _drawersKey,
-      drawer: MainDrawer(),
-      endDrawer: FilterDrawer(),
+      drawer: const MainDrawer(),
+      endDrawer: const FilterDrawer(),
       backgroundColor: const Color.fromARGB(255, 224, 233, 242),
       body: Stack(
         children: [

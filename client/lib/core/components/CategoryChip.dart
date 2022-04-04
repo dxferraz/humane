@@ -5,7 +5,7 @@ class CategoryChip extends StatelessWidget {
   final Gradient? gradient;
   final VoidCallback? onPressed;
 
-  CategoryChip({
+  const CategoryChip({
     Key? key,
     required this.category,
     this.onPressed,
@@ -50,7 +50,7 @@ class CategoryChip extends StatelessWidget {
                 child: Center(
                   child: Text(
                     category,
-                    style: TextStyle(color: Colors.white, fontSize: 12),
+                    style: const TextStyle(color: Colors.white, fontSize: 12),
                   ),
                 )),
           ),

@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:humane/Utils/colors.dart';
+import 'package:humane/app.dart';
 import 'package:humane/core/injection/injection.dart';
 import 'package:humane/core/theme/themeConstants.dart';
+import 'package:humane/features/authentication/presentation/bloc/signUserBloc.dart';
 import 'package:humane/features/listActions/presentation/bloc/ListActionsBloc.dart';
 import 'package:humane/features/listActions/presentation/components/SearchMode.dart';
 import 'package:humane/icons.dart';
@@ -10,9 +13,9 @@ import 'package:material_floating_search_bar/material_floating_search_bar.dart';
 import 'package:implicitly_animated_list/implicitly_animated_list.dart';
 
 class TopMenu extends StatefulWidget {
-  GlobalKey<ScaffoldState> drawersKey;
+  final GlobalKey<ScaffoldState> drawersKey;
 
-  TopMenu({Key? key, required this.drawersKey}) : super(key: key);
+  const TopMenu({Key? key, required this.drawersKey}) : super(key: key);
 
   @override
   State<TopMenu> createState() => _TopMenuState();
@@ -21,9 +24,11 @@ class TopMenu extends StatefulWidget {
 class _TopMenuState extends State<TopMenu> {
   final controller = FloatingSearchBarController();
   SearchModel model = SearchModel();
+  final SignUserBloc _userBloc = getIt<SignUserBloc>();
 
   @override
   void initState() {
+    _userBloc.add(AmISignedInEvent());
     model.addListener(() {
       setState(() {});
     });
@@ -55,9 +60,7 @@ class _TopMenuState extends State<TopMenu> {
                 children: [
                   const SizedBox(
                     width: 36,
-                    child: AnimatedSwitcher(
-                        duration: Duration(milliseconds: 500),
-                        child: const Icon(Icons.history, key: Key('history'))),
+                    child: AnimatedSwitcher(duration: Duration(milliseconds: 500), child: Icon(Icons.history, key: Key('history'))),
                   ),
                   const SizedBox(width: 16),
                   Expanded(
@@ -78,9 +81,7 @@ class _TopMenuState extends State<TopMenu> {
                     child: const SizedBox(
                       width: 45,
                       height: 50,
-                      child: AnimatedSwitcher(
-                          duration: Duration(milliseconds: 500),
-                          child: const Icon(Icons.close)),
+                      child: AnimatedSwitcher(duration: Duration(milliseconds: 500), child: Icon(Icons.close)),
                     ),
                   ),
                 ],
@@ -94,18 +95,21 @@ class _TopMenuState extends State<TopMenu> {
     }
 
     List<Widget> filterButton = [
-      ElevatedButton(
-        style: ElevatedButton.styleFrom(
-            primary: appDarkBlueColor,
-            shape: const CircleBorder(),
-            padding: const EdgeInsets.all(15)),
-        onPressed: () {
-          widget.drawersKey.currentState!.openEndDrawer();
-        },
-        child: const Icon(
-          Humane.filter,
-          size: 20,
-          color: Colors.white,
+      SizedBox(
+        height: 32,
+        child: ElevatedButton(
+          style: ElevatedButton.styleFrom(primary: appDarkBlue, shape: const CircleBorder(), padding: const EdgeInsets.all(15)),
+          onPressed: () {
+            widget.drawersKey.currentState!.openEndDrawer();
+          },
+          child: Transform.translate(
+            offset: const Offset(0, isWebPlatform ? 0 : -9),
+            child: const Icon(
+              Humane.filter,
+              size: 20,
+              color: Colors.white,
+            ),
+          ),
         ),
       ),
     ];
@@ -132,24 +136,6 @@ class _TopMenuState extends State<TopMenu> {
 
     return Stack(
       children: [
-        Align(
-          alignment: Alignment.topCenter,
-          child: Container(
-            width: size.width,
-            height: 110,
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                stops: const [0.15, 0.35],
-                begin: Alignment.bottomCenter,
-                end: Alignment.topCenter,
-                colors: [
-                  const Color.fromARGB(0, 224, 233, 242),
-                  const Color.fromARGB(255, 224, 233, 242).withAlpha(180),
-                ],
-              ),
-            ),
-          ),
-        ),
         Container(
           color: Colors.white,
           child: SizedBox(
@@ -163,15 +149,31 @@ class _TopMenuState extends State<TopMenu> {
                         top: 25, right: 10, left: 10, bottom: 10),
                     child: Center(
                       child: FloatingActionButton(
+                        heroTag: "DrawerMenu",
                         elevation: 0,
                         backgroundColor: Colors.transparent,
                         onPressed: () {
                           widget.drawersKey.currentState!.openDrawer();
                         },
-                        child: const Icon(
-                          Humane.menu,
-                          size: 25,
-                          color: appDarkBlueColor,
+                        child: BlocBuilder<SignUserBloc, SignUserState>(
+                          bloc: _userBloc,
+                          builder: (BuildContext context, SignUserState state) {
+                            // TODO: add fallback if user doesn't have a thumbnail
+                            if (state is SignedUser) {
+                              return SizedBox(
+                                width: 35,
+                                child: ClipOval(
+                                  //TODO: use image in base64 to avoid redownload
+                                  child: Image.network(state.user.thumbnail!),
+                                ),
+                              );
+                            }
+                            return const Icon(
+                              Humane.menu,
+                              size: 25,
+                              color: appDarkBlue,
+                            );
+                          },
                         ),
                       ),
                     ),
@@ -187,6 +189,7 @@ class _TopMenuState extends State<TopMenu> {
                         top: 15, right: 10, left: 10, bottom: 0),
                     child: Center(
                       child: FloatingActionButton(
+                        heroTag: "MessagesButton",
                         elevation: 0,
                         backgroundColor: Colors.transparent,
                         onPressed: () {},
@@ -207,8 +210,9 @@ class _TopMenuState extends State<TopMenu> {
           child: SizedBox(
             width: size.width * 0.6,
             child: Padding(
-              padding: const EdgeInsets.only(top: 15),
+              padding: const EdgeInsets.only(top: 22),
               child: FloatingSearchBar(
+                height: 42,
                 automaticallyImplyDrawerHamburger: false,
                 automaticallyImplyBackButton: false,
                 leadingActions: filterButton,

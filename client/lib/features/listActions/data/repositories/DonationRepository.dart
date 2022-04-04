@@ -23,6 +23,6 @@ class DonationRepository extends IDonationRepository {
 
   @override
   Future<Either<Failure, Pagination<Donation>>> getDonations(int take, int? cursor, Map<String, dynamic>? where) async {
-    return this.remoteDatasource.getDonations(take, cursor, where);
+    return remoteDatasource.getDonations(take, cursor, where);
   }
 }
