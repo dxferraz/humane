@@ -1,4 +1,3 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart' hide Title;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -11,9 +10,7 @@ import 'package:humane/core/theme/themeConstants.dart';
 import 'package:humane/features/authentication/presentation/bloc/signUserBloc.dart';
 import 'package:humane/features/authentication/presentation/pages/validators/regex.dart';
 import 'package:humane/icons.dart';
-import 'package:humane/core/components/Line.dart';
 import 'package:humane/core/components/TextLine.dart';
-import 'package:humane/core/components/Title.dart';
 
 class SignIn extends HookWidget {
   final _formKey = GlobalKey<FormState>();
@@ -67,14 +64,6 @@ class SignIn extends HookWidget {
               ),
             ),
             centerTitle: true,
-            title: const Text(
-              'Sign In',
-              style: TextStyle(
-                fontSize: 26,
-                fontWeight: FontWeight.w600,
-                color: appDarkBlueColor,
-              ),
-            ),
           ),
           key: _scaffoldKey,
           body: SingleChildScrollView(
@@ -97,10 +86,18 @@ class SignIn extends HookWidget {
                       child: Form(
                         key: _formKey,
                         child: Column(
-                          //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: <Widget>[
-                            const SizedBox(height: 30),
+                            const Text(
+                              'Sign In',
+                              style: TextStyle(
+                                fontSize: 36,
+                                fontWeight: FontWeight.bold,
+                                color: appDarkOrangeColor,
+                              ),
+                            ),
+                            const SizedBox(height: 40),
                             SvgPicture.asset(
                               'assets/images/SignInIllustration.svg',
                               width: MediaQuery.of(context).size.width / 2,
@@ -148,7 +145,7 @@ class SignIn extends HookWidget {
                                 ),
                               ],
                             ),
-                            const SizedBox(height: 20),
+                            const SizedBox(height: 10),
                             TextLine(text: "ou preencha os campos abaixo:"),
                             i.InputField(
                               onChanged: (_email) {
@@ -165,19 +162,20 @@ class SignIn extends HookWidget {
                               },
                             ),
                             i.InputField(
-                                onChanged: ([_password]) {
-                                  password = _password!;
-                                },
-                                hint: "Password",
-                                textInputAction: TextInputAction.done,
-                                focusNode: _passwordFocus,
-                                icon: const Icon(Humane.padlock),
-                                hidden: true,
-                                validator: (value) {
-                                  return isEmpty(value!);
-                                },
-                                onSubmit: () => submitForm(context),
-                                paddingBottom: 3),
+                              onChanged: ([_password]) {
+                                password = _password!;
+                              },
+                              hint: "Password",
+                              textInputAction: TextInputAction.done,
+                              focusNode: _passwordFocus,
+                              icon: const Icon(Humane.padlock),
+                              hidden: true,
+                              validator: (value) {
+                                return isEmpty(value!);
+                              },
+                              onSubmit: () => submitForm(context),
+                              paddingBottom: 3,
+                            ),
                             Container(
                               alignment: Alignment.centerRight,
                               child: GestureDetector(
@@ -236,8 +234,9 @@ class SignIn extends HookWidget {
   submitForm(BuildContext context) {
     FocusManager.instance.primaryFocus?.unfocus();
     if (_formKey.currentState?.validate() != false) {
-      BlocProvider.of<SignUserBloc>(context)
-          .add(SignInUserEvent(email: email, password: password));
+      BlocProvider.of<SignUserBloc>(context).add(
+        SignInUserEvent(email: email, password: password),
+      );
     }
   }
 }

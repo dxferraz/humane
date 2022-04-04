@@ -130,7 +130,9 @@ class Card extends HookWidget {
                               ),
                               Row(
                                 children: [
-                                  category != null ? CategoryChip(category: category!) : Container(),
+                                  category != null
+                                      ? CategoryChip(category: category!)
+                                      : Container(),
                                   Text(
                                     "Posted on " +
                                         tempDate.day.toString() +
@@ -221,7 +223,10 @@ class Card extends HookWidget {
                                   child: ClipRect(
                                     child: Container(
                                       child: BackdropFilter(
-                                        filter: ImageFilter.blur(sigmaX: 6.0, sigmaY: 6.0),
+                                        filter: ImageFilter.blur(
+                                          sigmaX: 6.0,
+                                          sigmaY: 6.0,
+                                        ),
                                         child: Container(),
                                       ),
                                       decoration: BoxDecoration(
