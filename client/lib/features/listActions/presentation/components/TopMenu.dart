@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:humane/Utils/colors.dart';
 import 'package:humane/app.dart';
 import 'package:humane/core/injection/injection.dart';
 import 'package:humane/core/theme/themeConstants.dart';
@@ -98,7 +97,7 @@ class _TopMenuState extends State<TopMenu> {
       SizedBox(
         height: 32,
         child: ElevatedButton(
-          style: ElevatedButton.styleFrom(primary: appDarkBlue, shape: const CircleBorder(), padding: const EdgeInsets.all(15)),
+          style: ElevatedButton.styleFrom(primary: appDarkBlueColor, shape: const CircleBorder(), padding: const EdgeInsets.all(15)),
           onPressed: () {
             widget.drawersKey.currentState!.openEndDrawer();
           },
@@ -171,7 +170,7 @@ class _TopMenuState extends State<TopMenu> {
                             return const Icon(
                               Humane.menu,
                               size: 25,
-                              color: appDarkBlue,
+                              color: appDarkBlueColor,
                             );
                           },
                         ),
