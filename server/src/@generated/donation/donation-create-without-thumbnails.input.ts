@@ -15,14 +15,14 @@ export class DonationCreateWithoutThumbnailsInput {
     @Field(() => Date, {nullable:true})
     timeStamp?: Date | string;
 
+    @Field(() => CategoryCreateNestedOneWithoutDonationInput, {nullable:false})
+    category!: CategoryCreateNestedOneWithoutDonationInput;
+
     @Field(() => String, {nullable:false})
     address!: string;
 
     @Field(() => String, {nullable:false})
     zipCode!: string;
-
-    @Field(() => CategoryCreateNestedOneWithoutDonationInput, {nullable:false})
-    category!: CategoryCreateNestedOneWithoutDonationInput;
 
     @Field(() => UserCreateNestedOneWithoutDonationsInput, {nullable:false})
     User!: UserCreateNestedOneWithoutDonationsInput;

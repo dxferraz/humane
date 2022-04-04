@@ -25,9 +25,6 @@ export class ImageUpdateManyWithoutDonationInput {
     createMany?: ImageCreateManyDonationInputEnvelope;
 
     @Field(() => [ImageWhereUniqueInput], {nullable:true})
-    connect?: Array<ImageWhereUniqueInput>;
-
-    @Field(() => [ImageWhereUniqueInput], {nullable:true})
     set?: Array<ImageWhereUniqueInput>;
 
     @Field(() => [ImageWhereUniqueInput], {nullable:true})
@@ -35,6 +32,9 @@ export class ImageUpdateManyWithoutDonationInput {
 
     @Field(() => [ImageWhereUniqueInput], {nullable:true})
     delete?: Array<ImageWhereUniqueInput>;
+
+    @Field(() => [ImageWhereUniqueInput], {nullable:true})
+    connect?: Array<ImageWhereUniqueInput>;
 
     @Field(() => [ImageUpdateWithWhereUniqueWithoutDonationInput], {nullable:true})
     update?: Array<ImageUpdateWithWhereUniqueWithoutDonationInput>;

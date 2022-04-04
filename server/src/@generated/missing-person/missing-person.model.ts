@@ -49,6 +49,6 @@ export class MissingPerson {
     @Field(() => HairColor, {nullable:true})
     hairColor!: keyof typeof HairColor | null;
 
-    @Field(() => MissingPersonCount, {nullable:true})
-    _count?: MissingPersonCount | null;
+    @Field(() => MissingPersonCount, {nullable:false})
+    _count?: MissingPersonCount;
 }

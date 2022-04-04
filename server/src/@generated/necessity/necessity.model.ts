@@ -43,6 +43,6 @@ export class Necessity {
     @Field(() => Int, {nullable:false})
     userId!: number;
 
-    @Field(() => NecessityCount, {nullable:true})
-    _count?: NecessityCount | null;
+    @Field(() => NecessityCount, {nullable:false})
+    _count?: NecessityCount;
 }

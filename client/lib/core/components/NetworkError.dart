@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart' hide Title;
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:humane/Utils/colors.dart';
 import 'package:humane/core/components/Title.dart';
+import 'package:humane/core/theme/themeConstants.dart';
 
 class NetworkError extends StatelessWidget {
   final String? message;
@@ -12,20 +12,24 @@ class NetworkError extends StatelessWidget {
   Widget build(BuildContext context) {
     return Opacity(
       opacity: 0.75,
-      child: Column(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center, children: [
-        SvgPicture.asset(
-          "assets/icons/no-connection.svg",
-          width: 120,
-        ),
-        Padding(
-          padding: const EdgeInsets.all(50.0),
-          child: Title(
-            color: appDarkBlue,
-            text: message ?? "",
-            align: TextAlign.center,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          SvgPicture.asset(
+            "assets/icons/no-connection.svg",
+            width: 120,
           ),
-        ),
-      ]),
+          Padding(
+            padding: const EdgeInsets.all(50.0),
+            child: Title(
+              color: appDarkBlueColor,
+              text: message ?? "",
+              align: TextAlign.center,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

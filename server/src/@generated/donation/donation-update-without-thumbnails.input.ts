@@ -15,14 +15,14 @@ export class DonationUpdateWithoutThumbnailsInput {
     @Field(() => Date, {nullable:true})
     timeStamp?: Date | string;
 
+    @Field(() => CategoryUpdateOneRequiredWithoutDonationInput, {nullable:true})
+    category?: CategoryUpdateOneRequiredWithoutDonationInput;
+
     @Field(() => String, {nullable:true})
     address?: string;
 
     @Field(() => String, {nullable:true})
     zipCode?: string;
-
-    @Field(() => CategoryUpdateOneRequiredWithoutDonationInput, {nullable:true})
-    category?: CategoryUpdateOneRequiredWithoutDonationInput;
 
     @Field(() => UserUpdateOneRequiredWithoutDonationsInput, {nullable:true})
     User?: UserUpdateOneRequiredWithoutDonationsInput;

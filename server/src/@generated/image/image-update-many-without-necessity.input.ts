@@ -25,9 +25,6 @@ export class ImageUpdateManyWithoutNecessityInput {
     createMany?: ImageCreateManyNecessityInputEnvelope;
 
     @Field(() => [ImageWhereUniqueInput], {nullable:true})
-    connect?: Array<ImageWhereUniqueInput>;
-
-    @Field(() => [ImageWhereUniqueInput], {nullable:true})
     set?: Array<ImageWhereUniqueInput>;
 
     @Field(() => [ImageWhereUniqueInput], {nullable:true})
@@ -35,6 +32,9 @@ export class ImageUpdateManyWithoutNecessityInput {
 
     @Field(() => [ImageWhereUniqueInput], {nullable:true})
     delete?: Array<ImageWhereUniqueInput>;
+
+    @Field(() => [ImageWhereUniqueInput], {nullable:true})
+    connect?: Array<ImageWhereUniqueInput>;
 
     @Field(() => [ImageUpdateWithWhereUniqueWithoutNecessityInput], {nullable:true})
     update?: Array<ImageUpdateWithWhereUniqueWithoutNecessityInput>;

@@ -9,6 +9,9 @@ export class DonationUncheckedCreateWithoutCategoryInput {
     @Field(() => Int, {nullable:true})
     id?: number;
 
+    @Field(() => ImageUncheckedCreateNestedManyWithoutDonationInput, {nullable:true})
+    thumbnails?: ImageUncheckedCreateNestedManyWithoutDonationInput;
+
     @Field(() => String, {nullable:false})
     title!: string;
 
@@ -26,7 +29,4 @@ export class DonationUncheckedCreateWithoutCategoryInput {
 
     @Field(() => Int, {nullable:false})
     userId!: number;
-
-    @Field(() => ImageUncheckedCreateNestedManyWithoutDonationInput, {nullable:true})
-    thumbnails?: ImageUncheckedCreateNestedManyWithoutDonationInput;
 }

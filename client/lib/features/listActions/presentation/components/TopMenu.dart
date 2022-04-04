@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:humane/Utils/colors.dart';
 import 'package:humane/app.dart';
 import 'package:humane/core/injection/injection.dart';
+import 'package:humane/core/theme/themeConstants.dart';
 import 'package:humane/features/authentication/presentation/bloc/signUserBloc.dart';
 import 'package:humane/features/listActions/presentation/bloc/ListActionsBloc.dart';
 import 'package:humane/features/listActions/presentation/components/SearchMode.dart';
@@ -87,7 +87,8 @@ class _TopMenuState extends State<TopMenu> {
               ),
             ),
           ),
-          if (model.suggestions.isNotEmpty && query != model.suggestions.last) const Divider(height: 0),
+          if (model.suggestions.isNotEmpty && query != model.suggestions.last)
+            const Divider(height: 0),
         ],
       );
     }
@@ -96,7 +97,7 @@ class _TopMenuState extends State<TopMenu> {
       SizedBox(
         height: 32,
         child: ElevatedButton(
-          style: ElevatedButton.styleFrom(primary: appDarkBlue, shape: const CircleBorder(), padding: const EdgeInsets.all(15)),
+          style: ElevatedButton.styleFrom(primary: appDarkBlueColor, shape: const CircleBorder(), padding: const EdgeInsets.all(15)),
           onPressed: () {
             widget.drawersKey.currentState!.openEndDrawer();
           },
@@ -143,7 +144,8 @@ class _TopMenuState extends State<TopMenu> {
                 SizedBox(
                   width: size.width * 0.2,
                   child: Padding(
-                    padding: const EdgeInsets.only(top: 25, right: 10, left: 10, bottom: 10),
+                    padding: const EdgeInsets.only(
+                        top: 25, right: 10, left: 10, bottom: 10),
                     child: Center(
                       child: FloatingActionButton(
                         heroTag: "DrawerMenu",
@@ -168,7 +170,7 @@ class _TopMenuState extends State<TopMenu> {
                             return const Icon(
                               Humane.menu,
                               size: 25,
-                              color: appDarkBlue,
+                              color: appDarkBlueColor,
                             );
                           },
                         ),
@@ -182,7 +184,8 @@ class _TopMenuState extends State<TopMenu> {
                 SizedBox(
                   width: size.width * 0.2,
                   child: Padding(
-                    padding: const EdgeInsets.only(top: 15, right: 10, left: 10, bottom: 0),
+                    padding: const EdgeInsets.only(
+                        top: 15, right: 10, left: 10, bottom: 0),
                     child: Center(
                       child: FloatingActionButton(
                         heroTag: "MessagesButton",
@@ -192,7 +195,7 @@ class _TopMenuState extends State<TopMenu> {
                         child: const Icon(
                           Humane.message,
                           size: 25,
-                          color: appDarkBlue,
+                          color: appDarkBlueColor,
                         ),
                       ),
                     ),
@@ -246,16 +249,17 @@ class _TopMenuState extends State<TopMenu> {
           ),
         ),
         BlocBuilder<ListActionsBloc, ListActionsState>(
-            bloc: getIt<ListActionsBloc>(),
-            builder: (BuildContext context, state) {
-              return Offstage(
-                offstage: state is! LoadingDonationsState,
-                child: const Padding(
-                  padding: EdgeInsets.only(top: 70),
-                  child: LinearProgressIndicator(),
-                ),
-              );
-            }),
+          bloc: getIt<ListActionsBloc>(),
+          builder: (BuildContext context, state) {
+            return Offstage(
+              offstage: state is! LoadingDonationsState,
+              child: const Padding(
+                padding: EdgeInsets.only(top: 70),
+                child: LinearProgressIndicator(),
+              ),
+            );
+          },
+        ),
       ],
     );
   }

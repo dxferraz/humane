@@ -9,6 +9,9 @@ export class NecessityUncheckedUpdateInput {
     @Field(() => Int, {nullable:true})
     id?: number;
 
+    @Field(() => ImageUncheckedUpdateManyWithoutNecessityInput, {nullable:true})
+    thumbnails?: ImageUncheckedUpdateManyWithoutNecessityInput;
+
     @Field(() => String, {nullable:true})
     title?: string;
 
@@ -29,7 +32,4 @@ export class NecessityUncheckedUpdateInput {
 
     @Field(() => Int, {nullable:true})
     userId?: number;
-
-    @Field(() => ImageUncheckedUpdateManyWithoutNecessityInput, {nullable:true})
-    thumbnails?: ImageUncheckedUpdateManyWithoutNecessityInput;
 }

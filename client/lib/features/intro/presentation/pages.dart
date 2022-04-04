@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart' hide Title;
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:humane/Utils/colors.dart';
 import 'package:humane/core/components/Title.dart';
+import 'package:humane/core/theme/themeConstants.dart';
 
 Widget introPage({
   required BuildContext context,
@@ -36,7 +36,7 @@ Widget introPage({
             subtitle,
             textAlign: TextAlign.center,
             style: const TextStyle(
-              color: appDarkBlue,
+              color: appDarkBlueColor,
               fontSize: 20,
               fontFamily: 'Ubuntu',
             ),

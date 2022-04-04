@@ -7,6 +7,9 @@ import { UserUpdateOneRequiredWithoutDonationsInput } from '../user/user-update-
 @InputType()
 export class DonationUpdateInput {
 
+    @Field(() => ImageUpdateManyWithoutDonationInput, {nullable:true})
+    thumbnails?: ImageUpdateManyWithoutDonationInput;
+
     @Field(() => String, {nullable:true})
     title?: string;
 
@@ -16,17 +19,14 @@ export class DonationUpdateInput {
     @Field(() => Date, {nullable:true})
     timeStamp?: Date | string;
 
+    @Field(() => CategoryUpdateOneRequiredWithoutDonationInput, {nullable:true})
+    category?: CategoryUpdateOneRequiredWithoutDonationInput;
+
     @Field(() => String, {nullable:true})
     address?: string;
 
     @Field(() => String, {nullable:true})
     zipCode?: string;
-
-    @Field(() => ImageUpdateManyWithoutDonationInput, {nullable:true})
-    thumbnails?: ImageUpdateManyWithoutDonationInput;
-
-    @Field(() => CategoryUpdateOneRequiredWithoutDonationInput, {nullable:true})
-    category?: CategoryUpdateOneRequiredWithoutDonationInput;
 
     @Field(() => UserUpdateOneRequiredWithoutDonationsInput, {nullable:true})
     User?: UserUpdateOneRequiredWithoutDonationsInput;

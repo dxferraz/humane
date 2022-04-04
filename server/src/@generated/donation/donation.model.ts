@@ -43,6 +43,6 @@ export class Donation {
     @Field(() => Int, {nullable:false})
     userId!: number;
 
-    @Field(() => DonationCount, {nullable:true})
-    _count?: DonationCount | null;
+    @Field(() => DonationCount, {nullable:false})
+    _count?: DonationCount;
 }

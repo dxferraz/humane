@@ -3,9 +3,9 @@ import { InputType } from '@nestjs/graphql';
 import { Int } from '@nestjs/graphql';
 import { Float } from '@nestjs/graphql';
 import { Skin } from '../prisma/skin.enum';
+import { UserUpdateOneRequiredWithoutReportsInput } from '../user/user-update-one-required-without-reports.input';
 import { EyeColor } from '../prisma/eye-color.enum';
 import { HairColor } from '../prisma/hair-color.enum';
-import { UserUpdateOneRequiredWithoutReportsInput } from '../user/user-update-one-required-without-reports.input';
 
 @InputType()
 export class MissingPersonUpdateWithoutThumbnailsInput {
@@ -25,6 +25,9 @@ export class MissingPersonUpdateWithoutThumbnailsInput {
     @Field(() => String, {nullable:true})
     description?: string;
 
+    @Field(() => UserUpdateOneRequiredWithoutReportsInput, {nullable:true})
+    reporter?: UserUpdateOneRequiredWithoutReportsInput;
+
     @Field(() => Date, {nullable:true})
     disappearanceDay?: Date | string;
 
@@ -33,7 +36,4 @@ export class MissingPersonUpdateWithoutThumbnailsInput {
 
     @Field(() => HairColor, {nullable:true})
     hairColor?: keyof typeof HairColor;
-
-    @Field(() => UserUpdateOneRequiredWithoutReportsInput, {nullable:true})
-    reporter?: UserUpdateOneRequiredWithoutReportsInput;
 }

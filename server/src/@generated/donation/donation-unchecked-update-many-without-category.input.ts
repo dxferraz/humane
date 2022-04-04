@@ -25,9 +25,6 @@ export class DonationUncheckedUpdateManyWithoutCategoryInput {
     createMany?: DonationCreateManyCategoryInputEnvelope;
 
     @Field(() => [DonationWhereUniqueInput], {nullable:true})
-    connect?: Array<DonationWhereUniqueInput>;
-
-    @Field(() => [DonationWhereUniqueInput], {nullable:true})
     set?: Array<DonationWhereUniqueInput>;
 
     @Field(() => [DonationWhereUniqueInput], {nullable:true})
@@ -35,6 +32,9 @@ export class DonationUncheckedUpdateManyWithoutCategoryInput {
 
     @Field(() => [DonationWhereUniqueInput], {nullable:true})
     delete?: Array<DonationWhereUniqueInput>;
+
+    @Field(() => [DonationWhereUniqueInput], {nullable:true})
+    connect?: Array<DonationWhereUniqueInput>;
 
     @Field(() => [DonationUpdateWithWhereUniqueWithoutCategoryInput], {nullable:true})
     update?: Array<DonationUpdateWithWhereUniqueWithoutCategoryInput>;

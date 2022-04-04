@@ -6,12 +6,12 @@ import { ChatRoomUpdateOneRequiredWithoutUsersOnChatRoomInput } from '../chat-ro
 @InputType()
 export class UsersOnChatRoomUpdateInput {
 
-    @Field(() => Date, {nullable:true})
-    createdAt?: Date | string;
-
     @Field(() => UserUpdateOneRequiredWithoutUsersOnChatRoomInput, {nullable:true})
     user?: UserUpdateOneRequiredWithoutUsersOnChatRoomInput;
 
     @Field(() => ChatRoomUpdateOneRequiredWithoutUsersOnChatRoomInput, {nullable:true})
     chatRoom?: ChatRoomUpdateOneRequiredWithoutUsersOnChatRoomInput;
+
+    @Field(() => Date, {nullable:true})
+    createdAt?: Date | string;
 }

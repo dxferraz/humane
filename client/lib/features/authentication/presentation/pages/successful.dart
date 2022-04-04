@@ -3,7 +3,7 @@ import 'package:flutter/material.dart' hide Title;
 import 'package:humane/core/components/Background.dart';
 import 'package:humane/core/components/GradientButton.dart';
 import 'package:humane/core/components/Title.dart';
-import 'package:humane/utils/colors.dart';
+import 'package:humane/core/theme/themeConstants.dart';
 
 class Successful extends StatefulWidget {
   final String title;
@@ -91,7 +91,7 @@ class SuccessfulState extends State<Successful> with SingleTickerProviderStateMi
                               Navigator.pushNamed(context, 'home');
                             },
                             text: "Go to Home",
-                            bottomLeftColor: appDarkOrange,
+                            bottomLeftColor: appDarkOrangeColor,
                             topRightColor: Colors.orange),
                       )
                     ],

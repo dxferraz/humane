@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart' hide Card, Title;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:humane/Utils/colors.dart';
 import 'package:humane/core/components/Card.dart';
 import 'package:humane/core/components/CardShimmed.dart';
 import 'package:humane/core/injection/injection.dart';
+import 'package:humane/core/theme/themeConstants.dart';
 import 'package:humane/features/listActions/domain/entities/donation.dart';
 import 'package:humane/features/listActions/domain/entities/pagination.dart';
 import 'package:humane/features/listActions/presentation/bloc/ListActionsBloc.dart';
@@ -90,7 +90,7 @@ class _DonationListState extends State<DonationList> with AutomaticKeepAliveClie
                           child: Text(
                             state.message!,
                             textAlign: TextAlign.center,
-                            style: const TextStyle(color: appDarkBlue, fontSize: 20, fontWeight: FontWeight.bold),
+                            style: const TextStyle(color: appDarkBlueColor, fontSize: 20, fontWeight: FontWeight.bold),
                           ),
                         )
                       : Container()

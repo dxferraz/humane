@@ -6,6 +6,9 @@ import { CategoryCreateNestedOneWithoutNecessityInput } from '../category/catego
 @InputType()
 export class NecessityCreateWithoutUserInput {
 
+    @Field(() => ImageCreateNestedManyWithoutNecessityInput, {nullable:true})
+    thumbnails?: ImageCreateNestedManyWithoutNecessityInput;
+
     @Field(() => String, {nullable:false})
     title!: string;
 
@@ -15,15 +18,12 @@ export class NecessityCreateWithoutUserInput {
     @Field(() => Date, {nullable:true})
     timeStamp?: Date | string;
 
+    @Field(() => CategoryCreateNestedOneWithoutNecessityInput, {nullable:false})
+    category!: CategoryCreateNestedOneWithoutNecessityInput;
+
     @Field(() => String, {nullable:false})
     address!: string;
 
     @Field(() => String, {nullable:false})
     zipCode!: string;
-
-    @Field(() => ImageCreateNestedManyWithoutNecessityInput, {nullable:true})
-    thumbnails?: ImageCreateNestedManyWithoutNecessityInput;
-
-    @Field(() => CategoryCreateNestedOneWithoutNecessityInput, {nullable:false})
-    category!: CategoryCreateNestedOneWithoutNecessityInput;
 }

@@ -25,9 +25,6 @@ export class NecessityUncheckedUpdateManyWithoutUserInput {
     createMany?: NecessityCreateManyUserInputEnvelope;
 
     @Field(() => [NecessityWhereUniqueInput], {nullable:true})
-    connect?: Array<NecessityWhereUniqueInput>;
-
-    @Field(() => [NecessityWhereUniqueInput], {nullable:true})
     set?: Array<NecessityWhereUniqueInput>;
 
     @Field(() => [NecessityWhereUniqueInput], {nullable:true})
@@ -35,6 +32,9 @@ export class NecessityUncheckedUpdateManyWithoutUserInput {
 
     @Field(() => [NecessityWhereUniqueInput], {nullable:true})
     delete?: Array<NecessityWhereUniqueInput>;
+
+    @Field(() => [NecessityWhereUniqueInput], {nullable:true})
+    connect?: Array<NecessityWhereUniqueInput>;
 
     @Field(() => [NecessityUpdateWithWhereUniqueWithoutUserInput], {nullable:true})
     update?: Array<NecessityUpdateWithWhereUniqueWithoutUserInput>;

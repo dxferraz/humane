@@ -25,31 +25,42 @@ class LoadingButtonState extends State<LoadingButton> {
 
   @override
   Widget build(BuildContext context) {
-    final buttonWidth = MediaQuery.of(context).size.width;
     // update the UI depending on below variable values
     final isDone = widget.state == LoadingButtonStates.completed;
 
     return Container(
       alignment: Alignment.center,
       child: AnimatedContainer(
-          duration: const Duration(milliseconds: 200),
-          onEnd: () => setState(() {
-                isAnimating = !isAnimating;
-              }),
-          width: widget.state == LoadingButtonStates.init ? buttonWidth : 60,
+        duration: const Duration(milliseconds: 200),
+        onEnd: () => setState(
+          () {
+            isAnimating = !isAnimating;
+          },
+        ),
+        //width: widget.state == LoadingButtonStates.init ? buttonWidth : 40,
 
-          // If Button State is Submiting or Completed  show 'buttonCircular' widget as below
-          child: buildButton(isDone)),
+        // If Button State is Submiting or Completed  show 'buttonCircular' widget as below
+        child: buildButton(isDone),
+      ),
       // child: circularContainer(true)),
     );
   }
 
   // If Button State is init : show Normal submit button
   Widget buildButton(bool done) => ElevatedButton(
-        style: ElevatedButton.styleFrom(shape: const StadiumBorder(), primary: done ? Colors.green : Theme.of(context).primaryColor),
+        style: ElevatedButton.styleFrom(
+          shape: const StadiumBorder(),
+          primary: done ? Colors.green : Theme.of(context).primaryColor,
+        ),
         onPressed: widget.onPress,
         child: widget.state == LoadingButtonStates.init
-            ? Text(widget.text, style: const TextStyle(fontSize: 16, fontFamily: "Montserrat-regular"))
+            ? Text(
+                widget.text,
+                style: const TextStyle(
+                  fontSize: 16,
+                  fontFamily: "Montserrat-regular",
+                ),
+              )
             : done
                 ? const Icon(Icons.done, size: 20, color: Colors.white)
                 : spinner,

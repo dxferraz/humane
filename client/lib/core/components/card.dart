@@ -1,13 +1,14 @@
 import 'dart:ui';
 import 'package:humane/core/components/CategoryChip.dart';
+import 'package:humane/core/theme/themeConstants.dart';
 import 'package:humane/features/listActions/domain/entities/donation.dart';
 import 'package:humane/features/listActions/domain/entities/pagination.dart';
+import 'package:humane/Utils/string.dart';
+import 'package:humane/features/listActions/domain/entities/Image.dart'
+    as image;
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:humane/Utils/colors.dart';
-import 'package:humane/Utils/string.dart';
-import 'package:humane/features/listActions/domain/entities/Image.dart' as image;
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 // ignore: import_of_legacy_library_into_null_safe
@@ -82,7 +83,8 @@ class Card extends HookWidget {
               children: <Widget>[
                 Container(
                   color: Colors.transparent,
-                  padding: const EdgeInsets.only(left: 15, right: 15, top: 15, bottom: 0),
+                  padding: const EdgeInsets.only(
+                      left: 15, right: 15, top: 15, bottom: 0),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.start,
@@ -127,12 +129,14 @@ class Card extends HookWidget {
                                     overflow: TextOverflow.ellipsis,
                                     fontSize: 16,
                                     height: 1.5,
-                                    color: appDarkBlue,
+                                    color: appDarkBlueColor,
                                     fontWeight: FontWeight.w700),
                               ),
                               Row(
                                 children: [
-                                  category != null ? CategoryChip(category: category!) : Container(),
+                                  category != null
+                                      ? CategoryChip(category: category!)
+                                      : Container(),
                                   Text(
                                     "Posted on " +
                                         tempDate.day.toString() +
@@ -152,7 +156,7 @@ class Card extends HookWidget {
                         offset: const Offset(0, 35),
                         icon: const Icon(
                           Icons.more_vert,
-                          color: appDarkBlue,
+                          color: appDarkBlueColor,
                         ),
                         onSelected: (result) {
                           if (result == 1) {
@@ -185,20 +189,30 @@ class Card extends HookWidget {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(bottom: 10, top: 10, right: 15, left: 15),
+                  padding: const EdgeInsets.only(
+                      bottom: 10, top: 10, right: 15, left: 15),
                   child: Text(
                     description,
                     maxLines: 5,
-                    style: const TextStyle(fontSize: 16, height: 1.5, overflow: TextOverflow.ellipsis),
+                    style: const TextStyle(
+                        fontSize: 16,
+                        height: 1.5,
+                        overflow: TextOverflow.ellipsis),
                   ),
                 ),
                 LayoutBuilder(
                   builder: (BuildContext context, BoxConstraints constraints) {
                     if (thumbnails == null) return Container();
                     return ClipRRect(
-                      borderRadius: const BorderRadius.only(bottomLeft: Radius.circular(10), bottomRight: Radius.circular(10)),
+                      borderRadius: const BorderRadius.only(
+                          bottomLeft: Radius.circular(10),
+                          bottomRight: Radius.circular(10)),
                       child: CarouselSlider(
-                        options: CarouselOptions(height: 300.0, viewportFraction: 1, initialPage: 0, enableInfiniteScroll: true),
+                        options: CarouselOptions(
+                            height: 300.0,
+                            viewportFraction: 1,
+                            initialPage: 0,
+                            enableInfiniteScroll: true),
                         items: thumbnails!.map((i) {
                           return CachedNetworkImage(
                             imageUrl: i.url,
@@ -215,7 +229,10 @@ class Card extends HookWidget {
                                   child: ClipRect(
                                     child: Container(
                                       child: BackdropFilter(
-                                        filter: ImageFilter.blur(sigmaX: 6.0, sigmaY: 6.0),
+                                        filter: ImageFilter.blur(
+                                          sigmaX: 6.0,
+                                          sigmaY: 6.0,
+                                        ),
                                         child: Container(),
                                       ),
                                       decoration: BoxDecoration(

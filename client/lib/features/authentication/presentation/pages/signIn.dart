@@ -1,4 +1,3 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart' hide Title;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -7,12 +6,11 @@ import 'package:humane/core/components/Background.dart';
 import 'package:humane/core/components/InputField.dart' as input;
 import 'package:humane/core/components/LoadingButton.dart';
 import 'package:humane/core/injection/injection.dart';
+import 'package:humane/core/theme/themeConstants.dart';
 import 'package:humane/features/authentication/presentation/bloc/signUserBloc.dart';
 import 'package:humane/features/authentication/presentation/pages/validators/regex.dart';
 import 'package:humane/icons.dart';
-import 'package:humane/core/components/Line.dart';
 import 'package:humane/core/components/TextLine.dart';
-import 'package:humane/core/components/Title.dart';
 
 // ignore: must_be_immutable
 class SignIn extends HookWidget {
@@ -22,6 +20,7 @@ class SignIn extends HookWidget {
   late String email;
   late String password;
 
+  @override
   SignIn({Key? key}) : super(key: key);
 
   @override
@@ -38,7 +37,9 @@ class SignIn extends HookWidget {
             _formKey.currentState?.reset();
           }
           // Go to Home Page
-          if (state is ErrorUser && state.messages != null && state.messages!.isNotEmpty) {
+          if (state is ErrorUser &&
+              state.messages != null &&
+              state.messages!.isNotEmpty) {
             String message = state.messages!.join("\n");
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
@@ -53,109 +54,115 @@ class SignIn extends HookWidget {
           }
         },
         child: Scaffold(
+          appBar: AppBar(
+            leading: IconButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              icon: const Icon(
+                Humane.back,
+                color: appDarkBlueColor,
+              ),
+            ),
+            centerTitle: true,
+          ),
           key: _scaffoldKey,
           body: SingleChildScrollView(
             child: Background(
-              child: BlocBuilder<SignUserBloc, SignUserState>(builder: (context, state) {
-                LoadingButtonStates buttonState = LoadingButtonStates.init;
-                if (state is ErrorUser) {
-                  buttonState = LoadingButtonStates.init;
-                }
+              child: BlocBuilder<SignUserBloc, SignUserState>(
+                builder: (context, state) {
+                  LoadingButtonStates buttonState = LoadingButtonStates.init;
+                  if (state is ErrorUser) {
+                    buttonState = LoadingButtonStates.init;
+                  }
 
-                if (state is LoadingUser) {
-                  buttonState = LoadingButtonStates.submitting;
-                }
+                  if (state is LoadingUser) {
+                    buttonState = LoadingButtonStates.submitting;
+                  }
 
-                return (SafeArea(
-                  child: Container(
-                    padding: const EdgeInsets.only(left: 30, right: 30),
-                    alignment: Alignment.center,
-                    height: MediaQuery.of(context).size.height,
-                    child: Form(
-                      key: _formKey,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.pop(context);
-                            },
-                            child: Container(
-                              padding: const EdgeInsets.only(bottom: 5),
-                              child: Icon(Humane.back, color: Theme.of(context).primaryColor),
+                  return (SafeArea(
+                    child: Container(
+                      padding: const EdgeInsets.only(left: 30, right: 30),
+                      height: MediaQuery.of(context).size.height,
+                      child: Form(
+                        key: _formKey,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: <Widget>[
+                            const Text(
+                              'Sign In',
+                              style: TextStyle(
+                                fontSize: 36,
+                                fontWeight: FontWeight.bold,
+                                color: appDarkOrangeColor,
+                              ),
                             ),
-                          ),
-                          const Title(text: "Sign In"),
-                          const Line(),
-                          const Text(
-                            'Enter via social networks',
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontFamily: "Montserrat-light",
+                            const SizedBox(height: 40),
+                            SvgPicture.asset(
+                              'assets/images/SignInIllustration.svg',
+                              width: MediaQuery.of(context).size.width / 2,
                             ),
-                          ),
-                          Container(
-                            padding: const EdgeInsets.symmetric(vertical: 20),
-                            child: Row(
-                              children: <Widget>[
-                                SizedBox(
-                                  width: 40,
-                                  height: 40,
-                                  child: SvgPicture.asset("assets/icons/facebook.svg", semanticsLabel: 'Facebook Logo'),
-                                ),
-                                Container(
-                                  width: 0.8,
-                                  height: 40,
-                                  margin: const EdgeInsets.symmetric(horizontal: 15.0),
-                                  decoration: BoxDecoration(
-                                    border: Border.all(
-                                      color: Colors.grey,
-                                      width: 0.5,
-                                    ),
+                            const SizedBox(height: 30),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: const [
+                                Text(
+                                  'Fazer login com:',
+                                  style: TextStyle(
+                                    color: appGreyColor,
+                                    fontSize: 18,
                                   ),
-                                ),
-                                Container(
-                                  width: 40,
-                                  height: 40,
-                                  decoration: const BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.all(Radius.circular(5)),
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Colors.grey,
-                                        blurRadius: 4.0, // has the effect of softening the shadow
-                                        spreadRadius: 1.0, // has the effect of extending the shadow
-                                        offset: Offset(
-                                          0, // horizontal, move right 10
-                                          0, // vertical, move down 10
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                  padding: const EdgeInsets.all(5),
-                                  child: SvgPicture.asset("assets/icons/google.svg", semanticsLabel: 'Google Logo'),
+                                  textAlign: TextAlign.center,
                                 ),
                               ],
                             ),
-                          ),
-                          const TextLine(text: "or continue with"),
-                          input.InputField(
-                            onChanged: (_email) {
-                              email = _email!;
-                              return;
-                            },
-                            hint: "Email",
-                            textInputAction: TextInputAction.next,
-                            focusNode: _emailFocus,
-                            nextFocusNode: _passwordFocus,
-                            type: TextInputType.emailAddress,
-                            icon: const Icon(Humane.mail),
-                            validator: (value) {
-                              return emailValidator(value!);
-                            },
-                          ),
-                          input.InputField(
+                            const SizedBox(height: 15),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                FloatingActionButton.extended(
+                                  onPressed: () {},
+                                  label: const Text("Google"),
+                                  icon: SvgPicture.asset(
+                                    "assets/icons/google.svg",
+                                    width: 30,
+                                    height: 30,
+                                  ),
+                                  backgroundColor: Colors.white,
+                                  foregroundColor: Colors.black,
+                                ),
+                                const SizedBox(width: 20),
+                                FloatingActionButton.extended(
+                                  onPressed: () {},
+                                  label: const Text("Facebook"),
+                                  icon: SvgPicture.asset(
+                                    "assets/icons/facebook.svg",
+                                    width: 32,
+                                    height: 32,
+                                  ),
+                                  backgroundColor: const Color(0xFF3b5999),
+                                  foregroundColor: Colors.white,
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 10),
+                            const TextLine(text: "ou preencha os campos abaixo:"),
+                            input.InputField(
+                              onChanged: (_email) {
+                                email = _email!;
+                              },
+                              hint: "Email",
+                              textInputAction: TextInputAction.next,
+                              focusNode: _emailFocus,
+                              nextFocusNode: _passwordFocus,
+                              type: TextInputType.emailAddress,
+                              icon: const Icon(Humane.mail),
+                              validator: (value) {
+                                return emailValidator(value!);
+                              },
+                            ),
+                            input.InputField(
                               onChanged: ([_password]) {
                                 password = _password!;
                                 return;
@@ -169,59 +176,56 @@ class SignIn extends HookWidget {
                                 return isEmpty(value!);
                               },
                               onSubmit: () => submitForm(context),
-                              paddingBottom: 3),
-                          Container(
-                            padding: const EdgeInsets.only(bottom: 20),
-                            alignment: Alignment.centerRight,
-                            child: GestureDetector(
-                              onTap: () {
-                                Navigator.of(context).pushNamed('forgotPassword');
-                              },
-                              child: Text(
-                                'Forgot Password?',
-                                style: TextStyle(
-                                  color: Theme.of(context).primaryColor,
-                                  fontFamily: "Montserrat-regular",
+                              paddingBottom: 3,
+                            ),
+                            Container(
+                              alignment: Alignment.centerRight,
+                              child: GestureDetector(
+                                onTap: () {
+                                  Navigator.of(context)
+                                      .pushNamed('forgotPassword');
+                                },
+                                child: Text(
+                                  'Esqueceu a senha?',
+                                  style: TextStyle(
+                                    color: Theme.of(context).primaryColor,
+                                    decoration: TextDecoration.underline,
+                                    fontSize: 16,
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                          LoadingButton(
-                            state: buttonState,
-                            text: 'Sign Up',
-                            onPress: () {
-                              if (buttonState != LoadingButtonStates.submitting) {
-                                submitForm(context);
-                              }
-                            },
-                          ),
-                          Container(
-                            padding: const EdgeInsets.only(top: 20),
-                            child: Center(
-                              child: Text.rich(
-                                TextSpan(
-                                  text: "Don't have an account? ",
-                                  style: TextStyle(fontFamily: "Montserrat-medium", color: Theme.of(context).secondaryHeaderColor),
-                                  children: <InlineSpan>[
-                                    TextSpan(
-                                      recognizer: TapGestureRecognizer()
-                                        ..onTap = () {
-                                          Navigator.of(context).pushNamed('signUp');
-                                        },
-                                      text: 'SIGN IN',
-                                      style: TextStyle(fontFamily: "Montserrat-medium", color: Theme.of(context).primaryColor),
-                                    ),
-                                  ],
+                            const SizedBox(height: 20),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                ElevatedButton(
+                                  onPressed: () {
+                                    Navigator.of(context).pushNamed('signUp');
+                                  },
+                                  child: const Text(
+                                    'Criar uma conta',
+                                  ),
                                 ),
-                              ),
+                                LoadingButton(
+                                  state: buttonState,
+                                  text: 'Entrar',
+                                  onPress: () {
+                                    if (buttonState !=
+                                        LoadingButtonStates.submitting) {
+                                      submitForm(context);
+                                    }
+                                  },
+                                ),
+                              ],
                             ),
-                          )
-                        ],
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                ));
-              }),
+                  ));
+                },
+              ),
             ),
           ),
         ),
@@ -232,7 +236,9 @@ class SignIn extends HookWidget {
   submitForm(BuildContext context) {
     FocusManager.instance.primaryFocus?.unfocus();
     if (_formKey.currentState?.validate() != false) {
-      BlocProvider.of<SignUserBloc>(context).add(SignInUserEvent(email: email.trim(), password: password));
+      BlocProvider.of<SignUserBloc>(context).add(
+        SignInUserEvent(email: email, password: password),
+      );
     }
   }
 }

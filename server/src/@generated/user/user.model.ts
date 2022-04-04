@@ -69,6 +69,6 @@ export class User {
     @Field(() => [Necessity], {nullable:true})
     necessities?: Array<Necessity>;
 
-    @Field(() => UserCount, {nullable:true})
-    _count?: UserCount | null;
+    @Field(() => UserCount, {nullable:false})
+    _count?: UserCount;
 }

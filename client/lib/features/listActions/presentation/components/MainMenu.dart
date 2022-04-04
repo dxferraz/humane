@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:humane/Utils/colors.dart';
 import 'package:humane/core/components/RadialButtons.dart';
 import 'package:humane/core/injection/injection.dart';
+import 'package:humane/core/theme/themeConstants.dart';
 import 'package:humane/features/listActions/presentation/bloc/ListActionsBloc.dart';
 import 'package:humane/features/listActions/presentation/components/MenuBackground.dart';
 import 'package:humane/icons.dart';
@@ -34,7 +34,8 @@ class _MainMenuState extends State<MainMenu> with TickerProviderStateMixin {
 
   @override
   void initState() {
-    openAnimationController = AnimationController(vsync: this, duration: const Duration(milliseconds: 300));
+    openAnimationController = AnimationController(
+        vsync: this, duration: const Duration(milliseconds: 300));
 
     openAnimation = Tween<double>(begin: 1, end: 0).animate(openAnimationController);
 
@@ -161,7 +162,8 @@ class _MainMenuState extends State<MainMenu> with TickerProviderStateMixin {
       child: Container(
         width: size.width,
         height: size.height,
-        color: Colors.black.withAlpha((200 * (1 - openAnimation.value)).toInt()),
+        color:
+            Colors.black.withAlpha((200 * (1 - openAnimation.value)).toInt()),
       ),
     );
 
@@ -264,11 +266,19 @@ class _MainMenuState extends State<MainMenu> with TickerProviderStateMixin {
     );
 
     return Stack(
-      children: [gradient, menuBackground, blackBackground, openMenuTitle, mainButton, sideButtons],
+      children: [
+        gradient,
+        menuBackground,
+        blackBackground,
+        openMenuTitle,
+        mainButton,
+        sideButtons
+      ],
     );
   }
 
-  Widget _buildSideButton(bool active, Size size, Offset translateOffset, String text, IconData icon, onTap) {
+  Widget _buildSideButton(bool active, Size size, Offset translateOffset,
+      String text, IconData icon, onTap) {
     return GestureDetector(
       onTap: onTap,
       child: SizedBox(
@@ -287,7 +297,8 @@ class _MainMenuState extends State<MainMenu> with TickerProviderStateMixin {
               height: 25,
               child: Text(
                 text,
-                style: const TextStyle(fontWeight: FontWeight.normal, color: Colors.white),
+                style: const TextStyle(
+                    fontWeight: FontWeight.normal, color: Colors.white),
               ),
             ),
           ],
@@ -314,7 +325,8 @@ class _MainMenuState extends State<MainMenu> with TickerProviderStateMixin {
     FloatingActionButton(
       heroTag: "FurnitureDonation",
       backgroundColor: Colors.orange,
-      child: Transform.translate(offset: const Offset(-5, 0), child: const Icon(Humane.furniture)),
+      child: Transform.translate(
+          offset: const Offset(-5, 0), child: const Icon(Humane.furniture)),
       elevation: 0,
       onPressed: () async {},
     ),

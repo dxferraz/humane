@@ -20,6 +20,6 @@ export class Category {
     @Field(() => [Necessity], {nullable:true})
     Necessity?: Array<Necessity>;
 
-    @Field(() => CategoryCount, {nullable:true})
-    _count?: CategoryCount | null;
+    @Field(() => CategoryCount, {nullable:false})
+    _count?: CategoryCount;
 }

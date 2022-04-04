@@ -6,6 +6,9 @@ import { UserCreateNestedOneWithoutNecessitiesInput } from '../user/user-create-
 @InputType()
 export class NecessityCreateWithoutCategoryInput {
 
+    @Field(() => ImageCreateNestedManyWithoutNecessityInput, {nullable:true})
+    thumbnails?: ImageCreateNestedManyWithoutNecessityInput;
+
     @Field(() => String, {nullable:false})
     title!: string;
 
@@ -20,9 +23,6 @@ export class NecessityCreateWithoutCategoryInput {
 
     @Field(() => String, {nullable:false})
     zipCode!: string;
-
-    @Field(() => ImageCreateNestedManyWithoutNecessityInput, {nullable:true})
-    thumbnails?: ImageCreateNestedManyWithoutNecessityInput;
 
     @Field(() => UserCreateNestedOneWithoutNecessitiesInput, {nullable:false})
     User!: UserCreateNestedOneWithoutNecessitiesInput;

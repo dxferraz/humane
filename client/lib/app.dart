@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:humane/Utils/colors.dart';
 import 'package:humane/core/flavors/flavorConfig.dart';
+import 'package:humane/core/theme/themeConstants.dart';
+import 'package:humane/core/theme/themeManager.dart';
 import 'package:humane/routes.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:humane/core/injection/injection.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 
 const isWebPlatform = kIsWeb;
+
+ThemeManager _themeManager = ThemeManager();
 
 class HumaneApp extends StatelessWidget {
   final FlavorConfig config;
@@ -23,23 +26,34 @@ class HumaneApp extends StatelessWidget {
       currentFocus.focusedChild?.unfocus();
     }
 
+    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+
     return AnnotatedRegion<SystemUiOverlayStyle>(
+      //Set status bar icon color
       value: SystemUiOverlayStyle.dark.copyWith(
         statusBarColor: Colors.transparent,
-        statusBarIconBrightness: Brightness.dark,
+        statusBarIconBrightness: Brightness.light,
       ),
       child: MaterialApp(
         builder: (context, child) {
           if (config.name.isEmpty) {
             return Container(child: child);
           }
-          return Banner(message: config.name, color: config.bannerColor, location: BannerLocation.bottomEnd, child: child);
+          return Banner(
+            message: config.name,
+            color: config.bannerColor,
+            location: BannerLocation.bottomEnd,
+            child: child,
+          );
         },
         title: config.appTitle,
         debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-            primarySwatch: orangeColor, primaryColor: primaryColor, secondaryHeaderColor: secondaryHeaderColor, fontFamily: 'Cairo'),
-        initialRoute: showIntro ? 'intro' : 'home',
+        theme: lightTheme,
+        darkTheme: darktheme,
+        themeMode: _themeManager.themeMode,
+        //TODO Implement Theme switch button
+        //initialRoute: showHome ? 'signIn' : 'intro',
+        initialRoute: 'home',
         routes: routes,
       ),
     );

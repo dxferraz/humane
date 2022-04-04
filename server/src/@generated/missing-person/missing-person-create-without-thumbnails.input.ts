@@ -3,9 +3,9 @@ import { InputType } from '@nestjs/graphql';
 import { Int } from '@nestjs/graphql';
 import { Float } from '@nestjs/graphql';
 import { Skin } from '../prisma/skin.enum';
+import { UserCreateNestedOneWithoutReportsInput } from '../user/user-create-nested-one-without-reports.input';
 import { EyeColor } from '../prisma/eye-color.enum';
 import { HairColor } from '../prisma/hair-color.enum';
-import { UserCreateNestedOneWithoutReportsInput } from '../user/user-create-nested-one-without-reports.input';
 
 @InputType()
 export class MissingPersonCreateWithoutThumbnailsInput {
@@ -25,6 +25,9 @@ export class MissingPersonCreateWithoutThumbnailsInput {
     @Field(() => String, {nullable:true})
     description?: string;
 
+    @Field(() => UserCreateNestedOneWithoutReportsInput, {nullable:false})
+    reporter!: UserCreateNestedOneWithoutReportsInput;
+
     @Field(() => Date, {nullable:true})
     disappearanceDay?: Date | string;
 
@@ -33,7 +36,4 @@ export class MissingPersonCreateWithoutThumbnailsInput {
 
     @Field(() => HairColor, {nullable:true})
     hairColor?: keyof typeof HairColor;
-
-    @Field(() => UserCreateNestedOneWithoutReportsInput, {nullable:false})
-    reporter!: UserCreateNestedOneWithoutReportsInput;
 }
