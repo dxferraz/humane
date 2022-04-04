@@ -11,7 +11,6 @@ import 'package:humane/features/authentication/presentation/bloc/signUserBloc.da
 import 'package:humane/features/authentication/presentation/pages/validators/regex.dart';
 import 'package:humane/icons.dart';
 import 'package:humane/core/components/TextLine.dart';
-import 'package:humane/core/components/Title.dart';
 
 // ignore: must_be_immutable
 class SignIn extends HookWidget {
@@ -60,7 +59,7 @@ class SignIn extends HookWidget {
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              icon: Icon(
+              icon: const Icon(
                 Humane.back,
                 color: appDarkBlueColor,
               ),
@@ -142,13 +141,13 @@ class SignIn extends HookWidget {
                                     width: 32,
                                     height: 32,
                                   ),
-                                  backgroundColor: Color(0xFF3b5999),
+                                  backgroundColor: const Color(0xFF3b5999),
                                   foregroundColor: Colors.white,
                                 ),
                               ],
                             ),
                             const SizedBox(height: 10),
-                            TextLine(text: "ou preencha os campos abaixo:"),
+                            const TextLine(text: "ou preencha os campos abaixo:"),
                             input.InputField(
                               onChanged: (_email) {
                                 email = _email!;

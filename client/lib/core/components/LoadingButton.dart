@@ -25,7 +25,6 @@ class LoadingButtonState extends State<LoadingButton> {
 
   @override
   Widget build(BuildContext context) {
-    final buttonWidth = MediaQuery.of(context).size.width;
     // update the UI depending on below variable values
     final isDone = widget.state == LoadingButtonStates.completed;
 
