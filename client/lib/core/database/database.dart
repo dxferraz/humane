@@ -14,7 +14,7 @@ class LocalDatabase extends _$LocalDatabase {
   // we tell the database where to store the data with this constructor
   LocalDatabase() : super(_openConnection());
 
-  // You should bump this number whenever you change or add a table definition.
+  // You should bump this number whenever you change or add a table definition. 
   @override
   int get schemaVersion => 1;
 }

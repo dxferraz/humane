@@ -60,7 +60,7 @@ android {
         stage {
             dimension "app"
             applicationId "help.humane.stage"
-        }
+         }
         prod {
             dimension "app"
         }
@@ -82,5 +82,3 @@ flutter {
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }
-
-
