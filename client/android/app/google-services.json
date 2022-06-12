@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "880168898433",
+    "firebase_url": "https://humane-help-default-rtdb.firebaseio.com",
+    "project_id": "humane-help",
+    "storage_bucket": "humane-help.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:880168898433:android:13a6e3af4957eb54c8a280",
+        "android_client_info": {
+          "package_name": "help.humane"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "880168898433-rdcq798n7boobdl45n36p3h051v6efkf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyApqMb2RG3MXAvoyt8FCaUgpoe1_zCB-_k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "880168898433-rdcq798n7boobdl45n36p3h051v6efkf.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "880168898433-saa6i6s4efhlb8tgudal3g0so383d709.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "help.humane"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

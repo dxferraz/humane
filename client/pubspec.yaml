@@ -18,47 +18,47 @@ dependencies:
   injectable: ^1.5.3
   scoped_model: ^1.1.0
 
-  #BLoC Arquitecture
+  # BLoC Arquitecture
   bloc: ^8.0.3
   flutter_bloc: ^8.0.1
 
-  #Flare 
+  # Flare 
   flare_flutter: ^3.0.2
 
-  #SVG
+  # SVG
   flutter_svg: ^1.0.3
 
-  #Validation
+  # Validation
   validators: ^3.0.0
 
-  #Equatable
+  # Equatable
   equatable: ^2.0.3
 
-  #Hooks
+  # Hooks
   flutter_hooks: ^0.18.2+1
 
-  #.env
+  # .env
   flutter_dotenv: ^5.0.2
   
-  #graphql
+  # graphql
   graphql_flutter: ^5.0.1
 
-  #Carousel Image
+  # Carousel Image
   carousel_slider: ^4.0.0
   
-  #Interceptor
+  # Interceptor
   http_interceptor: ^1.0.0
 
-  #Database
+  # Database
   path_provider: ^2.0.0
   path: ^1.8.0
   drift_dev: ^1.5.2
   sqlite3_flutter_libs: ^0.5.0
 
-  #Loading
+  # Loading
   shimmer: ^2.0.0
 
-  #Observables
+  # Observables
   dartz: ^0.10.1
 
   data_connection_checker: ^0.3.4
@@ -69,11 +69,15 @@ dependencies:
 
   cached_network_image: ^3.2.0
   
-  #Search Bar
+  # Search Bar
   implicitly_animated_list: ^2.1.0
   material_floating_search_bar: ^0.3.7
 
   intl: ^0.17.0
+
+  # Firebase
+  firebase_core: ^1.17.1
+  firebase_database: ^9.0.15
   
 dev_dependencies:
   flutter_test:
@@ -132,5 +136,3 @@ flutter:
     - assets/icons/
     - assets/images/
     - assets/animations/
-
-

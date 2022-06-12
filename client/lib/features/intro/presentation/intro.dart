@@ -80,6 +80,24 @@ class _IntroPageState extends State<IntroPage> {
               width: double.infinity,
             ),
           ),
+          Container(
+            //controller: controller,
+            padding: const EdgeInsets.only(top: 75),
+            child: Align(
+              alignment: Alignment.bottomCenter,
+              child: SmoothPageIndicator(
+                controller: controller,
+                count: 3,
+                effect: WormEffect(
+                  activeDotColor: Theme.of(context).primaryColor,
+                  dotColor: Theme.of(context).primaryColor.withOpacity(0.5),
+                  dotHeight: 10,
+                  dotWidth: 10,
+                  spacing: 10,
+                ),
+              ),
+            ),
+          ),
           Positioned(
             bottom: 0,
             child: Container(

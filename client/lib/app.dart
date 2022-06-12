@@ -52,7 +52,7 @@ class HumaneApp extends StatelessWidget {
         darkTheme: darktheme,
         themeMode: _themeManager.themeMode,
         //TODO Implement Theme switch button
-        //initialRoute: showHome ? 'signIn' : 'intro',
+        //initialRoute: showIntro ? 'intro' : 'home',
         initialRoute: 'home',
         routes: routes,
       ),
