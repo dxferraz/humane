@@ -10,7 +10,7 @@
             "request": "launch",
             "type": "dart", 
             "program": "lib/core/flavors/mainDev.dart",
-            "args": ["run", "dev", "--no-sound-null-safety"]
+            "args": ["--flavor", "dev", "--no-sound-null-safety"]
         },
         {
             "name": "stage",

@@ -12,7 +12,7 @@
   },
   "scripts": {
     "api:spec": "sh Taskfile api_spec",
-    "dev": "run-p start:dev prisma:w",
+    "dev": "run -p start:dev prisma:w",
     "preinstall": "sh Taskfile preinstall",
     "postinstall": "patch-package",
     "build": "sh Taskfile build",
